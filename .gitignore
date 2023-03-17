@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# VSCode
+.vscode/
+
+# ROOT files
+*.root
+
+# Training data
+*.hdf5
+
+# Model saves
+training/runs/
+training/checkpoints/
