@@ -86,5 +86,5 @@ reco_columns = [
     "MElectron_seedGain",
     "MElectron_sieie",
     "MElectron_sip3d",
-    "MElectron_tightCharge"
+    "MElectron_tightCharge",
 ]

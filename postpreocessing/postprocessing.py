@@ -26,7 +26,7 @@ def inverse_transform(df, column_name, function, p):
 
 def unsmearing(df, column_name, interval):
     """Unsmearing for in variables. We have gaussian and uniform smearing.
-    If we have interval, that means that we built a fake gaussian dataset 
+    If we have interval, that means that we built a fake gaussian dataset
     in the selected interval, and then we just have to compute the sample mean
     in this range.
     """
@@ -38,10 +38,11 @@ def unsmearing(df, column_name, interval):
         # which corresponds to an int value of 0 after a np.log(x + 1e-3)
         # transformation
 
-        val[mask_condition] = np.log(1e-3) 
+        val[mask_condition] = np.log(1e-3)
     else:
         df[column_name] = np.rint(df[column_name].values)
     return df[column_name]
+
 
 def cut_unsmearing(df, column_name, cut, x1, x2):
 
@@ -78,7 +79,9 @@ def postprocessing(df, vars_dictionary):
     Postprocessing general function given any dataframe and its dictionary
     """
 
-    with open(os.path.join(os.path.dirname(__file__), "scale_factors.json")) as scale_file:
+    with open(
+        os.path.join(os.path.dirname(__file__), "scale_factors.json")
+    ) as scale_file:
         scale_dict = json.load(scale_file)
 
     for column_name, operation in vars_dictionary.items():
@@ -101,7 +104,7 @@ def postprocessing_test(df, vars_dictionary):
         fig, axs = plt.subplots(1, 2)
         plt.suptitle(f"{column_name}")
         axs[0].hist(df[column_name], bins=30, histtype="step")
-        df[column_name] = restore_range(column_name, scale_dict, df)        
+        df[column_name] = restore_range(column_name, scale_dict, df)
         df[column_name] = process_column_var(column_name, operation, df)
         axs[1].hist(df[column_name], bins=30, histtype="step")
         plt.savefig(f"figures_post/{column_name}.pdf", format="pdf")
@@ -111,10 +114,11 @@ def postprocessing_test(df, vars_dictionary):
 
     return df
 
+
 if __name__ == "__main__":
 
     f = h5py.File("MElectrons.hdf5", "r")
-    df = pd.DataFrame(data=f.get("data"), columns=gen_columns+reco_columns)
+    df = pd.DataFrame(data=f.get("data"), columns=gen_columns + reco_columns)
     f.close()
 
     df = postprocessing_test(df, target_dictionary)

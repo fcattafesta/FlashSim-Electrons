@@ -1,4 +1,4 @@
-import  os
+import os
 import json
 import h5py
 import pandas as pd
@@ -81,6 +81,7 @@ def gaus_smearing(df, column_name, sigma, interval):
         )
     return df[column_name]
 
+
 def unif_smearing(df, column_name, half_width, interval):
     """
     Performs uniform smearing on given column. If interval is specified, random uniform data are assigned to column in interval.
@@ -93,7 +94,7 @@ def unif_smearing(df, column_name, half_width, interval):
             f"Creating uniform data (loc={loc}, half_width={half_width}) in range {interval}..."
         )
         val[mask_condition] = np.random.uniform(
-            low=loc-half_width, high=loc+half_width, size=val[mask_condition].shape
+            low=loc - half_width, high=loc + half_width, size=val[mask_condition].shape
         )
     else:
         print(f"Unifrom smearing with half_width={half_width}...")
@@ -102,6 +103,7 @@ def unif_smearing(df, column_name, half_width, interval):
         )
     return df[column_name]
 
+
 def transform(df, column_name, function, p):
     """
     Performs a function tranformation on column
@@ -109,6 +111,7 @@ def transform(df, column_name, function, p):
     print(f"Applying {function} with parameters {p}...")
     df[column_name] = df[column_name].apply(lambda x: function(x * p[0] + p[1]))
     return df[column_name]
+
 
 def fix_range(column_name, df):
 
@@ -122,13 +125,12 @@ def fix_range(column_name, df):
     return df[column_name], scale_factor
 
 
-
 def process_column_var(column_name, operations, df):
     """
     Processes single dataframe column. Operation type is specified by string.
     """
     print(f"Processing {column_name}...")
-    
+
     for op in operations:
         if op[0] == "s":
             interval = op[1]
@@ -184,13 +186,13 @@ def preprocessing(df, vars_dictionary):
     f.write(json.dumps(dict_to_save))
     f.close()
 
-    os.system("cp scale_factors.json ../../training/electrons/")  
+    os.system("cp scale_factors.json ../../training/electrons/")
 
     return df
 
 
 if __name__ == "__main__":
-    
+
     root_files = [f"MElectrons_{i}.root:MElectrons" for i in range(0, 7)]
 
     tree = uproot.open(root_files[0], num_workers=20)
@@ -202,7 +204,7 @@ if __name__ == "__main__":
         df.reset_index(drop=True)
 
     df = preprocessing(df, target_dictionary)
-    
+
     print(df.columns)
     file = h5py.File(f"MElectrons_1.hdf5", "w")
 
@@ -210,5 +212,4 @@ if __name__ == "__main__":
 
     file.close()
 
-    os.system("mv MElectrons_1.hdf5 ../../training/electrons/")  
-
+    os.system("mv MElectrons_1.hdf5 ../../training/electrons/")
