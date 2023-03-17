@@ -1,6 +1,6 @@
 import h5py
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 
 
 class ElectronDataset(Dataset):
