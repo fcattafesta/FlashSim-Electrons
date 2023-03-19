@@ -53,7 +53,8 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   legend->SetTextSize(0.02);
   legend->AddEntry(h_full.GetPtr(), "FullSim", "l");
   legend->AddEntry(h_flash.GetPtr(), "FlashSim", "l");
-  legend->DrawClone();
+  legend->SetFillStyle(0);
+  legend->DrawClone("NDC NB");
 
   TLatex cms_label;
   cms_label.SetTextSize(0.04);
