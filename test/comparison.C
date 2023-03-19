@@ -50,16 +50,15 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   legend->SetFillColor(0);
   legend->SetBorderSize(0);
   legend->SetTextSize(0.03);
-  legend->AddEntry(h_full.GetPtr(), "FullSim", "l");
+  legend->AddEntry(h_full.GetPtr(), "FullSim", "f");
   legend->AddEntry(h_flash.GetPtr(), "FlashSim", "f");
   legend->DrawClone();
 
   TLatex cms_label;
   cms_label.SetTextSize(0.04);
-  cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS Open Data}");
+  cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}");
   TLatex header;
   header.SetTextSize(0.03);
-  header.DrawLatexNDC(0.5, 0.92, "#it{Private work}");
  
   std::string filename = "comparison_" + col + ".pdf";
   c->SaveAs(filename.c_str());
