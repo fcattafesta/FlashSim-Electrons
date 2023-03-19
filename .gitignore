@@ -140,3 +140,7 @@ dmypy.json
 # Model saves
 training/runs/
 training/checkpoints/
+
+# dataset/
+
+extration/dataset/
