@@ -46,7 +46,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   h_full->DrawClone("hist");
   h_flash->DrawClone("hist same");
 
-  auto legend = new TLegend(0.72, 0.70, 0.89, 0.88);
+  auto legend = new TLegend(0.72, 0.75, 0.89, 0.88);
   legend->SetFillColor(0);
   legend->SetBorderSize(0);
   legend->SetTextSize(0.02);
