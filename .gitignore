@@ -141,6 +141,9 @@ dmypy.json
 training/runs/
 training/checkpoints/
 
-# dataset/
-
+# dataset
 extration/dataset/
+
+# figures
+test/figures/
+preprocessing/figures/
