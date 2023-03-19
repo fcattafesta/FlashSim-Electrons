@@ -72,7 +72,7 @@ void z_boson() {
   c->SetLeftMargin(0.15);
 
   h_full->SetTitle("");
-  h_full->GetXaxis()->SetTitle("#m_{ee} [GeV]");
+  h_full->GetXaxis()->SetTitle("m_{ee} [GeV]");
   h_full->GetXaxis()->SetTitleSize(0.04);
   h_full->GetYaxis()->SetTitle("Normalized Events");
   h_full->GetYaxis()->SetTitleSize(0.04);
