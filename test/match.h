@@ -667,6 +667,7 @@ auto match(ROOT::RDataFrame &d) {
           .Define("Electron_genElectronIdx", genElectronIdx_maker,
                   {"Electron_genPartIdx", "GenPart_pdgId"})
           .Define("Electron_MGenElectronMask", "Electron_genElectronIdx >= 0")
+          .Define("MElectron_charge", "Electron_charge[Electron_MGenElectronMask]")
           .Define("MElectron_convVeto",
                   "Electron_convVeto[Electron_MGenElectronMask]")
           .Define("MElectron_deltaEtaSC",
