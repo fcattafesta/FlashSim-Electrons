@@ -3,9 +3,9 @@ import json
 import sys
 import ROOT
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "generation"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
-from nbd_func import ele_names
+from columns import ele_names
 
 ROOT.gInterpreter.Declare('#include "comparison.h"')
 
