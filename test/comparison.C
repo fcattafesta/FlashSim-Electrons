@@ -3,7 +3,7 @@
 #include "match.h"
 #include <string>
 
-void comparison(std::string col, float min, float max, int nbins = 50) {
+void compare(std::string col, float min, float max, int nbins = 50) {
 
   ROOT::EnableImplicitMT();
 
@@ -50,8 +50,8 @@ void comparison(std::string col, float min, float max, int nbins = 50) {
   legend->SetFillColor(0);
   legend->SetBorderSize(0);
   legend->SetTextSize(0.03);
-  legend->AddEntry(&h_full, "FullSim", "l");
-  legend->AddEntry(&h_flash, "FlashSim", "f");
+  legend->AddEntry(h_full, "FullSim", "l");
+  legend->AddEntry(h_flash, "FlashSim", "f");
   legend->DrawClone();
 
   TLatex cms_label;
@@ -63,4 +63,8 @@ void comparison(std::string col, float min, float max, int nbins = 50) {
  
   std::string filename = "comparison_" + col + ".pdf";
   c->SaveAs(filename.c_str());
+}
+
+void comparison() {
+  compare("Electron_pt", 0, 200);
 }
