@@ -418,7 +418,7 @@ auto mother_genpart_dphi(ROOT::VecOps::RVec<int> &mother_idx,
   return mother_dphi;
 }
 
-void match(ROOT::RDataFrame &d, std::string col_to_save) {
+auto match(ROOT::RDataFrame &d) {
 
   ROOT::EnableImplicitMT();
 
@@ -759,6 +759,5 @@ void match(ROOT::RDataFrame &d, std::string col_to_save) {
           .Define("MElectron_tightCharge",
                   "Electron_tightCharge[Electron_MGenElectronMask]");
 
-  matched.Snapshot("Events", "output.root", col_to_save.c_str());
-
+  return matched;
 }
