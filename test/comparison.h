@@ -60,11 +60,9 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}");
   TLatex header;
   header.SetTextSize(0.03);
- 
-  std::string filename = "comparison_" + col + ".pdf";
+
+  std::string filename = "figures/comparison_" + col + ".pdf";
   c->SaveAs(filename.c_str());
 }
 
-void comparison() {
-  compare("Electron_eta", -4, 4);
-}
+void comparison() { compare("Electron_eta", -4, 4); }
