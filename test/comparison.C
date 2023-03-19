@@ -65,5 +65,5 @@ void compare(std::string col, float min, float max, int nbins = 50) {
 }
 
 void comparison() {
-  compare("Electron_pt", 0, 200);
+  compare("Electron_eta", 0, 200);
 }
