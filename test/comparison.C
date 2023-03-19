@@ -39,6 +39,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   h_full->GetYaxis()->SetTitleSize(0.04);
   h_full->SetLineColor(kBlack);
   h_full->SetLineWidth(2);
+  h_full->SetLineStyle(2);
 
   h_flash->SetLineColor(kOrange + 7);
   h_flash->SetLineWidth(2);
