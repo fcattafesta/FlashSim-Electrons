@@ -50,8 +50,8 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   legend->SetFillColor(0);
   legend->SetBorderSize(0);
   legend->SetTextSize(0.03);
-  legend->AddEntry(h_full::Get(), "FullSim", "l");
-  legend->AddEntry(h_flash::Get(), "FlashSim", "f");
+  legend->AddEntry(h_full.GetPtr(), "FullSim", "l");
+  legend->AddEntry(h_flash.GetPtr(), "FlashSim", "f");
   legend->DrawClone();
 
   TLatex cms_label;
