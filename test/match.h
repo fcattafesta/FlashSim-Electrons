@@ -418,7 +418,7 @@ auto mother_genpart_dphi(ROOT::VecOps::RVec<int> &mother_idx,
   return mother_dphi;
 }
 
-auto match(ROOT::RDataFrame &d) {
+ROOT::RDataFrame match(ROOT::RDataFrame &d) {
 
   ROOT::EnableImplicitMT();
 
