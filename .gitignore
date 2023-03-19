@@ -142,7 +142,7 @@ training/runs/
 training/checkpoints/
 
 # dataset
-extration/dataset/
+extraction/dataset/
 
 # figures
 test/figures/
