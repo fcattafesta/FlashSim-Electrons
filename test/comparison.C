@@ -40,7 +40,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   h_full->SetLineColor(kBlack);
   h_full->SetLineWidth(2);
 
-  h_flash->SetLineColor(kGreen + 2);
+  h_flash->SetLineColor(kOrange + 7);
   h_flash->SetLineWidth(2);
 
   h_full->DrawClone("hist");
@@ -65,5 +65,5 @@ void compare(std::string col, float min, float max, int nbins = 50) {
 }
 
 void comparison() {
-  compare("Electron_eta", -10, 10);
+  compare("Electron_eta", -4, 4);
 }
