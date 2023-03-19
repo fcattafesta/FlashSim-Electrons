@@ -14,12 +14,17 @@ def compare(full, flash, col, range):
 
     f = ROOT.TFile(full)
     d_full = ROOT.RDataFrame("Events", f)
-    d_full = ROOT.match(d_full)
+    ROOT.match(d_full, f"M{col}")
+    f.Close()
+
+    f = ROOT.TFile("output.root")
+    d_full = ROOT.RDataFrame("Events", f)
     f.Close()
 
     f = ROOT.TFile(flash)
     d_flash = ROOT.RDataFrame("Events", f)
     f.Close()
+    os.system("rm output.root")
 
     nbins = 50
     
