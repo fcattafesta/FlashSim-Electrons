@@ -29,3 +29,8 @@ def compare(full, flash, col, range):
     h_flash.Draw("same")
 
     c.SaveAs(os.path.join("figures", f"comparison_{col}.png"))
+
+
+if __name__ == "__main__":
+
+    compare(full_path, flash_path, "Electron_pt", (0, 200))
