@@ -13,9 +13,8 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from tensorboardX import SummaryWriter
 
-sys.path.insert(0, os.path.join("..", "..", "utils"))
-sys.path.insert(0, os.path.join("..", "..", "models"))
-sys.path.insert(0, "..")
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models"))
 
 from dataset import ElectronDataset
 from modded_basic_nflow import (
