@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import h5py
 import pandas as pd
@@ -11,6 +12,11 @@ import warnings
 warnings.filterwarnings("ignore")  # temporary for MatPlotLibDeprecationWarning bug
 
 from prep_actions import target_dictionary  # operation dictionary
+
+sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "extraction"))
+
+from make_dataset import extracted
+
 
 np.random.seed(0)  # fixed seed for random smearing
 
@@ -193,7 +199,7 @@ def preprocessing(df, vars_dictionary):
 
 if __name__ == "__main__":
 
-    root_files = [f"MElectrons_{i}.root:MElectrons" for i in range(0, 7)]
+    root_files = extracted
 
     tree = uproot.open(root_files[0], num_workers=20)
     df = make_dataset(tree)
@@ -212,4 +218,4 @@ if __name__ == "__main__":
 
     file.close()
 
-    os.system("mv MElectrons_1.hdf5 ../../training/electrons/")
+    os.system("mv MElectrons_1.hdf5 ../training")
