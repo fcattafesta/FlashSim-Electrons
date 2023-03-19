@@ -28,8 +28,8 @@ def compare(full, flash, col, range):
 
     nbins = 50
     
-    h_full = d_full.Histo1D({"", "", nbins, range[0], range[1]}, str(f"M{col})"))
-    h_flash = d_flash.Histo1D({"", "", nbins, range[0], range[1]}, col)
+    h_full = d_full.Histo1D({"full", "", nbins, range[0], range[1]}, str(f"M{col})"))
+    h_flash = d_flash.Histo1D({"flash", "", nbins, range[0], range[1]}, col)
 
     c = ROOT.TCanvas()
     h_full.Draw()
