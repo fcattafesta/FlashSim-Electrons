@@ -49,3 +49,8 @@ file_paths = [
     "106X_mcRun2_asymptotic_v13-v1/20000/"
     "40E28BE3-1A22-9D40-A482-2BAA3E9ABC24.root",
 ]
+
+extracted = [os.path.join("dataset", f"MElectrons_{i}") for i in range(len(file_paths))]
+
+for file_in, file_out in zip(file_paths, extracted):
+    ROOT.extraction(file_in, file_out)
