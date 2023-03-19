@@ -15,8 +15,8 @@ void comparison(std::string col, float min, float max, int nbins = 50) {
   auto flash_path = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1/230000/"
                     "8244ED99-0F95-9D4F-B393-22EBC589A46D_synth.root";
 
-  auto d_full = ROOT::RDataFrame("Events", full_path);
-  d_full = match(d_full);
+  auto d_tmp = ROOT::RDataFrame("Events", full_path);
+  d_full = match(d_tmp);
 
   auto d_flash = ROOT::RDataFrame("Events", flash_path);
 
@@ -50,8 +50,8 @@ void comparison(std::string col, float min, float max, int nbins = 50) {
   legend.SetFillColor(0);
   legend.SetBorderSize(0);
   legend.SetTextSize(0.03);
-  legend.AddEntry(h_full, "FullSim", "l");
-  legend.AddEntry(h_flash, "FlashSim", "f");
+  legend.AddEntry(&h_full, "FullSim", "l");
+  legend.AddEntry(&h_flash, "FlashSim", "f");
   legend.DrawClone();
 
   TLatex cms_label;
@@ -60,6 +60,7 @@ void comparison(std::string col, float min, float max, int nbins = 50) {
   TLatex header;
   header.SetTextSize(0.03);
   header.DrawLatexNDC(0.5, 0.92, "#it{Private work}");
-
-  c->SaveAs("comparison_" + col + ".pdf");
+ 
+  std::string filename = "comparison_" + col + ".pdf";
+  c->SaveAs(filename.c_str());
 }
