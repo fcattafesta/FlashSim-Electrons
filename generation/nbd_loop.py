@@ -5,7 +5,7 @@ import os
 from tqdm import tqdm
 import torch
 
-sys.path.insert(0, os.path.join("..", "..", "models"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models"))
 
 from modded_basic_nflow import load_mixture_model
 import nbd_func
