@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.join(dirpath, "..", "utils"))
 sys.path.insert(0, os.path.join(dirpath, "..", "training"))
 sys.path.insert(0, os.path.join(dirpath, "..", "postprocessing"))
 
-from columns import reco_columns, gen_columns
+from columns import reco_columns, gen_columns, ele_names
 from postprocessing import postprocessing
 from post_actions import target_dictionary
 
@@ -208,56 +208,6 @@ def nbd(ele_model, root, file_path, new_root):
     total = np.concatenate((total, charges), axis=1)
 
     # convert to akw arrays for saving to file with correct event structure
-    ele_names = [
-        "convVeto",
-        "deltaEtaSC",
-        "dr03EcalRecHitSumEt",
-        "dr03HcalDepth1TowerSumEt",
-        "dr03TkSumPt",
-        "dr03TkSumPtHEEP",
-        "dxy",
-        "dxyErr",
-        "dz",
-        "dzErr",
-        "eInvMinusPInv",
-        "energyErr",
-        "eta",
-        "hoe",
-        "ip3d",
-        "isPFcand",
-        "jetPtRelv2",
-        "jetRelIso",
-        "lostHits",
-        "miniPFRelIso_all",
-        "miniPFRelIso_chg",
-        "mvaFall17V1Iso",
-        "mvaFall17V1Iso_WP80",
-        "mvaFall17V1Iso_WP90",
-        "mvaFall17V1Iso_WPL",
-        "mvaFall17V1noIso",
-        "mvaFall17V1noIso_WP80",
-        "mvaFall17V1noIso_WP90",
-        "mvaFall17V1noIso_WPL",
-        "mvaFall17V2Iso",
-        "mvaFall17V2Iso_WP80",
-        "mvaFall17V2Iso_WP90",
-        "mvaFall17V2Iso_WPL",
-        "mvaFall17V2noIso",
-        "mvaFall17V2noIso_WP80",
-        "mvaFall17V2noIso_WP90",
-        "mvaFall17V2noIso_WPL",
-        "mvaTTH",
-        "pfRelIso03_all",
-        "pfRelIso03_chg",
-        "phi",
-        "pt",
-        "r9",
-        "seedGain",
-        "sieie",
-        "sip3d",
-        "tightCharge",
-        "charge",
-    ]
 
     to_ttree = dict(zip(ele_names, total.T))
     to_ttree = ak.unflatten(ak.Array(to_ttree), events_structure_ele)
