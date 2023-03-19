@@ -40,7 +40,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   h_full->SetLineColor(kBlack);
   h_full->SetLineWidth(2);
 
-  h_flash->SetLineColor(kRed);
+  h_flash->SetLineColor(kGreen + 2);
   h_flash->SetLineWidth(2);
 
   h_full->DrawClone("hist");
