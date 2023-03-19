@@ -46,10 +46,10 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   h_full->DrawClone("hist");
   h_flash->DrawClone("hist same");
 
-  auto legend = new TLegend(0.62, 0.70, 0.82, 0.88);
+  auto legend = new TLegend(0.72, 0.70, 0.92, 0.88);
   legend->SetFillColor(0);
   legend->SetBorderSize(0);
-  legend->SetTextSize(0.03);
+  legend->SetTextSize(0.02);
   legend->AddEntry(h_full.GetPtr(), "FullSim", "f");
   legend->AddEntry(h_flash.GetPtr(), "FlashSim", "f");
   legend->DrawClone();
