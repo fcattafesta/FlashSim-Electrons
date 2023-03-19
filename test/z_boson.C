@@ -101,6 +101,6 @@ void z_boson() {
   TLatex header;
   header.SetTextSize(0.03);
 
-  c->sSaveAs("figures/z_boson.pdf");
+  c->SaveAs("figures/z_boson.pdf");
 
 }
