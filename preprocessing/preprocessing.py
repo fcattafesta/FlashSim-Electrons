@@ -204,6 +204,7 @@ if __name__ == "__main__":
     print(root_files)
 
     tree = uproot.open(root_files[0], num_workers=20)
+    print(type(tree))
     df = make_dataset(tree)
 
     for file in root_files[1:]:
