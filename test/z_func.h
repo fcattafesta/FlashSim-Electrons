@@ -67,29 +67,37 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto d_flash = ROOT::RDataFrame("Events", f);
 
   auto d_flash_z =
-      d_flash.Filter("nElectron == 2")
-          .Filter("All(abs(Electron_eta) < 2.5)")
-          .Filter("All(Electron_pt > 20)")
-          .Filter("Sum(Electron_charge) == 0")
+      d_flash
+          .Define("ele_cuts",
+                  "nElectron == 2 && All(abs(Electron_eta) < 2.5) && "
+                  "All(Electron_pt > 20) && Sum(Electron_charge) == "
+                  "0")
+          .Redefine("Electron_pt", "Electron_pt[ele_cuts]")
+          .Redefine("Electron_eta", "Electron_eta[ele_cuts]")
+          .Redefine("Electron_phi", "Electron_phi[ele_cuts]")
           .Define("Z_pt", z_pt, {"Electron_pt", "Electron_eta", "Electron_phi"})
           .Define("Z_mask", pt_cut.c_str())
-          .Define("ZElectron_pt", "Electron_pt[Z_mask]")
-          .Define("ZElectron_eta", "Electron_eta[Z_mask]")
-          .Define("ZElectron_phi", "Electron_phi[Z_mask]")
+          .Redefine("Electron_pt", "Electron_pt[Z_mask]")
+          .Redefine("Electron_eta", "Electron_eta[Z_mask]")
+          .Redefine("Electron_phi", "Electron_phi[Z_mask]")
           .Define("Z_mass", InvariantMass,
                   {"ZElectron_pt", "ZElectron_eta", "ZElectron_phi"});
 
   auto d_full_z =
-      d_full.Filter("MnElectron == 2")
-          .Filter("All(abs(MElectron_eta) < 2.5)")
-          .Filter("All(MElectron_pt > 20)")
-          .Filter("Sum(MElectron_charge) == 0")
+      d_full
+          .Define("ele_cuts",
+                  "nMElectron == 2 && All(abs(MElectron_eta) < 2.5) && "
+                  "All(MElectron_pt > 20) && Sum(MElectron_charge) == "
+                  "0")
+          .Redefine("MElectron_pt", "MElectron_pt[ele_cuts]")
+          .Redefine("MElectron_eta", "MElectron_eta[ele_cuts]")
+          .Redefine("MElectron_phi", "MElectron_phi[ele_cuts]")
           .Define("Z_pt", z_pt_float,
                   {"MElectron_pt", "MElectron_eta", "MElectron_phi"})
           .Define("Z_mask", pt_cut.c_str())
-          .Define("ZMElectron_pt", "MElectron_pt[Z_mask]")
-          .Define("ZMElectron_eta", "MElectron_eta[Z_mask]")
-          .Define("ZMElectron_phi", "MElectron_phi[Z_mask]")
+          .Redefine("MElectron_pt", "MElectron_pt[Z_mask]")
+          .Redefine("MElectron_eta", "MElectron_eta[Z_mask]")
+          .Redefine("MElectron_phi", "MElectron_phi[Z_mask]")
           .Define("Z_mass", InvariantMass_float,
                   {"ZMElectron_pt", "ZMElectron_eta", "ZMElectron_phi"});
 
