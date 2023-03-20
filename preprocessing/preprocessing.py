@@ -199,7 +199,7 @@ def preprocessing(df, vars_dictionary):
 
 if __name__ == "__main__":
 
-    root_files = [os.path.join(os.path.dirname(__file__, "..", "extraction", file)) for file in extracted]
+    root_files = [os.path.join(os.path.dirname(__file__) , "..", "extraction", file) for file in extracted]
 
     tree = uproot.open(root_files[0], num_workers=20)
     df = make_dataset(tree)
