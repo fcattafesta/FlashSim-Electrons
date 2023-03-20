@@ -90,7 +90,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
 
-  auto func = new TF1("func", "func", 88, 92);
+  auto func = new TF1("func", "gaus", 88, 92);
 
   auto res_full = h_full->Fit(func, "LISQR");
   auto res_flash = h_flash->Fit(func, "LISQR");
