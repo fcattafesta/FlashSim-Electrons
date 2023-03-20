@@ -1,7 +1,9 @@
 import os
 import ROOT
 
-ROOT.gInterpreter.ProcessLine('#include "extraction.h"')
+if __name__ == "__main__":
+
+    ROOT.gInterpreter.ProcessLine('#include "extraction.h"')
 
 # root = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/"
 
