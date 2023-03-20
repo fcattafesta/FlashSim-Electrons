@@ -96,11 +96,11 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto peak_full = new TF1("peak_full", "gaus", 87, 93);
   peak_full->SetParameters(0.1, 90., 3);
 
-  auto peak_flash = new TF1("peak_flash", "gaus", 87, 93);
+  auto peak_flash = new TF1("peak_flash", "gaus", 88, 94);
   peak_flash->SetParameters(0.1, 90., 3);
 
-  auto res_full = h_full->Fit(peak_full, "LISR");
-  auto res_flash = h_flash->Fit(peak_flash, "LISR");
+  auto res_full = h_full->Fit(peak_full, "LQISR");
+  auto res_flash = h_flash->Fit(peak_flash, "LIQSR");
 
   auto mean_flash = res_flash->Parameter(1);
   auto mean_full = res_full->Parameter(1);
