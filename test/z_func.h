@@ -90,7 +90,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
 
-  auto func = new TF1("gaus", "gaus", 88, 92);
+  auto func = new TF1("func", "func", 88, 92);
 
   auto res_full = h_full->Fit(func, "LISQR");
   auto res_flash = h_flash->Fit(func, "LISQR");
@@ -126,18 +126,18 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
 
   h_full->DrawClone("hist");
 
-  gaus->SetParameters(res_full->Parameter(0), res_full->Parameter(1),
+  func->SetParameters(res_full->Parameter(0), res_full->Parameter(1),
                       res_full->Parameter(2));
-  gaus->DrawClone("same AL");
-  gaus->SetLineColor(kRed);
-  gaus->SetLineStyle(2);
+  func->DrawClone("same AL");
+  func->SetLineColor(kRed);
+  func->SetLineStyle(2);
 
   h_flash->DrawClone("hist same");
    
-  gaus->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
+  func->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
                       res_flash->Parameter(2));
-  gaus->DrawClone("same AL");
-  gaus->SetLineColor(kRed);
+  func->DrawClone("same AL");
+  func->SetLineColor(kRed);
 
   c->Update();
 
