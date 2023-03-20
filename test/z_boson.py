@@ -19,4 +19,4 @@ labels = [
 filenames = [f"figures/z_boson_{i}bin.pdf" for i in range(1, len(cuts) + 1)]
 
 for cut, label, filename in zip(cuts, labels, filenames):
-    ROOT.z_func(cut, label, filename)
+    ROOT.z_boson(cut, label, filename)
