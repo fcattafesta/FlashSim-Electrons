@@ -90,6 +90,14 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
 
+  auto res_flash = h_flash->Fit("gaus", "LISQ", "", 80, 100);
+  auto res_full = h_full->Fit("gaus", "LISQ", "", 80, 100);
+
+  auto mean_flash = res_flash->Parameter(1);
+  auto mean_full = res_full->Parameter(1);
+
+  auto bias = (mean_flash - mean_full) / mean_full;
+
   h_flash->Scale(1. / h_flash->Integral());
   h_full->Scale(1. / h_full->Integral());
 
@@ -128,6 +136,9 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   TLatex bin;
   bin.SetTextSize(0.03);
   bin.DrawLatexNDC(0.2, 0.86, label.c_str());
+  TLatex bias_label;
+  bias_label.SetTextSize(0.03);
+  bias_label.DrawLatexNDC(0.2, 0.82, Form("Bias = %.2f%%", bias * 100));
 
   c->SaveAs(filename.c_str());
 }
