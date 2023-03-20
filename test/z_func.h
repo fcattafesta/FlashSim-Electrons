@@ -92,8 +92,8 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
 
   auto func = new TF1("func", "gaus", 88, 92);
 
-  auto res_full = h_full->Fit(func, "LISQR");
-  auto res_flash = h_flash->Fit(func, "LISQR");
+  auto res_full = h_full->Fit(func, "LISR");
+  auto res_flash = h_flash->Fit(func, "LISR");
 
 
   auto mean_flash = res_flash->Parameter(1);
