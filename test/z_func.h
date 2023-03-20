@@ -91,6 +91,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
 
   auto func = new TF1("func", "gaus", 88, 92);
+  func->SetParameters(0.1, 90, 1);
 
   auto res_full = h_full->Fit(func, "LISR");
   auto res_flash = h_flash->Fit(func, "LISR");
