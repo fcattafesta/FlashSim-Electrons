@@ -90,9 +90,19 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
 
-  auto gaus = new TF1("gaus", "gaus", 80, 100);
+  auto func = new TF1("gaus", "gaus", 88, 92);
 
-  auto res_full = h_full->Fit(gaus, "LISQR");
+  auto res_full = h_full->Fit(func, "LISQR");
+  auto res_flash = h_flash->Fit(func, "LISQR");
+
+
+  auto mean_flash = res_flash->Parameter(1);
+  auto mean_full = res_full->Parameter(1);
+
+  cout << "Mean flash: " << mean_flash << endl;
+  cout << "Mean full: " << mean_full << endl;
+
+  auto bias = (mean_flash - mean_full) / mean_full;
 
   h_flash->Scale(1. / h_flash->Integral());
   h_full->Scale(1. / h_full->Integral());
@@ -115,23 +125,21 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   h_flash->SetLineWidth(2);
 
   h_full->DrawClone("hist");
+
+  gaus->SetParameters(res_full->Parameter(0), res_full->Parameter(1),
+                      res_full->Parameter(2));
   gaus->DrawClone("same AL");
   gaus->SetLineColor(kRed);
   gaus->SetLineStyle(2);
 
-  auto res_flash = h_flash->Fit(gaus, "LISQR");
-
+  h_flash->DrawClone("hist same");
+   
+  gaus->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
+                      res_flash->Parameter(2));
   gaus->DrawClone("same AL");
   gaus->SetLineColor(kRed);
-  h_flash->DrawClone("hist same");
 
-  auto mean_flash = res_flash->Parameter(1);
-  auto mean_full = res_full->Parameter(1);
-
-  cout << "Mean flash: " << mean_flash << endl;
-  cout << "Mean full: " << mean_full << endl;
-
-  auto bias = (mean_flash - mean_full) / mean_full;
+  c->Update();
 
   auto legend = new TLegend(0.72, 0.75, 0.89, 0.88);
   legend->SetFillColor(0);
@@ -150,7 +158,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   bin.DrawLatexNDC(0.2, 0.86, label.c_str());
   TLatex bias_label;
   bias_label.SetTextSize(0.03);
-  bias_label.DrawLatexNDC(0.2, 0.82, Form("Bias = %.2f%%", bias * 100));
+  bias_label.DrawLatexNDC(0.2, 0.80, Form("Bias = %.2f%%", bias * 100));
 
   c->SaveAs(filename.c_str());
 }
