@@ -90,13 +90,9 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
 
-  auto res_flash = h_flash->Fit("gaus", "LISQ", "", 80, 100);
-  auto res_full = h_full->Fit("gaus", "LISQ", "", 80, 100);
+  auto gaus = new TF1("gaus", "gaus", 80, 100);
 
-  auto mean_flash = res_flash->Parameter(1);
-  auto mean_full = res_full->Parameter(1);
-
-  auto bias = (mean_flash - mean_full) / mean_full;
+  auto res_full = h_full->Fit(gaus, "LISQR");
 
   h_flash->Scale(1. / h_flash->Integral());
   h_full->Scale(1. / h_full->Integral());
@@ -119,7 +115,22 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   h_flash->SetLineWidth(2);
 
   h_full->DrawClone("hist");
+  gaus->DrawClone("same AL") gaus->SetLineColor(kRed);
+  gaus->SetLineStyle(2);
+
+  auto res_flash = h_flash->Fit(gaus, "LISQR");
+
+  gaus->DrawClone("same AL");
+  gaus->SetLineColor(kRed);
   h_flash->DrawClone("hist same");
+
+  auto mean_flash = res_flash->Parameter(1);
+  auto mean_full = res_full->Parameter(1);
+
+  cout << "Mean flash: " << mean_flash << endl;
+  cout << "Mean full: " << mean_full << endl;
+
+  auto bias = (mean_flash - mean_full) / mean_full;
 
   auto legend = new TLegend(0.72, 0.75, 0.89, 0.88);
   legend->SetFillColor(0);
