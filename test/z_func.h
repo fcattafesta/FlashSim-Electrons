@@ -93,17 +93,20 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   h_flash->Scale(1. / h_flash->Integral());
   h_full->Scale(1. / h_full->Integral());
 
-  auto func = new TF1("func", "gaus", 88, 92);
-  func->SetParameters(0.2, 90., 3);
+  auto peak_full = new TF1("peak_full", "gaus", 87, 93);
+  peak_full->SetParameters(0.1, 90., 3);
 
-  auto res_full = h_full->Fit(func, "LISR");
-  auto res_flash = h_flash->Fit(func, "LISR");
+  auto peak_flash = new TF1("peak_flash", "gaus", 87, 93);
+  peak_flash->SetParameters(0.1, 90., 3);
+
+  auto res_full = h_full->Fit(peak_full, "LISR");
+  auto res_flash = h_flash->Fit(peak_flash, "LISR");
 
   auto mean_flash = res_flash->Parameter(1);
   auto mean_full = res_full->Parameter(1);
 
-  cout << "Mean flash: " << mean_flash << endl;
-  cout << "Mean full: " << mean_full << endl;
+  // cout << "Mean flash: " << mean_flash << endl;
+  // cout << "Mean full: " << mean_full << endl;
 
   auto bias = (mean_flash - mean_full) / mean_full;
 
@@ -126,18 +129,14 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
 
   h_full->DrawClone("hist");
 
-  func->SetParameters(res_full->Parameter(0), res_full->Parameter(1),
-                      res_full->Parameter(2));
-  func->Draw("same AL");
-  func->SetLineColor(kRed);
-  func->SetLineStyle(2);
+  peak_full->Draw("same AL");
+  peak_full->SetLineColor(kBlue);
+  peak_full->SetLineStyle(2);
 
   h_flash->DrawClone("hist same");
 
-  func->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
-                      res_flash->Parameter(2));
-  func->Draw("same AL");
-  func->SetLineColor(kRed);
+  peak_flash->Draw("same AL");
+  peak_flash->SetLineColor(kBlue);
 
   auto legend = new TLegend(0.72, 0.75, 0.89, 0.88);
   legend->SetFillColor(0);
