@@ -199,7 +199,7 @@ def preprocessing(df, vars_dictionary):
 
 if __name__ == "__main__":
 
-    root_files = [os.path.join(os.path.dirname(__file__) , "..", f"extraction:{file}") for file in extracted]
+    root_files = [os.path.join(os.path.dirname(__file__) , "..", "extraction", f"{file}:MElectrons") for file in extracted]
 
     print(root_files)
 
