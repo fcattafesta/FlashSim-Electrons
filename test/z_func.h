@@ -29,16 +29,10 @@ auto z_pt_float(ROOT::VecOps::RVec<float> &pt, ROOT::VecOps::RVec<float> &eta,
 
   auto m = 0.51099895000e-3; // GeV
 
-  ROOT::VecOps::RVec<float> z_pt;
-  z_pt.reserve(pt.size());
+  ROOT::Math::PtEtaPhiMVector p1(pt[0], eta[0], phi[0], m);
+  ROOT::Math::PtEtaPhiMVector p2(pt[1], eta[1], phi[1], m);
 
-  for (auto i = 0; i < pt.size(); i += 2) {
-    ROOT::Math::PtEtaPhiMVector p1(pt[i], eta[i], phi[i], m);
-    ROOT::Math::PtEtaPhiMVector p2(pt[i + 1], eta[i + 1], phi[i + 1], m);
-    z_pt.push_back((p1 + p2).pt());
-  }
-
-  return z_pt;
+  return (p1 + p2).pt();
 }
 
 auto z_pt(ROOT::VecOps::RVec<double> &pt, ROOT::VecOps::RVec<double> &eta,
@@ -46,14 +40,10 @@ auto z_pt(ROOT::VecOps::RVec<double> &pt, ROOT::VecOps::RVec<double> &eta,
 
   auto m = 0.51099895000e-3; // GeV
 
-  ROOT::VecOps::RVec<double> z_pt;
-  z_pt.reserve(pt.size());
+  ROOT::Math::PtEtaPhiMVector p1(pt[0], eta[0], phi[0], m);
+  ROOT::Math::PtEtaPhiMVector p2(pt[1], eta[1], phi[1], m);
 
-  for (auto i = 0; i < pt.size(); i += 2) {
-    ROOT::Math::PtEtaPhiMVector p1(pt[i], eta[i], phi[i], m);
-    ROOT::Math::PtEtaPhiMVector p2(pt[i + 1], eta[i + 1], phi[i + 1], m);
-    z_pt.push_back((p1 + p2).pt());
-  }
+  return (p1 + p2).pt();
 }
 
 void z_boson(std::string pt_cut, std::string label, std::string filename) {
@@ -77,39 +67,25 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto d_flash = ROOT::RDataFrame("Events", f);
 
   auto d_flash_z =
-      d_flash
-          .Define("ele_cuts",
-                  "nElectron == 2 && All(abs(Electron_eta) < 2.5) && "
-                  "All(Electron_pt > 20) && Sum(Electron_charge) == "
-                  "0")
-          .Redefine("Electron_pt", "Electron_pt[ele_cuts]")
-          .Redefine("Electron_eta", "Electron_eta[ele_cuts]")
-          .Redefine("Electron_phi", "Electron_phi[ele_cuts]")
+      d_flash.Filter("nElectron == 2")
+          .Filter("All(abs(Electron_eta) < 2.5)")
+          .Filter("All(Electron_pt > 20)")
+          .Filter("Sum(Electron_charge) == 0")
           .Define("Z_pt", z_pt, {"Electron_pt", "Electron_eta", "Electron_phi"})
-          .Define("Z_mask", pt_cut.c_str())
-          .Redefine("Electron_pt", "Electron_pt[Z_mask]")
-          .Redefine("Electron_eta", "Electron_eta[Z_mask]")
-          .Redefine("Electron_phi", "Electron_phi[Z_mask]")
+          .Filter(pt_cut.c_str())
           .Define("Z_mass", InvariantMass,
-                  {"ZElectron_pt", "ZElectron_eta", "ZElectron_phi"});
+                  {"Electron_pt", "Electron_eta", "Electron_phi"});
 
   auto d_full_z =
-      d_full
-          .Define("ele_cuts",
-                  "nMElectron == 2 && All(abs(MElectron_eta) < 2.5) && "
-                  "All(MElectron_pt > 20) && Sum(MElectron_charge) == "
-                  "0")
-          .Redefine("MElectron_pt", "MElectron_pt[ele_cuts]")
-          .Redefine("MElectron_eta", "MElectron_eta[ele_cuts]")
-          .Redefine("MElectron_phi", "MElectron_phi[ele_cuts]")
+      d_full.Filter("MnElectron == 2")
+          .Filter("All(abs(MElectron_eta) < 2.5)")
+          .Filter("All(MElectron_pt > 20)")
+          .Filter("Sum(MElectron_charge) == 0")
           .Define("Z_pt", z_pt_float,
                   {"MElectron_pt", "MElectron_eta", "MElectron_phi"})
-          .Define("Z_mask", pt_cut.c_str())
-          .Redefine("MElectron_pt", "MElectron_pt[Z_mask]")
-          .Redefine("MElectron_eta", "MElectron_eta[Z_mask]")
-          .Redefine("MElectron_phi", "MElectron_phi[Z_mask]")
+          .Filter(pt_cut.c_str())
           .Define("Z_mass", InvariantMass_float,
-                  {"ZMElectron_pt", "ZMElectron_eta", "ZMElectron_phi"});
+                  {"MElectron_pt", "MElectron_eta", "MElectron_phi"});
 
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
