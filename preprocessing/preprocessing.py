@@ -23,7 +23,7 @@ np.random.seed(0)  # fixed seed for random smearing
 # NOTE: uproot 5 update has changed the way to access the TTree
 # as a multiindex pandas dataframe, in case of future errors the sintax should be:
 # df = ak.to_dataframe(tree.arrays(library="ak", *args, **kwargs))
-def make_dataset(tree, version=0, dictionary=False, *args, **kwargs):
+def dataset(tree, version=0, dictionary=False, *args, **kwargs):
     """
     Given the TTree, returns the corresponding pandas dataframe.
     If dictionary is True, an empty dictionary of TTree variables is dumped on .txt file (to be copied on dictionary.py).
@@ -205,11 +205,11 @@ if __name__ == "__main__":
 
     tree = uproot.open(root_files[0], num_workers=20)
     print(type(tree))
-    df = make_dataset(tree)
+    df = dataset(tree)
 
     for file in root_files[1:]:
         tree = uproot.open(file, num_workers=20)
-        df = pd.concat([df, make_dataset(tree)], axis=0)
+        df = pd.concat([df, dataset(tree)], axis=0)
         df.reset_index(drop=True)
 
     df = preprocessing(df, target_dictionary)
