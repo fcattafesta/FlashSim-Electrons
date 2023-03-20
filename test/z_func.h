@@ -128,7 +128,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
 
   func->SetParameters(res_full->Parameter(0), res_full->Parameter(1),
                       res_full->Parameter(2));
-  func->DrawClone("same AL");
+  func->Draw("same AL");
   func->SetLineColor(kRed);
   func->SetLineStyle(2);
 
@@ -136,7 +136,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
    
   func->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
                       res_flash->Parameter(2));
-  func->DrawClone("same AL");
+  func->Draw("same AL");
   func->SetLineColor(kRed);
 
   c->Update();
