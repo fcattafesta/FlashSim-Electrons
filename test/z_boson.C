@@ -48,7 +48,7 @@ void z_boson() {
                  .Filter("All(abs(Electron_eta) < 2.5)")
                  .Filter("All(Electron_pt > 20)")
                  .Filter("Sum(Electron_charge) == 0")
-                 .Filter("All(Electron_ip3d < 0.015)")
+                 //.Filter("All(Electron_ip3d < 0.015)")
                  .Define("Z_mass", InvariantMass,
                          {"Electron_pt", "Electron_eta", "Electron_phi"});
 
@@ -56,7 +56,7 @@ void z_boson() {
                        .Filter("All(abs(MElectron_eta) < 2.5)")
                        .Filter("All(MElectron_pt > 20)")
                        .Filter("Sum(MElectron_charge) == 0")
-                       .Filter("All(MElectron_ip3d < 0.015)")
+                       //.Filter("All(MElectron_ip3d < 0.015)")
                        .Define("Z_mass", InvariantMass_float,
                                {"MElectron_pt", "MElectron_eta", "MElectron_phi"});
 
@@ -74,7 +74,7 @@ void z_boson() {
   h_full->SetTitle("");
   h_full->GetXaxis()->SetTitle("m_{ee} [GeV]");
   h_full->GetXaxis()->SetTitleSize(0.04);
-  h_full->GetYaxis()->SetTitle("Normalized Events");
+  h_full->GetYaxis()->SetTitle("Normalized Events / 1 GeV");
   h_full->GetYaxis()->SetTitleSize(0.04);
   h_full->SetLineColor(kBlack);
   h_full->SetLineWidth(2);
