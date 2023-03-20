@@ -134,12 +134,10 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
 
   h_flash->DrawClone("hist same");
    
-  func->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
-                      res_flash->Parameter(2));
-  func->Draw("same AL");
-  func->SetLineColor(kRed);
-
-  c->Update();
+  // func->SetParameters(res_flash->Parameter(0), res_flash->Parameter(1),
+  //                     res_flash->Parameter(2));
+  // func->Draw("same AL");
+  // func->SetLineColor(kRed);
 
   auto legend = new TLegend(0.72, 0.75, 0.89, 0.88);
   legend->SetFillColor(0);
