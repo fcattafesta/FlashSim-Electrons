@@ -48,7 +48,7 @@ file_paths = [
     "40E28BE3-1A22-9D40-A482-2BAA3E9ABC24.root",
 ]
 
-extracted = [os.path.join("dataset", f"MElectrons_{i}") for i in range(len(file_paths))]
+extracted = [os.path.join("dataset", f"MElectrons_{i}.root") for i in range(len(file_paths))]
 
 if __name__ == "__main__":
 
