@@ -115,7 +115,8 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   h_flash->SetLineWidth(2);
 
   h_full->DrawClone("hist");
-  gaus->DrawClone("same AL") gaus->SetLineColor(kRed);
+  gaus->DrawClone("same AL");
+  gaus->SetLineColor(kRed);
   gaus->SetLineStyle(2);
 
   auto res_flash = h_flash->Fit(gaus, "LISQR");
