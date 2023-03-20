@@ -93,7 +93,7 @@ void z_boson() {
   std::string label[4] {"p^Z_T < 50", "50 <= p^Z_T < 100", "100 <= p^Z_T < 150",
                        "p^Z_T >= 200"};
 
-  for (auto i = 0; i < cuts.size(); ++i) {
+  for (auto i = 0; i < 4; ++i) {
     auto h_flash = d_flash_z.Filter(cuts[i].c_str())
                        .Histo1D({"", "", 50, 60, 110}, "Z_mass");
     auto h_full = d_full_z.Filter(cuts[i].c_str())
