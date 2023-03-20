@@ -72,9 +72,9 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
           .Filter("All(Electron_pt > 20)")
           .Filter("Sum(Electron_charge) == 0")
           .Define("Z_pt", z_pt, {"Electron_pt", "Electron_eta", "Electron_phi"})
-          .Filter(pt_cut.c_str())
+          .Define("Z_mask", pt_cut.c_str())
           .Define("Z_mass", InvariantMass,
-                  {"Electron_pt", "Electron_eta", "Electron_phi"});
+                  {"Electron_pt[Z_mask]", "Electron_eta[Z_mask]", "Electron_phi[Z_mask]"});
 
   auto d_full_z =
       d_full.Filter("MnElectron == 2")
@@ -83,9 +83,9 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
           .Filter("Sum(MElectron_charge) == 0")
           .Define("Z_pt", z_pt_float,
                   {"MElectron_pt", "MElectron_eta", "MElectron_phi"})
-          .Filter(pt_cut.c_str())
+          .Define("Z_mask", pt_cut.c_str())
           .Define("Z_mass", InvariantMass_float,
-                  {"MElectron_pt", "MElectron_eta", "MElectron_phi"});
+                  {"MElectron_pt[Z_mask]", "MElectron_eta[Z_mask]", "MElectron_phi[Z_mask]"});
 
   auto h_flash = d_flash_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
   auto h_full = d_full_z.Histo1D({"", "", 50, 60, 110}, "Z_mass");
