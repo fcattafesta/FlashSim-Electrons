@@ -29,10 +29,16 @@ auto z_pt_float(ROOT::VecOps::RVec<float> &pt, ROOT::VecOps::RVec<float> &eta,
 
   auto m = 0.51099895000e-3; // GeV
 
-  ROOT::Math::PtEtaPhiMVector p1(pt[0], eta[0], phi[0], m);
-  ROOT::Math::PtEtaPhiMVector p2(pt[1], eta[1], phi[1], m);
+  ROOT::VecOps::RVec<float> z_pt;
+  z_pt.reserve(pt.size());
 
-  return (p1 + p2).pt();
+  for (auto i = 0; i < pt.size(); i += 2) {
+    ROOT::Math::PtEtaPhiMVector p1(pt[i], eta[i], phi[i], m);
+    ROOT::Math::PtEtaPhiMVector p2(pt[i + 1], eta[i + 1], phi[i + 1], m);
+    z_pt.push_back((p1 + p2).pt());
+  }
+
+  return z_pt;
 }
 
 auto z_pt(ROOT::VecOps::RVec<double> &pt, ROOT::VecOps::RVec<double> &eta,
@@ -40,10 +46,14 @@ auto z_pt(ROOT::VecOps::RVec<double> &pt, ROOT::VecOps::RVec<double> &eta,
 
   auto m = 0.51099895000e-3; // GeV
 
-  ROOT::Math::PtEtaPhiMVector p1(pt[0], eta[0], phi[0], m);
-  ROOT::Math::PtEtaPhiMVector p2(pt[1], eta[1], phi[1], m);
+  ROOT::VecOps::RVec<double> z_pt;
+  z_pt.reserve(pt.size());
 
-  return (p1 + p2).pt();
+  for (auto i = 0; i < pt.size(); i += 2) {
+    ROOT::Math::PtEtaPhiMVector p1(pt[i], eta[i], phi[i], m);
+    ROOT::Math::PtEtaPhiMVector p2(pt[i + 1], eta[i + 1], phi[i + 1], m);
+    z_pt.push_back((p1 + p2).pt());
+  }
 }
 
 void z_boson(std::string pt_cut, std::string label, std::string filename) {
