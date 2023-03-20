@@ -87,10 +87,10 @@ void z_boson() {
           .Define("Z_mass", InvariantMass_float,
                   {"MElectron_pt", "MElectron_eta", "MElectron_phi"});
 
-  std::string cuts = {"Z_pt < 50", "50 <= Z_pt < 100", "100 <= Z_pt < 150",
+  std::string cuts {"Z_pt < 50", "50 <= Z_pt < 100", "100 <= Z_pt < 150",
                       "Z_pt >= 200"};
 
-  std::string label = {"p^Z_T < 50", "50 <= p^Z_T < 100", "100 <= p^Z_T < 150",
+  std::string label {"p^Z_T < 50", "50 <= p^Z_T < 100", "100 <= p^Z_T < 150",
                        "p^Z_T >= 200"};
 
   for (auto i = 0; i < cuts.size(); ++i) {
