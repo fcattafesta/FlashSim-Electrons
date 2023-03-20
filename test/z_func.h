@@ -127,7 +127,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}");
   TLatex bin;
   bin.SetTextSize(0.03);
-  bin.DrawLatexNDC(0.16, 0.86, label.c_str());
+  bin.DrawLatexNDC(0.2, 0.86, label.c_str());
 
   c->SaveAs(filename.c_str());
 }
