@@ -201,6 +201,8 @@ if __name__ == "__main__":
 
     root_files = [os.path.join(os.path.dirname(__file__) , "..", "extraction", file) for file in extracted]
 
+    print(root_files)
+
     tree = uproot.open(root_files[0], num_workers=20)
     df = make_dataset(tree)
 
