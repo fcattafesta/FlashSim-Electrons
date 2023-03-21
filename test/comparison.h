@@ -99,7 +99,7 @@ void pt_bias() {
   auto peak_full = new TF1("peak_full", "gaus", 20, 50);
   peak_full->SetParameters(0.2, 32, 1);
 
-  auto peak_flash = new TF1("peak_flash", "gaus", 88, 94);
+  auto peak_flash = new TF1("peak_flash", "gaus", 20, 50);
   peak_flash->SetParameters(0.2, 32, 1);
 
   auto res_full = h_full->Fit(peak_full, "LISR");
