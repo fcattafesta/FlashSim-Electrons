@@ -97,16 +97,20 @@ void pt_bias() {
   h_flash->Scale(1. / h_flash->Integral());
 
   auto peak_full = new TF1("peak_full", "gaus", 20, 50);
-  peak_full->SetParameters(0.1, 32, 10);
+  peak_full->SetParameters(0.2, 32, 1);
 
   auto peak_flash = new TF1("peak_flash", "gaus", 88, 94);
-  peak_flash->SetParameters(0.1, 32, 10);
+  peak_flash->SetParameters(0.2, 32, 1);
 
-  auto res_full = h_full->Fit(peak_full, "LQISR");
-  auto res_flash = h_flash->Fit(peak_flash, "LIQSR");
+  auto res_full = h_full->Fit(peak_full, "LISR");
+  auto res_flash = h_flash->Fit(peak_flash, "LISR");
 
   auto mean_flash = res_flash->Parameter(1);
   auto mean_full = res_full->Parameter(1);
+
+  // cout << "Mean flash: " << mean_flash << endl;
+  // cout << "Mean full: " << mean_full << endl;
+
   auto bias = (mean_flash - mean_full) / mean_full;
 
   gStyle->SetOptStat(0);
