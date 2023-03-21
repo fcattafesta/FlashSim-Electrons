@@ -34,8 +34,8 @@ outputs = [
     for i in range(len(file_paths))
 ]
 
-# for file, output in zip(file_paths, outputs):
-#     ROOT.extract(file, output)
+for file, output in zip(file_paths, outputs):
+    ROOT.extract(file, output)
 
 root_files = [f"{output}:GenElectrons" for output in outputs]
 
