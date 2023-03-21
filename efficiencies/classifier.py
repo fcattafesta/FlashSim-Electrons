@@ -43,7 +43,7 @@ class Classifier(nn.Module):
 # Define the training loop
 
 
-def train(dataloader, model, loss, optimizer, device):
+def train(dataloader, model, loss_fn, optimizer, device):
 
     model.train()
 
@@ -53,7 +53,7 @@ def train(dataloader, model, loss, optimizer, device):
         X, y = X.to(device), y.to(device)
 
         pred = model(X)
-        loss = loss(pred, y)
+        loss = loss_fn(pred, y)
 
         optimizer.zero_grad()
         loss.backward()
