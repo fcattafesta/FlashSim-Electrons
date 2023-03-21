@@ -250,9 +250,9 @@ auto charge(ROOT::VecOps::RVec<int> &pdgId) {
   charge.reserve(size);
   for (size_t i = 0; i < size; i++) {
     if (pdgId[i] == -11)
-      charge.emplace_back(-1);
-    else
       charge.emplace_back(+1);
+    else
+      charge.emplace_back(-1);
   }
   return charge;
 }
@@ -280,7 +280,7 @@ auto match_gen_to_reco(
       auto dpt = abs(gen_pt[i] - reco_pt[j]);
 
       if ((dr < 0.3) && (dpt / gen_pt[i] < 0.5) &&
-          (gen_chg[i] == reco_chg[j])) {
+          (gen_chg[i] * reco_chg[j]) > 0) {
         mask[i] = 1;
       }
     }
@@ -289,7 +289,7 @@ auto match_gen_to_reco(
   return mask;
 }
 
-void extract(std::string x) {
+void extract(std::string x, std::string y) {
 
   ROOT::EnableImplicitMT();
 
@@ -333,7 +333,8 @@ void extract(std::string x) {
                    return BitwiseDecoder(ints, bit);
                  },
                  {"GenPart_statusFlags"})
-          .Define("GenElectronMask", "abs(GenPart_pdgId) == 11 && isLastCopy")
+          .Define("GenElectronMask",
+                  "abs(GenPart_pdgId) == 11 && isLastCopy == 1")
           .Define("GenElectron_pt", "GenPart_pt[GenElectronMask]")
           .Define("GenElectron_eta", "GenPart_eta[GenElectronMask]")
           .Define("GenElectron_phi", "GenPart_phi[GenElectronMask]")
@@ -546,57 +547,55 @@ void extract(std::string x) {
                   {"GenElectron_pt", "GenElectron_eta", "GenElectron_phi",
                    "GenElectron_charge", "Electron_pt", "Electron_eta",
                    "Electron_phi", "Electron_charge"})
-          .Define("GenElectron_isReco_pt",
-                  "GenElectron_pt[GenElectron_isReco]");
+          .Define("GenElectron_isReco_pt", "GenElectron_pt[GenElectron_isReco]")
+          .Define("GenElectron_all_pt", "GenPart_pt[abs(GenPart_pdgId) == 11]");
 
-  auto n_genele = matched.Histo1D("GenElectron_pt")->GetEntries();
-  auto n_match = matched.Histo1D("GenElectron_isReco")->GetEntries();
+  auto n_genele = matched.Histo1D("GenElectron_all_pt")->GetEntries();
+  auto n_last = matched.Histo1D("GenElectron_isReco")->GetEntries();
   auto h_match = matched.Histo1D("GenElectron_isReco_pt");
+  auto n_match = h_match->GetEntries();
 
   cout << "Number of matched electrons: " << n_match << endl;
 
-  h_match->DrawCopy();
+  vector<string> col_to_save = {"GenElectron_eta",
+                                "GenElectron_phi",
+                                "GenElectron_pt",
+                                "GenElectron_charge",
+                                "GenElectron_statusFlag0",
+                                "GenElectron_statusFlag1",
+                                "GenElectron_statusFlag2",
+                                "GenElectron_statusFlag3",
+                                "GenElectron_statusFlag4",
+                                "GenElectron_statusFlag5",
+                                "GenElectron_statusFlag6",
+                                "GenElectron_statusFlag7",
+                                "GenElectron_statusFlag8",
+                                "GenElectron_statusFlag9",
+                                "GenElectron_statusFlag10",
+                                "GenElectron_statusFlag11",
+                                "GenElectron_statusFlag12",
+                                "GenElectron_statusFlag13",
+                                "GenElectron_statusFlag14",
+                                "ClosestJet_dr",
+                                "ClosestJet_dphi",
+                                "ClosestJet_deta",
+                                "ClosestJet_pt",
+                                "ClosestJet_mass",
+                                "ClosestJet_EncodedPartonFlavour_light",
+                                "ClosestJet_EncodedPartonFlavour_gluon",
+                                "ClosestJet_EncodedPartonFlavour_c",
+                                "ClosestJet_EncodedPartonFlavour_b",
+                                "ClosestJet_EncodedPartonFlavour_undefined",
+                                "ClosestJet_EncodedHadronFlavour_b",
+                                "ClosestJet_EncodedHadronFlavour_c",
+                                "ClosestJet_EncodedHadronFlavour_light",
+                                "Pileup_gpudensity",
+                                "Pileup_nPU",
+                                "Pileup_nTrueInt",
+                                "Pileup_pudensity",
+                                "Pileup_sumEOOT",
+                                "Pileup_sumLOOT",
+                                "GenElectron_isReco"};
 
-  //   vector<string> col_to_save = {"GenElectron_eta",
-  //                                 "GenElectron_phi",
-  //                                 "GenElectron_pt",
-  //                                 "GenElectron_charge",
-  //                                 "GenElectron_statusFlag0",
-  //                                 "GenElectron_statusFlag1",
-  //                                 "GenElectron_statusFlag2",
-  //                                 "GenElectron_statusFlag3",
-  //                                 "GenElectron_statusFlag4",
-  //                                 "GenElectron_statusFlag5",
-  //                                 "GenElectron_statusFlag6",
-  //                                 "GenElectron_statusFlag7",
-  //                                 "GenElectron_statusFlag8",
-  //                                 "GenElectron_statusFlag9",
-  //                                 "GenElectron_statusFlag10",
-  //                                 "GenElectron_statusFlag11",
-  //                                 "GenElectron_statusFlag12",
-  //                                 "GenElectron_statusFlag13",
-  //                                 "GenElectron_statusFlag14",
-  //                                 "ClosestJet_dr",
-  //                                 "ClosestJet_dphi",
-  //                                 "ClosestJet_deta",
-  //                                 "ClosestJet_pt",
-  //                                 "ClosestJet_mass",
-  //                                 "ClosestJet_EncodedPartonFlavour_light",
-  //                                 "ClosestJet_EncodedPartonFlavour_gluon",
-  //                                 "ClosestJet_EncodedPartonFlavour_c",
-  //                                 "ClosestJet_EncodedPartonFlavour_b",
-  //                                 "ClosestJet_EncodedPartonFlavour_undefined",
-  //                                 "ClosestJet_EncodedHadronFlavour_b",
-  //                                 "ClosestJet_EncodedHadronFlavour_c",
-  //                                 "ClosestJet_EncodedHadronFlavour_light",
-  //                                 "Pileup_gpudensity",
-  //                                 "Pileup_nPU",
-  //                                 "Pileup_nTrueInt",
-  //                                 "Pileup_pudensity",_isReco_pt
-  //                                 "Pileup_sumEOOT",
-  //                                 "Pileup_sumLOOT",
-  //                                 "event",
-  //                                 "run"};
-
-  //   matched.Snapshot("Gens", "testGens.root", col_to_save);
+  matched.Snapshot("GenElectrons", y.c_str(), col_to_save);
 }
