@@ -49,6 +49,8 @@ for file in root_files[1:]:
 
 print(df.columns)
 
-file = h5py.File(f"GenElectrons.hdf5", "w")
+file = h5py.File(os.path.join(os.path.dirname(__file__), f"GenElectrons.hdf5"), "w")
 file.create_dataset("GenElectrons", data=df.values, dtype="f4")
 file.close()
+
+# 1405944 GenElectrons
