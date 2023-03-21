@@ -72,7 +72,7 @@ void pt_bias() {
   auto max = 100;
   auto nbins = 100;
 
-  auto col = "Electron_pt";
+  std::string col = "Electron_pt";
 
   ROOT::EnableImplicitMT();
 
