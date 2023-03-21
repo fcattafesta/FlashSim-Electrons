@@ -89,7 +89,7 @@ def main_loop():
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-    datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.h5")
+    datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.hdf5")
     train_dataset = dataset(datapath, 0, 1300000)
     test_dataset = dataset(datapath, 1300000, 1400000)
 
