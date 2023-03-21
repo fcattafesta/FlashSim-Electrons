@@ -8,6 +8,7 @@ root = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/TTJets_TuneCP5_13TeV-
 ttbar_training_files = [
     "250000/047F4368-97D4-1A4E-B896-23C6C72DD2BE.root",
     "240000/B38E7351-C9E4-5642-90A2-F075E2411B00.root",
+    "230000/DA422D8F-6198-EE47-8B00-1D94D97950B6.root",
 ]
 
 file_paths = [os.path.join(root, f) for f in ttbar_training_files]
