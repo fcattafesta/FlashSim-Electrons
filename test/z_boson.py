@@ -1,6 +1,6 @@
 import ROOT
 
-ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
+# ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
 ROOT.gInterpreter.ProcessLine('#include "comparison.h"')
 
 cuts = [

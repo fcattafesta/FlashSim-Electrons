@@ -68,8 +68,8 @@ void compare(std::string col, float min, float max, int nbins = 50) {
 
 void pt_bias() {
 
-  auto min = 0;
-  auto max = 100;
+  double min = 0;
+  double max = 100;
   auto nbins = 100;
 
   std::string col = "Electron_pt";
