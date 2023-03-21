@@ -14,7 +14,7 @@ class dataset(torch.utils.data.Dataset):
             h5py_file["GenElectrons"][start : (start + stop), 0:38], dtype=torch.float32
         )
         self.y = torch.tensor(
-            h5py_file["GenElectrons"][start : (start + stop), -1], dtype=torch.float32
+            h5py_file["GenElectrons"][start : (start + stop), -1], dtype=torch.long
         )
 
     def __len__(self):
