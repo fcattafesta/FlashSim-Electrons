@@ -21,5 +21,7 @@ labels = [
 filenames = [f"figures/z_boson_{i}bin.pdf" for i in range(1, len(cuts))]
 filenames.append(f"figures/z_boson_all.pdf")
 
-for cut, label, filename in zip(cuts, labels, filenames):
-    ROOT.z_boson(cut, label, filename)
+ROOT.pt_bias()
+
+# for cut, label, filename in zip(cuts, labels, filenames):
+#     ROOT.z_boson(cut, label, filename)
