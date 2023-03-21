@@ -85,7 +85,7 @@ def test(dataloader, model, loss_fn, device):
 def main_loop():
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = Classifier(38, 128, 1).to(device)
+    model = Classifier(38, 128, 38).to(device)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
