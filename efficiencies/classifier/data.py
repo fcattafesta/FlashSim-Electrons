@@ -11,7 +11,7 @@ class isReco_Dataset(torch.utils.data.Dataset):
         )
         self.y = torch.tensor(
             h5py_file["GenElectrons"][start : (start + stop), -1], dtype=torch.long
-        )
+        ).view(-1, 1)
 
     def __len__(self):
         return len(self.y)
