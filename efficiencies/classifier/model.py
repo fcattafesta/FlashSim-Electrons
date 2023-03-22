@@ -28,7 +28,9 @@ def train(dataloader, model, loss_fn, optimizer, device):
     size = len(dataloader.dataset)
     for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
+        print(X.shape, y.shape)
         pred = model(X)
+        print(pred.shape)
         loss = loss_fn(pred, y)
         optimizer.zero_grad()
         loss.backward()
@@ -49,7 +51,7 @@ def test(dataloader, model, loss_fn, device):
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
-            correct += (pred.argmax(1) == y).type(torch.float).sum().item()
+            correct += (pred.round == y).type(torch.float).sum().item()
             print(f"Correct: {correct}")
     test_loss /= num_batches
     correct /= size

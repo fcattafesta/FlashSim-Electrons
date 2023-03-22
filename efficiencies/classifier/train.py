@@ -13,6 +13,7 @@ def training_loop():
     print(f"Device: {device}")
 
     model = Classifier(38).to(device)
+    print(model)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
@@ -25,11 +26,6 @@ def training_loop():
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset, batch_size=1048, shuffle=True
     )
-
-    for batch_idx, (data, target) in enumerate(train_dataloader):
-        print(data.shape)
-        print(target.shape)
-        break
 
     test_dataloader = torch.utils.data.DataLoader(
         test_dataset, batch_size=1048, shuffle=True
