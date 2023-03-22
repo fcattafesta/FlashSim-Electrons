@@ -27,8 +27,6 @@ def train(dataloader, model, loss_fn, optimizer, device):
         loss.backward()
         optimizer.step()
 
-        running_loss += loss.item()
-
         if batch % 100 == 0:
             loss, current = loss.item(), (batch + 1) * len(X)
             print(f"Loss: {loss}  [{current}/{size}]")
