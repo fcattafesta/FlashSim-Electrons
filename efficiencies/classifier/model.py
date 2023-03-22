@@ -65,5 +65,5 @@ def test(dataloader, model, loss_fn, device):
             test_accuracy += accuracy(pred, y).item()
 
     print(
-        f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {accuracy/len(dataloader)}"
+        f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {test_accuracy/len(dataloader)}"
     )
