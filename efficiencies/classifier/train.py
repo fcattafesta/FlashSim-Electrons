@@ -22,8 +22,18 @@ def training_loop():
     train_dataset = isReco_Dataset(datapath, 0, 1300000)
     test_dataset = isReco_Dataset(datapath, 1300000, 1400000)
 
-    train_dataloader = torch.utils.data.DataLoader(train_dataset, shuffle=True)
-    test_dataloader = torch.utils.data.DataLoader(test_dataset, shuffle=True)
+    train_dataloader = torch.utils.data.DataLoader(
+        train_dataset, batch_size=1048, shuffle=True
+    )
+
+    for batch_idx, (data, target) in enumerate(train_dataloader):
+        print(data.shape)
+        print(target.shape)
+        break
+
+    test_dataloader = torch.utils.data.DataLoader(
+        test_dataset, batch_size=1048, shuffle=True
+    )
 
     epochs = 5
     for t in range(epochs):
