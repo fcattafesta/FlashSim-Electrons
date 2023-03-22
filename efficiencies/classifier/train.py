@@ -35,21 +35,21 @@ def training_loop():
     datapath = os.path.join(
         os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5"
     )
-    train_dataset = isReco_Dataset(datapath, 0, 1000)
-    test_dataset = isReco_Dataset(datapath, 1000, 1500)
-    validation_dataset = isReco_Dataset(datapath, 1500, 2000)
+    train_dataset = isReco_Dataset(datapath, 0, 2000000)
+    test_dataset = isReco_Dataset(datapath, 2000000, 2400000)
+    validation_dataset = isReco_Dataset(datapath, 2400000, 3400000)
 
     train_dataloader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=100, shuffle=True
-    )
-    validation_dataloader = torch.utils.data.DataLoader(
-        validation_dataset, batch_size=1000, shuffle=True
+        train_dataset, batch_size=10000, shuffle=True
     )
     test_dataloader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=100, shuffle=True
+        test_dataset, batch_size=10000, shuffle=True
+    )
+    validation_dataloader = torch.utils.data.DataLoader(
+        validation_dataset, batch_size=100000, shuffle=True
     )
 
-    epochs = 1
+    epochs = 100
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
         train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
