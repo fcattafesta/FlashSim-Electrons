@@ -36,7 +36,7 @@ def training_loop():
     for t in range(epochs):
         print(f"Epoch {t+1}\n-------------------------------")
         train(train_dataloader, model, loss_fn, optimizer, device)
-        test(test_dataloader, model, loss_fn, device)
+        # test(test_dataloader, model, loss_fn, device)
     print("Done!")
 
 

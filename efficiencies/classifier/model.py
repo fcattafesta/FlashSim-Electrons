@@ -51,6 +51,19 @@ def train(dataloader, model, loss_fn, optimizer, device):
     print(
         f"Epoch Loss: {epoch_loss/len(dataloader)} | Epoch Accuracy: {epoch_acc/len(dataloader)}"
     )
+    model.eval()
+    test_loss = 0
+    test_accuracy = 0
+    with torch.no_grad():
+        for X, y in dataloader:
+            X, y = X.to(device), y.to(device)
+            pred = model(X)
+            test_loss += loss_fn(pred, y).item()
+            test_accuracy += accuracy(pred, y).item()
+
+    print(
+        f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {test_accuracy/len(dataloader)}"
+    )
 
 
 def test(dataloader, model, loss_fn, device):
@@ -68,4 +81,4 @@ def test(dataloader, model, loss_fn, device):
         f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {test_accuracy/len(dataloader)}"
     )
 
-    
+
