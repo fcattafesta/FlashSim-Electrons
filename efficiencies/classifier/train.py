@@ -21,8 +21,8 @@ def training_loop():
     datapath = os.path.join(
         os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5"
     )
-    train_dataset = isReco_Dataset(datapath, 0, 1300000)
-    test_dataset = isReco_Dataset(datapath, 1300000, 1400000)
+    train_dataset = isReco_Dataset(datapath, 0, 1120000)
+    test_dataset = isReco_Dataset(datapath, 1120000, 1400000)
 
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset, batch_size=10000, shuffle=True

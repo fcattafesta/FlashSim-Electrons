@@ -67,3 +67,5 @@ def test(dataloader, model, loss_fn, device):
     print(
         f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {test_accuracy/len(dataloader)}"
     )
+
+    
