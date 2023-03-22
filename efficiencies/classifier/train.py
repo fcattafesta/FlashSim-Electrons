@@ -110,6 +110,11 @@ def training_loop():
     )
     plt.close()
 
+    # histogram of predictions
+    plt.figure(figsize=(10, 10))
+    plt.hist(y_pred_list, bins=20, histtype="step", label="Predictions", density=True)
+    plt.savefig(os.path.join(os.path.dirname(__file__), "figures", "predictions.pdf"))
+
 
 if __name__ == "__main__":
     training_loop()

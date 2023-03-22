@@ -65,4 +65,4 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
     print(
         f"Test  | Loss = {test_loss/len(test_dataloader):.4f} | Acc. = {test_accuracy/len(test_dataloader):.2f} |"
     )
-    print("--------------------------------------------")
+    print("--------------------------------------")
