@@ -85,9 +85,8 @@ def training_loop():
     plt.ylabel("Actual label")
     plt.xlabel("Predicted label")
     plt.savefig(
-        os.path.join(
-            os.path.dirname(__file__), "figures", "confusion_matrix.pdf", format="pdf"
-        )
+        os.path.join(os.path.dirname(__file__), "figures", "confusion_matrix.pdf"),
+        format="pdf",
     )
 
     # auc
