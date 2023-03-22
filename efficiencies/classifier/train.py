@@ -4,6 +4,7 @@ import numpy as np
 
 import torch
 from torch import nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 import seaborn as sns
 from matplotlib import pyplot as plt
@@ -31,6 +32,7 @@ def training_loop():
 
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    scheduler = ReduceLROnPlateau(optimizer, "min", patience=5)
 
     datapath = os.path.join(
         os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5"
@@ -57,7 +59,7 @@ def training_loop():
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
         tr_loss, tr_acc, te_loss, te_acc = train(
-            train_dataloader, test_dataloader, model, loss_fn, optimizer, device
+            train_dataloader, test_dataloader, model, loss_fn, optimizer, scheduler, device
         )
         test_history.append(te_loss)
         train_history.append(tr_loss)

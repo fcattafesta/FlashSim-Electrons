@@ -2,6 +2,7 @@ import torch
 from torch import nn
 
 
+
 class BinaryClassifier(nn.Module):
     def __init__(self, input_dim, hidden_dim):
         super().__init__()
@@ -30,7 +31,7 @@ def accuracy(y_pred, y_true):
     return acc
 
 
-def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
+def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, scheduler, device):
     epoch_loss = 0
     epoch_acc = 0
 
@@ -56,6 +57,8 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
     # if batch % 100 == 0:
     #     loss, current = loss.item(), (batch + 1) * len(X)
     #     print(f"Loss: {loss}  [{current}/{size}]")
+
+    scheduler.step(avg_acc)
 
     print(f"Train | Loss = {avg_loss:.4f} | Acc. = {avg_acc:.2f} | ")
 
