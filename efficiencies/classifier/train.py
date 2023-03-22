@@ -94,6 +94,7 @@ def training_loop():
 
     fpr, tpr, thresholds = roc_curve(y_true_list, y_pred_list)
 
+    plt.figure(figsize=(10, 10))
     plt.plot(fpr, tpr, label="ROC Curve")
     plt.plot([0, 1], [0, 1], "k--")
     # auc on plot
