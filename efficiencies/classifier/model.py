@@ -49,9 +49,9 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
         #     print(f"Loss: {loss}  [{current}/{size}]")
 
     print(
-        f"Epoch Loss: {epoch_loss/len(train_dataloader)} | Epoch Accuracy: {epoch_acc/len(train_dataloader)} | ",
-        end="",
+        f"Train | Loss = {epoch_loss/len(train_dataloader):.4f} | Acc. = {epoch_acc/len(train_dataloader):.2f} | "
     )
+    print("_______________________________________________________")
 
     model.eval()
     test_loss = 0
@@ -64,5 +64,6 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
             test_accuracy += accuracy(pred, y).item()
 
     print(
-        f"Test Loss: {test_loss/len(test_dataloader)} | Test Accuracy: {test_accuracy/len(test_dataloader)}"
+        f"Test | Loss = {test_loss/len(test_dataloader):.4f} | Acc. = {test_accuracy/len(test_dataloader):.2f}"
     )
+    print("_______________________________________________________")

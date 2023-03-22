@@ -37,23 +37,21 @@ def training_loop():
     )
     train_dataset = isReco_Dataset(datapath, 0, 1000)
     test_dataset = isReco_Dataset(datapath, 1000, 1500)
+    validation_dataset = isReco_Dataset(datapath, 1500, 2000)
 
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset, batch_size=100, shuffle=True
     )
-
-    validation_dataset = isReco_Dataset(datapath, 1500, 2000)
     validation_dataloader = torch.utils.data.DataLoader(
         validation_dataset, batch_size=1000, shuffle=True
     )
-
     test_dataloader = torch.utils.data.DataLoader(
         test_dataset, batch_size=100, shuffle=True
     )
 
     epochs = 5
     for epoch in range(epochs):
-        print(f"Epoch {epoch + 1} |", end="")
+        print(f"Epoch {(epoch + 1):03}:")
         train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
 
     # Test the model
@@ -79,21 +77,37 @@ def training_loop():
     cm = confusion_matrix(y_true_list, y_pred_tag_list)
     print(cm)
 
+    # Plot confusion matrix
+
+    plt.figure(figsize=(10, 10))
+    sns.heatmap(cm, annot=True, fmt="d")
+    plt.title("Confusion matrix")
+    plt.ylabel("Actual label")
+    plt.xlabel("Predicted label")
+    plt.savefig(
+        os.path.join(
+            os.path.dirname(__file__), "figures", "confusion_matrix.pdf", format="pdf"
+        )
+    )
+
     # auc
     auc = roc_auc_score(y_true_list, y_pred_list)
 
-    
     fpr, tpr, thresholds = roc_curve(y_true_list, y_pred_list)
 
     plt.plot(fpr, tpr, label="ROC Curve")
     plt.plot([0, 1], [0, 1], "k--")
-    # auc on plot 
+    # auc on plot
     plt.text(0.5, 0.4, f"AUC: {auc:.3f}")
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
     plt.title("ROC Curve")
     plt.legend()
-    plt.savefig("roc.png")
+    plt.savefig(
+        os.path.join(os.path.dirname(__file__), "figures", "roc_curve.pdf"),
+        format="pdf",
+    )
+
 
 if __name__ == "__main__":
     training_loop()
