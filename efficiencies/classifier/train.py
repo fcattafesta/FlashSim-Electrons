@@ -88,6 +88,7 @@ def training_loop():
         os.path.join(os.path.dirname(__file__), "figures", "confusion_matrix.pdf"),
         format="pdf",
     )
+    plt.close()
 
     # auc
     auc = roc_auc_score(y_true_list, y_pred_list)
@@ -107,6 +108,7 @@ def training_loop():
         os.path.join(os.path.dirname(__file__), "figures", "roc_curve.pdf"),
         format="pdf",
     )
+    plt.close()
 
 
 if __name__ == "__main__":
