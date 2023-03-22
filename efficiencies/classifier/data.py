@@ -18,11 +18,3 @@ class isReco_Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         return self.X[idx], self.y[idx]
-
-
-if __name__ == "__main__":
-
-    path = os.path.join(os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5")
-    data = isReco_Dataset(path, 0, 1000)
-
-    print(data[0][1])
