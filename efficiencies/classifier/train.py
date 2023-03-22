@@ -49,7 +49,7 @@ def training_loop():
         test_dataset, batch_size=100, shuffle=True
     )
 
-    epochs = 5
+    epochs = 1
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
         train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
