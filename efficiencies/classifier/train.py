@@ -3,7 +3,7 @@ import os
 import torch
 from torch import nn
 
-from model import BinaryClassifier, train, test
+from model import BinaryClassifier, train
 from data import isReco_Dataset
 
 
@@ -13,8 +13,10 @@ def training_loop():
     print(f"Device: {device}")
 
     model = BinaryClassifier(38, 512).to(device)
-    print(f"Parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
-    
+    print(
+        f"Parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}"
+    )
+
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
@@ -32,13 +34,7 @@ def training_loop():
         test_dataset, batch_size=10000, shuffle=True
     )
 
-    epochs = 5
-    for t in range(epochs):
-        print(f"Epoch {t+1}\n-------------------------------")
+    epochs = 10
+    for epoch in range(epochs):
+        print(f"Epoch {epoch + 1} |", end="")
         train(train_dataloader, model, loss_fn, optimizer, device)
-        # test(test_dataloader, model, loss_fn, device)
-    print("Done!")
-
-
-if __name__ == "__main__":
-    training_loop()
