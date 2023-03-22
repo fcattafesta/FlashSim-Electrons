@@ -1,5 +1,7 @@
 import os
 
+import numpy as np
+
 import torch
 from torch import nn
 
@@ -33,23 +35,23 @@ def training_loop():
     datapath = os.path.join(
         os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5"
     )
-    train_dataset = isReco_Dataset(datapath, 0, 1120000)
-    test_dataset = isReco_Dataset(datapath, 1120000, 1400000)
+    train_dataset = isReco_Dataset(datapath, 0, 1000)
+    test_dataset = isReco_Dataset(datapath, 1000, 1500)
 
     train_dataloader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=100000, shuffle=True
+        train_dataset, batch_size=100, shuffle=True
     )
 
-    validation_dataset = isReco_Dataset(datapath, 1400000, 2000000)
+    validation_dataset = isReco_Dataset(datapath, 1500, 2000)
     validation_dataloader = torch.utils.data.DataLoader(
-        validation_dataset, batch_size=100000, shuffle=True
+        validation_dataset, batch_size=1000, shuffle=True
     )
 
     test_dataloader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=100000, shuffle=True
+        test_dataset, batch_size=100, shuffle=True
     )
 
-    epochs = 1
+    epochs = 5
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1} |", end="")
         train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
@@ -69,29 +71,11 @@ def training_loop():
             y_true = y.cpu().numpy()
             y_true_list.append(y_true)
 
-    y_pred_list = [a.squeeze().tolist() for a in y_pred_list]
-
-    y_true_list = [a.squeeze().tolist() for a in y_true_list]
-
-    print(classification_report(y_true_list, y_pred_list))
+    y_pred_list = np.array(y_pred_list).flatten()
+    y_true_list = np.array(y_true_list).flatten()
 
     cm = confusion_matrix(y_true_list, y_pred_list)
-
-    sns.heatmap(cm, annot=True, fmt="d")
-
-    fpr, tpr, thresholds = roc_curve(y_true_list, y_pred_list)
-
-    auc = roc_auc_score(y_true_list, y_pred_list)
-
-    print(f"AUC: {auc}")
-
-    plt.plot(fpr, tpr, label=f"AUC: {auc}")
-    plt.plot([0, 1], [0, 1], "k--")
-    plt.title("ROC Curve")
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.legend(loc=4)
-    plt.savefig("roc.png")
+    print(cm)
 
 
 if __name__ == "__main__":
