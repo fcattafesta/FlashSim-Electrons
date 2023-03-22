@@ -50,7 +50,7 @@ def test(dataloader, model, loss_fn, device):
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
-            correct += (pred.round == y).item()
+            correct += int((pred.round == y)).item()
             print(f"Correct: {correct}")
     test_loss /= num_batches
     correct /= size
