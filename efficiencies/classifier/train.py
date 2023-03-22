@@ -115,7 +115,7 @@ def training_loop():
             cm = confusion_matrix(y_true_list, y_pred_tag_list)
 
             # Plot confusion matrix
-
+            sns.color_palette("viridis", as_cmap=True)
             plt.figure(figsize=(10, 10))
             sns.heatmap(cm, annot=True, fmt="d")
             plt.title("Confusion matrix")
@@ -150,9 +150,15 @@ def training_loop():
             plt.close()
 
             # histogram of predictions
+            positive = y_pred_list[y_true_list == 1]
+            negative = y_pred_list[y_true_list == 0]
+
             plt.figure(figsize=(10, 10))
             plt.hist(
-                y_pred_list, bins=20, histtype="step", label="Predictions", density=True
+                positive, bins=20, histtype="step", label="Positive", density=True, color="b"
+            )
+            plt.hist(
+                negative, bins=20, histtype="step", label="Negative", density=True, color="r"
             )
             plt.savefig(
                 os.path.join(os.path.dirname(__file__), "figures", "predictions.pdf")
