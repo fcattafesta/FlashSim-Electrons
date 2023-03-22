@@ -8,8 +8,8 @@ class Classifier(nn.Module):
         hidden_dim_1 = 128
         hidden_dim_2 = 64
         self.fc1 = nn.Linear(input_dim, hidden_dim_1)
-        self.fc2 = nn.Linear(hidden_dim_1, hidden_dim_2)
-        self.fc3 = nn.Linear(hidden_dim_2, 1)
+        self.fc2 = nn.Linear(hidden_dim_1, hidden_dim_1)
+        self.fc3 = nn.Linear(hidden_dim_1, 1)
         self.relu = nn.ReLU()
         self.softmax = nn.Softmax(dim=1)
 
