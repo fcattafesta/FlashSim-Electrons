@@ -49,10 +49,44 @@ def training_loop():
         validation_dataset, batch_size=100000, shuffle=True
     )
 
+    test_history = []
+    train_history = []
+    test_acc_history = []
+    train_acc_history = []
     epochs = 100
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
-        train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
+        tr_loss, tr_acc, te_loss, te_acc = train(
+            train_dataloader, test_dataloader, model, loss_fn, optimizer, device
+        )
+        test_history.append(te_loss)
+        train_history.append(tr_loss)
+        test_acc_history.append(te_acc)
+        train_acc_history.append(tr_acc)
+
+        if epoch % 10 == 0:
+            # Save the model
+            torch.save(model.state_dict(), "model.pt")
+
+            # Plot the loss
+            plt.plot(train_history, label="Train")
+            plt.plot(test_history, label="Test")
+            plt.legend()
+            plt.savefig(
+                os.path.join(os.path.dirname(__file__), "figures", "loss.pdf"),
+                format="pdf",
+            )
+            plt.close()
+
+            # Plot the accuracy
+            plt.plot(train_acc_history, label="Train")
+            plt.plot(test_acc_history, label="Test")
+            plt.legend()
+            plt.savefig(
+                os.path.join(os.path.dirname(__file__), "figures", "accuracy.pdf"),
+                format="pdf",
+            )
+            plt.close()
 
     # Test the model
 
