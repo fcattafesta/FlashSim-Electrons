@@ -149,4 +149,5 @@ test/figures/
 preprocessing/figures/
 
 # efficiencies
-efficiencies/dataset
+efficiencies/dataset/
+efficiencies/classifier/figures/
