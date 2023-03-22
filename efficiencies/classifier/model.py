@@ -56,13 +56,13 @@ def train(dataloader, model, loss_fn, optimizer, device):
 def test(dataloader, model, loss_fn, device):
     model.eval()
     test_loss = 0
-    accuracy = 0
+    test_accuracy = 0
     with torch.no_grad():
         for X, y in dataloader:
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
-            accuracy += accuracy(pred, y).item()
+            test_accuracy += accuracy(pred, y).item()
 
     print(
         f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {accuracy/len(dataloader)}"
