@@ -8,6 +8,7 @@ class BinaryClassifier(nn.Module):
         self.fc1 = nn.Linear(input_dim, hidden_dim)
         self.fc2 = nn.Linear(hidden_dim, 1)
         self.relu = nn.ReLU()
+
     def forward(self, x):
         x = self.fc1(x)
         x = self.relu(x)
@@ -15,7 +16,18 @@ class BinaryClassifier(nn.Module):
         return x
 
 
+def accuracy(y_pred, y_true):
+    y_pred_tag = torch.round(torch.sigmoid(y_pred))
+    correct_results_sum = (y_pred_tag == y_true).sum().float()
+    acc = correct_results_sum / y_true.shape[0]
+    acc = torch.round(acc * 100)
+    return acc
+
+
 def train(dataloader, model, loss_fn, optimizer, device):
+    epoch_loss = 0
+    epoch_acc = 0
+
     model.train()
     size = len(dataloader.dataset)
     for batch, (X, y) in enumerate(dataloader):
@@ -24,16 +36,24 @@ def train(dataloader, model, loss_fn, optimizer, device):
         optimizer.zero_grad()
         pred = model(X)
         loss = loss_fn(pred, y)
+        acc = accuracy(pred, y)
+
         loss.backward()
         optimizer.step()
+
+        epoch_loss += loss.item()
+        epoch_acc += acc.item()
 
         if batch % 100 == 0:
             loss, current = loss.item(), (batch + 1) * len(X)
             print(f"Loss: {loss}  [{current}/{size}]")
 
+    print(
+        f"Epoch Loss: {epoch_loss/len(dataloader)} | Epoch Accuracy: {epoch_acc/len(dataloader)}"
+    )
+
 
 def test(dataloader, model, loss_fn, device):
-    size = len(dataloader.dataset)
     num_batches = len(dataloader)
     model.eval()
     test_loss, correct = 0, 0
@@ -45,7 +65,6 @@ def test(dataloader, model, loss_fn, device):
             pred_tag = torch.round(torch.sigmoid(pred))
             correct = (pred_tag == y).sum().float().item()
     test_loss /= num_batches
-    correct /= size
     print(
         f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n"
     )
