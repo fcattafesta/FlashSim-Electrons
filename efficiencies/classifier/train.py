@@ -3,6 +3,10 @@ import os
 import torch
 from torch import nn
 
+import seaborn as sns
+
+from sklearn.metrics import roc_curve, roc_auc_score, confusion_matrix, classification_report
+
 from model import BinaryClassifier, train
 from data import isReco_Dataset
 
@@ -30,6 +34,10 @@ def training_loop():
         train_dataset, batch_size=10000, shuffle=True
     )
 
+    validation_dataset = isReco_Dataset(datapath, 1400000, 2000000)
+    validation_dataloader = torch.utils.data.DataLoader(validation_dataset, batch_size=10000, shuffle=True)
+
+
     test_dataloader = torch.utils.data.DataLoader(
         test_dataset, batch_size=10000, shuffle=True
     )
@@ -37,7 +45,18 @@ def training_loop():
     epochs = 10
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1} |", end="")
-        train(train_dataloader, model, loss_fn, optimizer, device)
+        train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
+
+    
+    # Test the model
+
+    model.eval()
+    with torch.no_grad():
+        y_pred = model(validation_dataset.X)
+        y_pred = torch.round(torch.sigmoid(y_pred))
+        y_pred = y_pred.cpu().numpy()
+        y_true = validation_dataset.y.cpu().numpy()
+
 
 
 if __name__ == "__main__":

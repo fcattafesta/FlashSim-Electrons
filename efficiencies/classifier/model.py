@@ -24,13 +24,13 @@ def accuracy(y_pred, y_true):
     return acc
 
 
-def train(dataloader, model, loss_fn, optimizer, device):
+def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
     epoch_loss = 0
     epoch_acc = 0
 
     model.train()
-    size = len(dataloader.dataset)
-    for batch, (X, y) in enumerate(dataloader):
+    size = len(train_dataloader.dataset)
+    for batch, (X, y) in enumerate(train_dataloader):
         X, y = X.to(device), y.to(device)
 
         optimizer.zero_grad()
@@ -49,7 +49,7 @@ def train(dataloader, model, loss_fn, optimizer, device):
         #     print(f"Loss: {loss}  [{current}/{size}]")
 
     print(
-        f"Epoch Loss: {epoch_loss/len(dataloader)} | Epoch Accuracy: {epoch_acc/len(dataloader)} | ",
+        f"Epoch Loss: {epoch_loss/len(train_dataloader)} | Epoch Accuracy: {epoch_acc/len(train_dataloader)} | ",
         end="",
     )
 
@@ -57,12 +57,12 @@ def train(dataloader, model, loss_fn, optimizer, device):
     test_loss = 0
     test_accuracy = 0
     with torch.no_grad():
-        for X, y in dataloader:
+        for X, y in test_dataloader:
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
             test_accuracy += accuracy(pred, y).item()
 
     print(
-        f"Test Loss: {test_loss/len(dataloader)} | Test Accuracy: {test_accuracy/len(dataloader)}"
+        f"Test Loss: {test_loss/len(test_dataloader)} | Test Accuracy: {test_accuracy/len(test_dataloader)}"
     )
