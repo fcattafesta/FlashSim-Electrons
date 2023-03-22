@@ -38,3 +38,7 @@ def training_loop():
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1} |", end="")
         train(train_dataloader, model, loss_fn, optimizer, device)
+
+
+if __name__ == "__main__":
+    training_loop()
