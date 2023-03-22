@@ -44,13 +44,14 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
         epoch_loss += loss.item()
         epoch_acc += acc.item()
 
-        # if batch % 100 == 0:
-        #     loss, current = loss.item(), (batch + 1) * len(X)
-        #     print(f"Loss: {loss}  [{current}/{size}]")
+    avg_loss = epoch_loss / len(train_dataloader)
+    avg_acc = epoch_acc / len(train_dataloader)
 
-    print(
-        f"Train | Loss = {epoch_loss/len(train_dataloader):.4f} | Acc. = {epoch_acc/len(train_dataloader):.2f} | "
-    )
+    # if batch % 100 == 0:
+    #     loss, current = loss.item(), (batch + 1) * len(X)
+    #     print(f"Loss: {loss}  [{current}/{size}]")
+
+    print(f"Train | Loss = {avg_loss:.4f} | Acc. = {avg_acc:.2f} | ")
 
     model.eval()
     test_loss = 0
@@ -62,7 +63,10 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device):
             test_loss += loss_fn(pred, y).item()
             test_accuracy += accuracy(pred, y).item()
 
-    print(
-        f"Test  | Loss = {test_loss/len(test_dataloader):.4f} | Acc. = {test_accuracy/len(test_dataloader):.2f} |"
-    )
+    avg_test_loss = test_loss / len(test_dataloader)
+    avg_test_acc = test_accuracy / len(test_dataloader)
+
+    print(f"Test  | Loss = {avg_test_loss:.4f} | Acc. = {avg_test_acc:.2f} |")
     print("--------------------------------------")
+
+    return (avg_loss, avg_acc, avg_test_loss, avg_test_acc)

@@ -88,66 +88,72 @@ def training_loop():
             )
             plt.close()
 
-    # Test the model
+            # Test the model
 
-    model.eval()
-    y_pred_list = []
-    y_true_list = []
-    y_pred_tag_list = []
-    with torch.no_grad():
-        for X, y in validation_dataloader:
-            X, y = X.to(device), y.to(device)
-            y_pred = model(X)
-            y_pred = torch.sigmoid(y_pred)
-            y_pred_list.append(y_pred.cpu().numpy())
-            y_pred_tag = torch.round(y_pred)
-            y_pred_tag_list.append(y_pred_tag.cpu().numpy())
-            y_true_list.append(y.cpu().numpy())
+            model.eval()
+            y_pred_list = []
+            y_true_list = []
+            y_pred_tag_list = []
+            with torch.no_grad():
+                for X, y in validation_dataloader:
+                    X, y = X.to(device), y.to(device)
+                    y_pred = model(X)
+                    y_pred = torch.sigmoid(y_pred)
+                    y_pred_list.append(y_pred.cpu().numpy())
+                    y_pred_tag = torch.round(y_pred)
+                    y_pred_tag_list.append(y_pred_tag.cpu().numpy())
+                    y_true_list.append(y.cpu().numpy())
 
-    y_pred_list = np.array(y_pred_list).flatten()
-    y_true_list = np.array(y_true_list).flatten()
-    y_pred_tag_list = np.array(y_pred_tag_list).flatten()
+            y_pred_list = np.array(y_pred_list).flatten()
+            y_true_list = np.array(y_true_list).flatten()
+            y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
-    cm = confusion_matrix(y_true_list, y_pred_tag_list)
-    print(cm)
+            cm = confusion_matrix(y_true_list, y_pred_tag_list)
+            print(cm)
 
-    # Plot confusion matrix
+            # Plot confusion matrix
 
-    plt.figure(figsize=(10, 10))
-    sns.heatmap(cm, annot=True, fmt="d")
-    plt.title("Confusion matrix")
-    plt.ylabel("Actual label")
-    plt.xlabel("Predicted label")
-    plt.savefig(
-        os.path.join(os.path.dirname(__file__), "figures", "confusion_matrix.pdf"),
-        format="pdf",
-    )
-    plt.close()
+            plt.figure(figsize=(10, 10))
+            sns.heatmap(cm, annot=True, fmt="d")
+            plt.title("Confusion matrix")
+            plt.ylabel("Actual label")
+            plt.xlabel("Predicted label")
+            plt.savefig(
+                os.path.join(
+                    os.path.dirname(__file__), "figures", "confusion_matrix.pdf"
+                ),
+                format="pdf",
+            )
+            plt.close()
 
-    # auc
-    auc = roc_auc_score(y_true_list, y_pred_list)
+            # auc
+            auc = roc_auc_score(y_true_list, y_pred_list)
 
-    fpr, tpr, thresholds = roc_curve(y_true_list, y_pred_list)
+            fpr, tpr, thresholds = roc_curve(y_true_list, y_pred_list)
 
-    plt.figure(figsize=(10, 10))
-    plt.plot(fpr, tpr, label="ROC Curve")
-    plt.plot([0, 1], [0, 1], "k--")
-    # auc on plot
-    plt.text(0.5, 0.4, f"AUC: {auc:.3f}")
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.title("ROC Curve")
-    plt.legend()
-    plt.savefig(
-        os.path.join(os.path.dirname(__file__), "figures", "roc_curve.pdf"),
-        format="pdf",
-    )
-    plt.close()
+            plt.figure(figsize=(10, 10))
+            plt.plot(fpr, tpr, label="ROC Curve")
+            plt.plot([0, 1], [0, 1], "k--")
+            # auc on plot
+            plt.text(0.5, 0.4, f"AUC: {auc:.3f}")
+            plt.xlabel("False Positive Rate")
+            plt.ylabel("True Positive Rate")
+            plt.title("ROC Curve")
+            plt.legend()
+            plt.savefig(
+                os.path.join(os.path.dirname(__file__), "figures", "roc_curve.pdf"),
+                format="pdf",
+            )
+            plt.close()
 
-    # histogram of predictions
-    plt.figure(figsize=(10, 10))
-    plt.hist(y_pred_list, bins=20, histtype="step", label="Predictions", density=True)
-    plt.savefig(os.path.join(os.path.dirname(__file__), "figures", "predictions.pdf"))
+            # histogram of predictions
+            plt.figure(figsize=(10, 10))
+            plt.hist(
+                y_pred_list, bins=20, histtype="step", label="Predictions", density=True
+            )
+            plt.savefig(
+                os.path.join(os.path.dirname(__file__), "figures", "predictions.pdf")
+            )
 
 
 if __name__ == "__main__":
