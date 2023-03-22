@@ -17,7 +17,7 @@ class Classifier(nn.Module):
         x = self.fc1(x)
         x = self.relu(x)
         x = self.fc3(x)
-        x = self.softmax(x)
+        # x = self.softmax(x)
         return x
 
 
@@ -47,7 +47,6 @@ def test(dataloader, model, loss_fn, device):
         for X, y in dataloader:
             X, y = X.to(device), y.to(device)
             pred = model(X)
-            print(pred)
             test_loss += loss_fn(pred, y).item()
             correct += int(pred.round == y)
     test_loss /= num_batches
