@@ -32,6 +32,7 @@ def train(dataloader, model, loss_fn, optimizer, device):
         pred = model(X)
         print(pred.shape)
         loss = loss_fn(pred, y)
+        print(loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
