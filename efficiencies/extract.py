@@ -48,6 +48,7 @@ for file in root_files[1:]:
     df.reset_index(drop=True)
 
 print(df.columns)
+print(df.shape)
 
 file = h5py.File(os.path.join(os.path.dirname(__file__), f"GenElectrons.hdf5"), "w")
 file.create_dataset("GenElectrons", data=df.values, dtype="f4")
