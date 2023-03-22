@@ -25,4 +25,4 @@ if __name__ == "__main__":
     path = os.path.join(os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5")
     data = isReco_Dataset(path, 0, 1000)
 
-    print(data)
+    print(data[-1])
