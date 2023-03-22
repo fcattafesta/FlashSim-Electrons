@@ -14,7 +14,7 @@ def training_loop():
 
     model = Classifier(38).to(device)
     print(model)
-    loss_fn = nn.BCELoss()
+    loss_fn = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
     datapath = os.path.join(
