@@ -31,18 +31,18 @@ def training_loop():
     test_dataset = isReco_Dataset(datapath, 1120000, 1400000)
 
     train_dataloader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=10000, shuffle=True
+        train_dataset, batch_size=100000, shuffle=True
     )
 
     validation_dataset = isReco_Dataset(datapath, 1400000, 2000000)
-    validation_dataloader = torch.utils.data.DataLoader(validation_dataset, batch_size=10000, shuffle=True)
+    validation_dataloader = torch.utils.data.DataLoader(validation_dataset, batch_size=100000, shuffle=True)
 
 
     test_dataloader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=10000, shuffle=True
+        test_dataset, batch_size=100000, shuffle=True
     )
 
-    epochs = 10
+    epochs = 5
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1} |", end="")
         train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
@@ -52,10 +52,12 @@ def training_loop():
 
     model.eval()
     with torch.no_grad():
-        y_pred = model(validation_dataset.X)
-        y_pred = torch.round(torch.sigmoid(y_pred))
-        y_pred = y_pred.cpu().numpy()
-        y_true = validation_dataset.y.cpu().numpy()
+        for X, y in validation_dataloader:
+            X, y = X.to(device), y.to(device)
+            y_pred = model(X)
+            y_pred = torch.round(torch.sigmoid(y_pred))
+            y_pred = y_pred.cpu().numpy()
+            y_true = y.cpu().numpy()
 
 
 
