@@ -29,7 +29,8 @@ def train(dataloader, model, loss_fn, optimizer, device):
     for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
         pred = model(X)
-        print(y, pred)
+        print(f"Pred: {pred}")
+        print(f"Y: {y}")
         loss = loss_fn(pred, y)
         optimizer.zero_grad()
         loss.backward()
