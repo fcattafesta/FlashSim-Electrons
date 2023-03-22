@@ -28,11 +28,8 @@ def train(dataloader, model, loss_fn, optimizer, device):
     size = len(dataloader.dataset)
     for batch, (X, y) in enumerate(dataloader):
         X, y = X.to(device), y.to(device)
-        print(X.shape, y.shape)
         pred = model(X)
-        print(pred.shape)
         loss = loss_fn(pred, y)
-        print(loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
