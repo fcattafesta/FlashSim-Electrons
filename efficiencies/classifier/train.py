@@ -61,22 +61,42 @@ def training_loop():
     model.eval()
     y_pred_list = []
     y_true_list = []
+    y_pred_tag_list = []
     with torch.no_grad():
         for X, y in validation_dataloader:
             X, y = X.to(device), y.to(device)
             y_pred = model(X)
-            y_pred = torch.round(torch.sigmoid(y_pred))
+            y_pred = torch.sigmoid(y_pred)
             y_pred = y_pred.cpu().numpy()
             y_pred_list.append(y_pred)
+            y_pred_tag = torch.round(y_pred)
+            y_pred_tag = y_pred_tag.cpu().numpy()
+            y_pred_tag_list.append(y_pred_tag)
             y_true = y.cpu().numpy()
             y_true_list.append(y_true)
 
     y_pred_list = np.array(y_pred_list).flatten()
     y_true_list = np.array(y_true_list).flatten()
+    y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
-    cm = confusion_matrix(y_true_list, y_pred_list)
+    cm = confusion_matrix(y_true_list, y_pred_tag_list)
     print(cm)
 
+    # auc
+    auc = roc_auc_score(y_true_list, y_pred_list)
+
+    
+    fpr, tpr, thresholds = roc_curve(y_true_list, y_pred_list)
+
+    plt.plot(fpr, tpr, label="ROC Curve")
+    plt.plot([0, 1], [0, 1], "k--")
+    # auc on plot 
+    plt.text(0.5, 0.4, f"AUC: {auc:.3f}")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("ROC Curve")
+    plt.legend()
+    plt.savefig("roc.png")
 
 if __name__ == "__main__":
     training_loop()
