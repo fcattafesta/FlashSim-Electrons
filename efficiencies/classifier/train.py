@@ -49,7 +49,7 @@ def training_loop():
         test_dataset, batch_size=100000, shuffle=True
     )
 
-    epochs = 5
+    epochs = 1
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1} |", end="")
         train(train_dataloader, test_dataloader, model, loss_fn, optimizer, device)
@@ -65,9 +65,9 @@ def training_loop():
             y_pred = model(X)
             y_pred = torch.round(torch.sigmoid(y_pred))
             y_pred = y_pred.cpu().numpy()
-            y_pred_list.append[y_pred]
+            y_pred_list.append(y_pred)
             y_true = y.cpu().numpy()
-            y_true_list.append[y_true]
+            y_true_list.append(y_true)
 
     y_pred_list = [a.squeeze().tolist() for a in y_pred_list]
 
