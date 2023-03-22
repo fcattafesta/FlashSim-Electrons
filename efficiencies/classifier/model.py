@@ -2,22 +2,16 @@ import torch
 from torch import nn
 
 
-class Classifier(nn.Module):
-    def __init__(self, input_dim):
+class BinaryClassifier(nn.Module):
+    def __init__(self, input_dim, hidden_dim):
         super().__init__()
-        hidden_dim_1 = 128
-        hidden_dim_2 = 64
-        self.fc1 = nn.Linear(input_dim, hidden_dim_1)
-        self.fc2 = nn.Linear(hidden_dim_1, hidden_dim_1)
-        self.fc3 = nn.Linear(hidden_dim_1, 1)
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.fc2 = nn.Linear(hidden_dim, 1)
         self.relu = nn.ReLU()
-        self.softmax = nn.Softmax(dim=1)
-
     def forward(self, x):
         x = self.fc1(x)
         x = self.relu(x)
-        x = self.fc3(x)
-        # x = self.softmax(x)
+        x = self.fc2(x)
         return x
 
 
@@ -32,6 +26,8 @@ def train(dataloader, model, loss_fn, optimizer, device):
         loss = loss_fn(pred, y)
         loss.backward()
         optimizer.step()
+
+        running_loss += loss.item()
 
         if batch % 100 == 0:
             loss, current = loss.item(), (batch + 1) * len(X)
@@ -48,7 +44,8 @@ def test(dataloader, model, loss_fn, device):
             X, y = X.to(device), y.to(device)
             pred = model(X)
             test_loss += loss_fn(pred, y).item()
-            correct += int(pred.round == y)
+            pred_tag = torch.round(torch.sigmoid(pred))
+            correct = (pred_tag == y).sum().float().item()
     test_loss /= num_batches
     correct /= size
     print(

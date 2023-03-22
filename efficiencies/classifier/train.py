@@ -3,7 +3,7 @@ import os
 import torch
 from torch import nn
 
-from model import Classifier, train, test
+from model import BinaryClassifier, train, test
 from data import isReco_Dataset
 
 
@@ -12,7 +12,7 @@ def training_loop():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
-    model = Classifier(38).to(device)
+    model = BinaryClassifier(38, 128).to(device)
     print(model)
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
