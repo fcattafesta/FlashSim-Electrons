@@ -69,6 +69,7 @@ def training_loop():
             torch.save(model.state_dict(), "model.pt")
 
             # Plot the loss
+            plt.figure(figsize=(12, 8))
             plt.plot(train_history, label="Train")
             plt.plot(test_history, label="Test")
             plt.legend()
@@ -79,6 +80,7 @@ def training_loop():
             plt.close()
 
             # Plot the accuracy
+            plt.figure(figsize=(12, 8))
             plt.plot(train_acc_history, label="Train")
             plt.plot(test_acc_history, label="Test")
             plt.legend()
@@ -109,7 +111,6 @@ def training_loop():
             y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
             cm = confusion_matrix(y_true_list, y_pred_tag_list)
-            print(cm)
 
             # Plot confusion matrix
 
