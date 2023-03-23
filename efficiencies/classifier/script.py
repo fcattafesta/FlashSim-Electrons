@@ -10,7 +10,8 @@ from model import BinaryClassifier
 datapath = os.path.join(os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5")
 dataset = isReco_Dataset(datapath, 3400000, 4400000)
 
-model = torch.load_state_dict("model.pt")
+model = BinaryClassifier(38, 512)
+model.load_state_dict("model.pt")
 model.eval()
 
 example, _ = dataset[0]
