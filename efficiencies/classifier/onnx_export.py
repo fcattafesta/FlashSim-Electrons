@@ -2,7 +2,7 @@ import os
 
 import torch
 import torch.onnx
-import onnx
+import onnxruntime as ort
 
 from data import isReco_Dataset
 from model import BinaryClassifier
@@ -15,9 +15,16 @@ dataset = isReco_Dataset(datapath, 3400000, 4400000)
 # model.load_state_dict(torch.load("model.pt"))
 # model.eval()
 
-# example, _ = dataset[0]
+example, _ = dataset[0]
 
 # torch.onnx.export(model, example, "Efficiency.onnx")
 
-onnx.load("Efficiency.onnx")
-onnx.checker.check_model("Efficiency.onnx")
+sess = ort.InferenceSession("Efficiency.onnx")
+
+def to_numpy(tensor):
+    return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
+
+ort_inputs = {sess.get_inputs()[0].name: to_numpy(example)}
+ort_outs = sess.run(None, ort_inputs)
+
+print(ort_outs)
