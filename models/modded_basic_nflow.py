@@ -621,7 +621,7 @@ def create_mixture_flow_model(
         )
         transform.append(create_random_transform(param_dim=input_dim))
 
-    transform_fnal = CompositeTransform(transform)
+    transform_fnal = transforms.CompositeTransform(transform)
 
     flow = FlowM(transform_fnal, distribution)
 
