@@ -20,7 +20,7 @@ from model import BinaryClassifier, train
 from data import isReco_Dataset
 
 
-def training_loop():
+def training_loop(): 
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
@@ -32,7 +32,7 @@ def training_loop():
 
     loss_fn = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-    scheduler = ReduceLROnPlateau(optimizer, "min", patience=5)
+    scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
 
     datapath = os.path.join(
         os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5"
@@ -112,12 +112,11 @@ def training_loop():
             y_true_list = np.array(y_true_list).flatten()
             y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
-            cm = confusion_matrix(y_true_list, y_pred_tag_list)
+            cm = confusion_matrix(y_true_list, y_pred_tag_list, normalize="true")
 
             # Plot confusion matrix
-            sns.color_palette("viridis", as_cmap=True)
             plt.figure(figsize=(10, 10))
-            sns.heatmap(cm, annot=True, fmt="d")
+            sns.heatmap(cm, annot=True, fmt="d", cmap="viridis")
             plt.title("Confusion matrix")
             plt.ylabel("Actual label")
             plt.xlabel("Predicted label")
@@ -155,10 +154,10 @@ def training_loop():
 
             plt.figure(figsize=(10, 10))
             plt.hist(
-                positive, bins=20, histtype="step", label="Positive", density=True, color="b"
+                positive, bins=20, histtype="step", label="Positive", color="b"
             )
             plt.hist(
-                negative, bins=20, histtype="step", label="Negative", density=True, color="r"
+                negative, bins=20, histtype="step", label="Negative", color="r"
             )
             plt.savefig(
                 os.path.join(os.path.dirname(__file__), "figures", "predictions.pdf")
