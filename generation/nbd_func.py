@@ -167,7 +167,7 @@ def nbd(ele_model, root, file_path, new_root):
                 sample = np.squeeze(sample, axis=1)
                 leftover_sample.append(sample)
 
-    print("Mean rate: {batch_size / np.mean(times)}")
+    print(f"Mean rate: {batch_size / np.mean(times)}")
 
     tot_sample = np.array(tot_sample)
     tot_sample = np.reshape(tot_sample, ((len(ele_loader) - 1) * batch_size, 47))
@@ -225,6 +225,6 @@ def nbd(ele_model, root, file_path, new_root):
             "run": to_ttreee.run,
         }
 
-    print("{new_path}_synth.root saved")
+    print(f"{new_path}_synth.root saved")
 
     return

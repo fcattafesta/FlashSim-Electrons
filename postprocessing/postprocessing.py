@@ -80,7 +80,7 @@ def postprocessing(df, vars_dictionary):
     """
 
     with open(
-        os.path.join(os.path.dirname(__file__), "scale_factors.json")
+        os.path.join(os.path.dirname(__file__), "..", "preprocessing", "scale_factors.json")
     ) as scale_file:
         scale_dict = json.load(scale_file)
 
