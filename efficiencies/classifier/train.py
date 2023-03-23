@@ -30,7 +30,7 @@ def training_loop():
         f"Parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}"
     )
 
-    loss_fn = nn.BCEWithLogitsLoss()
+    loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([9.]))
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
 
@@ -116,7 +116,7 @@ def training_loop():
 
             # Plot confusion matrix
             plt.figure(figsize=(10, 10))
-            sns.heatmap(cm, annot=True, fmt="d", cmap="viridis")
+            sns.heatmap(cm, annot=True, fmt="f", cmap="viridis")
             plt.title("Confusion matrix")
             plt.ylabel("Actual label")
             plt.xlabel("Predicted label")
