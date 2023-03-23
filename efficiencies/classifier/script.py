@@ -33,6 +33,9 @@ y_pred = traced_script_module.predict(X)
 
 y_pred_tag = torch.round(y_pred)
 
+y_pred = y_pred.detach().numpy()
+y_true = y_true.detach().numpy()
+
 cm = confusion_matrix(y_true, y_pred_tag, normalize="true")
 
 # Plot confusion matrix
