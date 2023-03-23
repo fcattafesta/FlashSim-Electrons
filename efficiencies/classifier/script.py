@@ -18,13 +18,15 @@ example, _ = dataset[0]
 print(model.predict(example))
 
 
-traced_script_module = torch.jit.trace(model.predict, example)
+inputs = {"forward": example, "predict": example}
+
+traced_script_module = torch.jit.trace_module(model, inputs)
 
 # tests 
 
-test, _ = dataset[1]
+test, _ = dataset[0]
 
-pred = traced_script_module(test)
+pred = traced_script_module.predict(test)
 
 print(pred)
 
