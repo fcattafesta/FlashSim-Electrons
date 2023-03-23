@@ -18,7 +18,7 @@ example, _ = dataset[0]
 print(model.predict(example))
 
 
-traced_script_module = torch.jit.trace(model, example)
+traced_script_module = torch.jit.trace(model.predict, example)
 
 # tests 
 
