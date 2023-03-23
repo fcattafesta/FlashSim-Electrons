@@ -151,3 +151,4 @@ preprocessing/figures/
 # efficiencies
 efficiencies/dataset/
 efficiencies/classifier/figures/
+efficiencies/classifier/onnxruntime-linux-x64-1.14.1
