@@ -13,7 +13,7 @@ import nbd_func
 if __name__ == "__main__":
 
     root = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
-    new_root = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1/"
+    new_root = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1_60/"
     files_paths = [
         os.path.join(d, f)
         for d in os.listdir(root)
@@ -31,7 +31,14 @@ if __name__ == "__main__":
     ele_flow, _, _, _, trh, tsh = load_mixture_model(
         device=device,
         model_dir=os.path.dirname(__file__),
-        filename="EM1/checkpoint-latest.pt",
+        filename=os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "training",
+            "checkpoints",
+            "EM1",
+            "checkpoint-latest.pt",
+        ),
     )
 
     ele_flow = ele_flow.to(device)
