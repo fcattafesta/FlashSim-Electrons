@@ -20,7 +20,7 @@ from model import BinaryClassifier, train
 from data import isReco_Dataset
 
 
-def training_loop(): 
+def training_loop():
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
@@ -30,7 +30,7 @@ def training_loop():
         f"Parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}"
     )
 
-    loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([9.], device=device))
+    loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([9.0], device=device))
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
 
@@ -59,7 +59,13 @@ def training_loop():
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
         tr_loss, tr_acc, te_loss, te_acc = train(
-            train_dataloader, test_dataloader, model, loss_fn, optimizer, scheduler, device
+            train_dataloader,
+            test_dataloader,
+            model,
+            loss_fn,
+            optimizer,
+            scheduler,
+            device,
         )
         test_history.append(te_loss)
         train_history.append(tr_loss)
@@ -153,12 +159,8 @@ def training_loop():
             negative = y_pred_list[y_true_list == 0]
 
             plt.figure(figsize=(10, 10))
-            plt.hist(
-                positive, bins=20, histtype="step", label="Positive", color="b"
-            )
-            plt.hist(
-                negative, bins=20, histtype="step", label="Negative", color="r"
-            )
+            plt.hist(positive, bins=20, histtype="step", label="Positive", color="b")
+            plt.hist(negative, bins=20, histtype="step", label="Negative", color="r")
             plt.savefig(
                 os.path.join(os.path.dirname(__file__), "figures", "predictions.pdf")
             )
