@@ -30,7 +30,7 @@ def training_loop():
         f"Parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}"
     )
 
-    loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([9.]))
+    loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([9.], device=device))
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
 
