@@ -5,13 +5,17 @@ from sklearn.metrics import roc_curve, roc_auc_score, confusion_matrix, classifi
 import torch
 
 from data import isReco_Dataset
+from model import BinaryClassifier
 
 datapath = os.path.join(os.path.dirname(__file__), "..", "dataset", "GenElectrons.hdf5")
 dataset = isReco_Dataset(datapath, 3400000, 4400000)
 
 model = torch.load("model.pt")
+model.eval()
 
 example, _ = dataset[0]
+print(model(example))
+
 
 traced_script_module = torch.jit.trace(model, example)
 
