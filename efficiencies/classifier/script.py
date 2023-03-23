@@ -15,7 +15,7 @@ model.load_state_dict(torch.load("model.pt"))
 model.eval()
 
 example, _ = dataset[0]
-print(model(example))
+print(model.predict(example))
 
 
 traced_script_module = torch.jit.trace(model, example)

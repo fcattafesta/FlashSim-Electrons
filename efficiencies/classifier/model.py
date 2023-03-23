@@ -21,6 +21,10 @@ class BinaryClassifier(nn.Module):
         x = self.relu(x)
         x = self.fc4(x)
         return x
+    
+    def predict(self, x):
+        pred = torch.sigmoid(self.forward(x))
+        return pred
 
 
 def accuracy(y_pred, y_true):
