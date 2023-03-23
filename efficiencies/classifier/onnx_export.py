@@ -16,5 +16,5 @@ model.eval()
 
 example, _ = dataset[0]
 
-torch.export.onnx(model, example, "Efficiency.onnx")
+torch.onnx.export(model, example, "Efficiency.onnx")
 
