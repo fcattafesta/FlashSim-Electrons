@@ -50,8 +50,6 @@ file_paths = [
 
 extracted = [os.path.join("dataset", f"MElectrons_{i}.root") for i in range(len(file_paths))]
 
-file_paths = ["../../preliminar/047F4368-97D4-1A4E-B896-23C6C72DD2BE.root"]
-extracted = ["a.root"]
 
 if __name__ == "__main__":
 
@@ -59,4 +57,3 @@ if __name__ == "__main__":
 
     for file_in, file_out in zip(file_paths, extracted):
         ROOT.extraction(file_in, file_out)
-        input()
