@@ -142,7 +142,8 @@ training/runs/
 training/checkpoints/
 
 # dataset
-extraction/dataset/
+extraction/gen_electrons/dataset
+extraction/gen_jets/dataset
 
 # figures
 test/figures/
@@ -151,4 +152,3 @@ preprocessing/figures/
 # efficiencies
 efficiencies/dataset/
 efficiencies/classifier/figures/
-efficiencies/classifier/onnxruntime-linux-x64-1.14.1
