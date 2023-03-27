@@ -142,8 +142,7 @@ training/runs/
 training/checkpoints/
 
 # dataset
-extraction/gen_electrons/dataset
-extraction/gen_jets/dataset
+extraction/dataset
 
 # figures
 test/figures/
