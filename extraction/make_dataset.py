@@ -1,6 +1,8 @@
 import os
 import ROOT
 
+from extract import make_files
+
 # root = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/"
 
 # ttbar_training_files = [
@@ -50,10 +52,7 @@ file_paths = [
 
 extracted = [os.path.join("dataset", f"MElectrons_{i}.root") for i in range(len(file_paths))]
 
-
 if __name__ == "__main__":
 
-    ROOT.gInterpreter.ProcessLine('#include "extraction.h"')
-
     for file_in, file_out in zip(file_paths, extracted):
-        ROOT.extraction(file_in, file_out)
+        make_files(file_in, file_out)
