@@ -30,9 +30,9 @@ def dataset(tree, cols, version=0, dictionary=False, *args, **kwargs):
     """
     df = (
         tree.arrays(expressions=cols, library="pd", *args, **kwargs)
-        .reset_index(drop=True)
-        .astype("float32")
-        .dropna()
+        # .reset_index(drop=True)
+        # .astype("float32")
+        # .dropna()
     )
 
     print(df)
