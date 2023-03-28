@@ -209,11 +209,11 @@ def make_dataset(files, outname, scale_factors_name, gen_cols):
     cols = gen_cols + reco_columns
 
     tree = uproot.open(files[0], num_workers=20)
-    df = dataset(tree)
+    df = dataset(tree, cols)
 
     for file in files[1:]:
-        tree = uproot.open(file, num_workers=20)
-        df = pd.concat([df, dataset(tree)], axis=0)
+        tree = uproot.open(file, cols, num_workers=20)
+        df = pd.concat([df, dataset(tree, cols)], axis=0)
         df.reset_index(drop=True)
 
     df = preprocessing(df, target_dictionary, scale_factors_name)
