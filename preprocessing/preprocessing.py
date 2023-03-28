@@ -29,7 +29,7 @@ def dataset(tree, cols, version=0, dictionary=False, *args, **kwargs):
     If dictionary is True, an empty dictionary of TTree variables is dumped on .txt file (to be copied on dictionary.py).
     """
     df = (
-        tree.arrays(expression=cols, library="pd", *args, **kwargs)
+        tree.arrays(expressions=cols, library="pd", *args, **kwargs)
         .reset_index(drop=True)
         .astype("float32")
         .dropna
