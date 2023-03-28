@@ -38,7 +38,7 @@ filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
 scale_name = "scale_factors_jet.json"
 
-gen_jet.remove(pu)
+gen_jet = [gen_jet.remove(s) for s in pu]
 
 
 make_dataset(filepaths, "MElectrons_jet", scale_name, gen_jet)
