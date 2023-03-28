@@ -262,7 +262,7 @@ def jet_match(matched):
         .Define("MGenJet_hadronFlavour_uchar", "Take(GenJet_hadronFlavour, MGenJetIdx)")
         .Define(
             "MGenJet_hadronFlavour",
-            "static_cast<ROOT::VecOps::RVec<int>>(CleanGenJet_hadronFlavour_uchar)",
+            "static_cast<ROOT::VecOps::RVec<int>>(MGenJet_hadronFlavour_uchar)",
         )
         .Define(
             "MGenJet_EncodedHadronFlavour_b",
