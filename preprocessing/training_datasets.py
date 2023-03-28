@@ -4,7 +4,7 @@ from preprocessing import make_dataset
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
-from columns import gen_ele, gen_pho, gen_jet
+from columns import gen_ele, gen_pho, gen_jet, pu
 
 dataset_path = os.path.join(os.path.dirname(__file__), "..", "extraction", "dataset")
 
@@ -37,5 +37,8 @@ filenames = [f"MElectrons_{i}_jet.root:MElectrons" for i in range(9)]
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
 scale_name = "scale_factors_jet.json"
+
+gen_jet.remove(pu)
+
 
 make_dataset(filepaths, "MElectrons_jet", scale_name, gen_jet)
