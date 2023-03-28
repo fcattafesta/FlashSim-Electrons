@@ -4,9 +4,16 @@ import ROOT
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
-from columns import ele_names, reco_columns
-
-from variables import gen_ele, gen_pho, gen_jet, eff_ele, eff_pho, eff_jet
+from columns import (
+    ele_names,
+    reco_columns,
+    gen_ele,
+    gen_pho,
+    gen_jet,
+    eff_ele,
+    eff_pho,
+    eff_jet,
+)
 
 ROOT.gInterpreter.ProcessLine('#include "extraction.h"')
 

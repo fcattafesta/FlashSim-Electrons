@@ -1,94 +1,3 @@
-gen_columns = [
-    "MGenElectron_eta",
-    "MGenElectron_phi",
-    "MGenElectron_pt",
-    "MGenElectron_charge",
-    "MGenElectron_statusFlag0",
-    "MGenElectron_statusFlag1",
-    "MGenElectron_statusFlag2",
-    "MGenElectron_statusFlag3",
-    "MGenElectron_statusFlag4",
-    "MGenElectron_statusFlag5",
-    "MGenElectron_statusFlag6",
-    "MGenElectron_statusFlag7",
-    "MGenElectron_statusFlag8",
-    "MGenElectron_statusFlag9",
-    "MGenElectron_statusFlag10",
-    "MGenElectron_statusFlag11",
-    "MGenElectron_statusFlag12",
-    "MGenElectron_statusFlag13",
-    "MGenElectron_statusFlag14",
-    "ClosestJet_dr",
-    "ClosestJet_dphi",
-    "ClosestJet_deta",
-    "ClosestJet_pt",
-    "ClosestJet_mass",
-    "ClosestJet_EncodedPartonFlavour_light",
-    "ClosestJet_EncodedPartonFlavour_gluon",
-    "ClosestJet_EncodedPartonFlavour_c",
-    "ClosestJet_EncodedPartonFlavour_b",
-    "ClosestJet_EncodedPartonFlavour_undefined",
-    "ClosestJet_EncodedHadronFlavour_b",
-    "ClosestJet_EncodedHadronFlavour_c",
-    "ClosestJet_EncodedHadronFlavour_light",
-    "Pileup_gpudensity",
-    "Pileup_nPU",
-    "Pileup_nTrueInt",
-    "Pileup_pudensity",
-    "Pileup_sumEOOT",
-    "Pileup_sumLOOT",
-]
-
-reco_columns = [
-    "MElectron_convVeto",
-    "MElectron_deltaEtaSC",
-    "MElectron_dr03EcalRecHitSumEt",
-    "MElectron_dr03HcalDepth1TowerSumEt",
-    "MElectron_dr03TkSumPt",
-    "MElectron_dr03TkSumPtHEEP",
-    "MElectron_dxy",
-    "MElectron_dxyErr",
-    "MElectron_dz",
-    "MElectron_dzErr",
-    "MElectron_eInvMinusPInv",
-    "MElectron_energyErr",
-    "MElectron_etaMinusGen",
-    "MElectron_hoe",
-    "MElectron_ip3d",
-    "MElectron_isPFcand",
-    "MElectron_jetPtRelv2",
-    "MElectron_jetRelIso",
-    "MElectron_lostHits",
-    "MElectron_miniPFRelIso_all",
-    "MElectron_miniPFRelIso_chg",
-    "MElectron_mvaFall17V1Iso",
-    "MElectron_mvaFall17V1Iso_WP80",
-    "MElectron_mvaFall17V1Iso_WP90",
-    "MElectron_mvaFall17V1Iso_WPL",
-    "MElectron_mvaFall17V1noIso",
-    "MElectron_mvaFall17V1noIso_WP80",
-    "MElectron_mvaFall17V1noIso_WP90",
-    "MElectron_mvaFall17V1noIso_WPL",
-    "MElectron_mvaFall17V2Iso",
-    "MElectron_mvaFall17V2Iso_WP80",
-    "MElectron_mvaFall17V2Iso_WP90",
-    "MElectron_mvaFall17V2Iso_WPL",
-    "MElectron_mvaFall17V2noIso",
-    "MElectron_mvaFall17V2noIso_WP80",
-    "MElectron_mvaFall17V2noIso_WP90",
-    "MElectron_mvaFall17V2noIso_WPL",
-    "MElectron_mvaTTH",
-    "MElectron_pfRelIso03_all",
-    "MElectron_pfRelIso03_chg",
-    "MElectron_phiMinusGen",
-    "MElectron_ptRatio",
-    "MElectron_r9",
-    "MElectron_seedGain",
-    "MElectron_sieie",
-    "MElectron_sip3d",
-    "MElectron_tightCharge",
-]
-
 ele_cond = [
     "GenElectron_eta",
     "GenElectron_phi",
@@ -122,13 +31,55 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_b",
     "ClosestJet_EncodedHadronFlavour_c",
     "ClosestJet_EncodedHadronFlavour_light",
-    "Pileup_gpudensity",
-    "Pileup_nPU",
-    "Pileup_nTrueInt",
-    "Pileup_pudensity",
-    "Pileup_sumEOOT",
-    "Pileup_sumLOOT",
 ]
+
+eff_ele = [var.replace("C", "GC", 1) for var in ele_cond]  # for efficiency
+
+gen_ele = [var.replace("G", "MG", 1) for var in ele_cond]  # for flow
+
+pho_cond = [
+    "GenPhoton_eta",
+    "GenPhoton_phi",
+    "GenPhoton_pt",
+    "GenPhoton_statusFlag0",
+    "GenPhoton_statusFlag1",
+    "GenPhoton_statusFlag2",
+    "GenPhoton_statusFlag3",
+    "GenPhoton_statusFlag4",
+    "GenPhoton_statusFlag5",
+    "GenPhoton_statusFlag6",
+    "GenPhoton_statusFlag7",
+    "GenPhoton_statusFlag8",
+    "GenPhoton_statusFlag9",
+    "GenPhoton_statusFlag10",
+    "GenPhoton_statusFlag11",
+    "GenPhoton_statusFlag12",
+    "GenPhoton_statusFlag13",
+    "GenPhoton_statusFlag14",
+]
+
+eff_pho = pho_cond  # for efficiency
+
+gen_pho = [var.replace("G", "MG", 1) for var in pho_cond]  # for flow
+
+jet_cond = [
+    "GenJet_eta",
+    "GenJet_phi",
+    "GenJet_pt",
+    "GenJet_mass",
+    "GenJet_EncodedPartonFlavour_light",
+    "GenJet_EncodedPartonFlavour_gluon",
+    "GenJet_EncodedPartonFlavour_c",
+    "GenJet_EncodedPartonFlavour_b",
+    "GenJet_EncodedPartonFlavour_undefined",
+    "GenJet_EncodedHadronFlavour_b",
+    "GenJet_EncodedHadronFlavour_c",
+    "GenJet_EncodedHadronFlavour_light",
+]
+
+eff_jet = jet_cond  # for efficiency
+
+gen_jet = [var.replace("G", "MG", 1) for var in jet_cond]  # for flow
 
 ele_names = [
     "convVeto",
@@ -180,3 +131,18 @@ ele_names = [
     "tightCharge",
     "charge",
 ]
+
+reco_columns = [f"MElectron_{name}" for name in ele_names]
+
+pu = [
+    "Pileup_gpudensity",
+    "Pileup_nPU",
+    "Pileup_nTrueInt",
+    "Pileup_pudensity",
+    "Pileup_sumEOOT",
+    "Pileup_sumLOOT",
+]
+
+gen_ele = gen_ele + pu
+gen_pho = gen_pho + pu
+gen_jet = gen_jet + pu
