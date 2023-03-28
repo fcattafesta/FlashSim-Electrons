@@ -13,22 +13,26 @@ warnings.filterwarnings("ignore")  # temporary for MatPlotLibDeprecationWarning 
 
 from prep_actions import target_dictionary  # operation dictionary
 
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
+
+from columns import reco_columns
+
 
 np.random.seed(0)  # fixed seed for random smearing
 
 # NOTE: uproot 5 update has changed the way to access the TTree
 # as a multiindex pandas dataframe, in case of future errors the sintax should be:
 # df = ak.to_dataframe(tree.arrays(library="ak", *args, **kwargs))
-def dataset(tree, version=0, dictionary=False, *args, **kwargs):
+def dataset(tree, cols, version=0, dictionary=False, *args, **kwargs):
     """
     Given the TTree, returns the corresponding pandas dataframe.
     If dictionary is True, an empty dictionary of TTree variables is dumped on .txt file (to be copied on dictionary.py).
     """
     df = (
-        tree.arrays(library="pd", *args, **kwargs)
+        tree.arrays(expression=cols, library="pd", *args, **kwargs)
         .reset_index(drop=True)
         .astype("float32")
-        .dropna()
+        .dropna
     )
 
     if dictionary:
@@ -198,10 +202,12 @@ def preprocessing(df, vars_dictionary, scale_factor_name):
     return df
 
 
-def make_dataset(files, outname, scale_factors_name):
+def make_dataset(files, outname, scale_factors_name, gen_cols):
     """
     Makes dataset from given files and saves it to outname
     """
+    cols = gen_cols + reco_columns
+
     tree = uproot.open(files[0], num_workers=20)
     df = dataset(tree)
 
