@@ -502,6 +502,8 @@ def jet_ele(matched):
 
 def make_files(inputname, outname, dict):
 
+    ROOT.EnableImplicitMT()
+
     print(f"Processing {inputname}...")
 
     d = ROOT.RDataFrame("Events", inputname)
