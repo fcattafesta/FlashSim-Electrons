@@ -1,4 +1,5 @@
 import os
+import json
 import ROOT
 
 from extract import make_files
@@ -50,9 +51,21 @@ file_paths = [
     "40E28BE3-1A22-9D40-A482-2BAA3E9ABC24.root",
 ]
 
-extracted = [os.path.join("dataset", f"MElectrons_{i}.root") for i in range(len(file_paths))]
+extracted = [os.path.join("dataset", f"MElectrons_{i}") for i in range(len(file_paths))]
+
+d = {
+    "RECOELE_GENELE": (0, 0),
+    "GENELE_RECOELE": (0, 0),
+    "RECOELE_GENPHO": (0, 0),
+    "GENPHO_RECOELE": (0, 0),
+    "RECOELE_GENJET": (0, 0),
+    "GENJET_RECOELE": (0, 0),
+}
 
 if __name__ == "__main__":
 
     for file_in, file_out in zip(file_paths, extracted):
-        make_files(file_in, file_out)
+        make_files(file_in, file_out, d)
+
+    with open(os.path.join(os.path.dirname(__file__)), "match_dict.json", "w") as f:
+        json.dump(d, f)

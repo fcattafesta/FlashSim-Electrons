@@ -33,6 +33,8 @@ gen_ele = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
+eff_ele = [var.replace("M", "", 1) for var in gen_ele if var.startswith("M")]
+
 gen_pho = [
     "MGenPhoton_eta",
     "MGenPhoton_phi",
@@ -54,6 +56,8 @@ gen_pho = [
     "MGenPhoton_statusFlag14",
 ]
 
+eff_pho = [var.replace("M", "", 1) for var in gen_pho if var.startswith("M")]
+
 gen_jet = [
     "MGenJet_eta",
     "MGenJet_phi",
@@ -68,6 +72,8 @@ gen_jet = [
     "MGenJet_EncodedHadronFlavour_c",
     "MGenJet_EncodedHadronFlavour_light",
 ]
+
+eff_jet = [var.replace("M", "", 1) for var in gen_jet if var.startswith("M")]
 
 pu = [
     "Pileup_gpudensity",

@@ -74,7 +74,7 @@ auto GenEleMatch(float dr, float closest_dr, float pt_rel, float closest_pt_rel,
   int num = pow(2, 13);
   int bAND = status & num;
   if (dr < closest_dr && pt_rel < closest_pt_rel && abs(pdgid) == 11 &&
-      chg == TMath::Sign(1, pdgid) && num == bAND) {
+      chg == -TMath::Sign(1, pdgid) && num == bAND) {
     return 1;
   }
   return 0;
@@ -85,7 +85,7 @@ auto Electron_genObjMatch(
     ROOT::VecOps::RVec<float> &gen_phi, ROOT::VecOps::RVec<float> &ele_pt,
     ROOT::VecOps::RVec<float> &ele_eta, ROOT::VecOps::RVec<float> &ele_phi,
     ROOT::VecOps::RVec<int> &objmatch, int type,
-    ROOT::VecOps::RVec<int> &gen_pgdid, ROOT::VecOps::RVec<int> &gen_status,
+    ROOT::VecOps::RVec<int> &gen_pdgid, ROOT::VecOps::RVec<int> &gen_status,
     ROOT::VecOps::RVec<int> &clean, ROOT::VecOps::RVec<int> &ele_chg) {
 
   auto size_outer = ele_pt.size();
@@ -106,13 +106,13 @@ auto Electron_genObjMatch(
 
         if (type == 0) {
           if (GenEleMatch(dr, closest_dr, dpt / gen_pt[j], closest_pt_rel,
-                          gen_pgdid[j], gen_status[j], ele_chg[i]) == 1) {
+                          gen_pdgid[j], gen_status[j], ele_chg[i]) == 1) {
             closest_dr = dr;
             closest_pt_rel = dpt / gen_pt[j];
             objmatch[i] = type;
           }
         } else if (type == 1) {
-          if (GenPhotonMatch(dr, closest_dr, gen_pgdid[j], gen_status[j]) ==
+          if (GenPhotonMatch(dr, closest_dr, gen_pdgid[j], gen_status[j]) ==
               1) {
             closest_dr = dr;
             objmatch[i] = type;
@@ -133,7 +133,7 @@ auto Electron_genObjIdx(
     ROOT::VecOps::RVec<float> &gen_pt, ROOT::VecOps::RVec<float> &gen_eta,
     ROOT::VecOps::RVec<float> &gen_phi, ROOT::VecOps::RVec<float> &ele_pt,
     ROOT::VecOps::RVec<float> &ele_eta, ROOT::VecOps::RVec<float> &ele_phi,
-    int type, ROOT::VecOps::RVec<int> &gen_pgdid,
+    int type, ROOT::VecOps::RVec<int> &gen_pdgid,
     ROOT::VecOps::RVec<int> &gen_status, ROOT::VecOps::RVec<int> &clean,
     ROOT::VecOps::RVec<int> &ele_chg) {
 
@@ -158,13 +158,13 @@ auto Electron_genObjIdx(
 
       if (type == 0) {
         if (GenEleMatch(dr, closest_dr, dpt / gen_pt[j], closest_pt_rel,
-                        gen_pgdid[j], gen_status[j], ele_chg[i]) == 1) {
+                        gen_pdgid[j], gen_status[j], ele_chg[i]) == 1) {
           closest_dr = dr;
           closest_pt_rel = dpt / gen_pt[j];
           idx[i] = j;
         }
       } else if (type == 1) {
-        if (GenPhotonMatch(dr, closest_dr, gen_pgdid[j], gen_status[j]) == 1) {
+        if (GenPhotonMatch(dr, closest_dr, gen_pdgid[j], gen_status[j]) == 1) {
           closest_dr = dr;
           idx[i] = j;
         }
@@ -395,10 +395,10 @@ auto charge(ROOT::VecOps::RVec<int> &pdgId) {
   return charge;
 }
 
-auto flavour_encoder(ROOT::VecOps::RVec<int> &flavour,
+auto flavour_encoder(ROOT::VecOps::RVec<int> &fj,
                      ROOT::VecOps::RVec<int> flavours) {
 
-  auto size = flavour.size();
+  auto size = fj.size();
   auto n_flavours = flavours.size();
 
   ROOT::VecOps::RVec<int> fenc;
@@ -414,4 +414,92 @@ auto flavour_encoder(ROOT::VecOps::RVec<int> &flavour,
   }
 
   return fenc;
+}
+
+auto GenPart_ElectronIdx(
+    ROOT::VecOps::RVec<float> &gen_pt, ROOT::VecOps::RVec<float> &gen_eta,
+    ROOT::VecOps::RVec<float> &gen_phi, ROOT::VecOps::RVec<int> &gen_pdgid,
+    ROOT::VecOps::RVec<int> &gen_status, ROOT::VecOps::RVec<float> &ele_pt,
+    ROOT::VecOps::RVec<float> &ele_eta, ROOT::VecOps::RVec<float> &ele_phi,
+    ROOT::VecOps::RVec<int> &ele_charge, ROOT::VecOps::RVec<int> &idx,
+    int type) {
+
+  auto size_outer = gen_pt.size();
+  auto size_inner = ele_pt.size();
+
+  for (auto i = 0; i < size_outer; i++) {
+    auto closest_dr = 0.3;
+    auto closest_pt_rel = 0.5;
+
+    if (idx[i] < 0) {
+      for (auto j = 0; j < size_inner; j++) {
+        auto dpt_rel = abs(ele_pt[j] - gen_pt[i]) / gen_pt[i];
+        auto deta = ele_eta[j] - gen_eta[i];
+        auto dphi = TVector2::Phi_mpi_pi(ele_phi[j] - gen_phi[i]);
+        auto dr = TMath::Sqrt(deta * deta + dphi * dphi);
+
+        if (type == 0) {
+          if (GenEleMatch(dr, closest_dr, dpt_rel, closest_pt_rel, gen_pdgid[i],
+                          gen_status[i], ele_charge[j]) == 1) {
+            closest_dr = dr;
+            closest_pt_rel = dpt_rel;
+            idx[i] = j;
+          }
+        } else if (type == 1) {
+          if (GenPhotonMatch(dr, closest_dr, gen_pdgid[i], gen_status[i]) ==
+              1) {
+            closest_dr = dr;
+            closest_pt_rel = dpt_rel;
+            idx[i] = j;
+          }
+        }
+      }
+    }
+  }
+  return idx;
+}
+
+auto GenJet_ElectronIdx(ROOT::VecOps::RVec<float> &gen_pt,
+                        ROOT::VecOps::RVec<float> &gen_eta,
+                        ROOT::VecOps::RVec<float> &gen_phi,
+                        ROOT::VecOps::RVec<int> &clean,
+                        ROOT::VecOps::RVec<float> &ele_pt,
+                        ROOT::VecOps::RVec<float> &ele_eta,
+                        ROOT::VecOps::RVec<float> &ele_phi,
+                        ROOT::VecOps::RVec<int> &genpart_ele_idx) {
+
+  auto size_outer = gen_pt.size();
+  auto size_inner = ele_pt.size();
+  auto size_genpart = genpart_ele_idx.size();
+
+  ROOT::VecOps::RVec<int> idx;
+  idx.reserve(size_outer);
+
+  for (auto i = 0; i < size_outer; i++) {
+    auto closest_dr = 0.3;
+
+    idx.emplace_back(-1);
+
+    for (auto j = 0; j < size_inner; j++) {
+      auto deta = ele_eta[j] - gen_eta[i];
+      auto dphi = TVector2::Phi_mpi_pi(ele_phi[j] - gen_phi[i]);
+      auto dr = TMath::Sqrt(deta * deta + dphi * dphi);
+
+      int match_to_genpart = 0;
+
+      for (auto k = 0; k < size_genpart; k++) {
+        if (j == genpart_ele_idx[k]) {
+          match_to_genpart = 1;
+          break;
+        }
+      }
+
+      if ((GenJetMatch(dr, closest_dr, clean[i]) == 1) &&
+          (match_to_genpart == 0)) {
+        closest_dr = dr;
+        idx[i] = j;
+      }
+    }
+  }
+  return idx;
 }
