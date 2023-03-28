@@ -134,8 +134,6 @@ ele_names = [
 
 reco_columns = [f"MElectron_{name}" for name in ele_names]
 
-reco_columns.remove("MElectron_charge")
-
 for i, name in enumerate(reco_columns):
     if name == "MElectron_pt":
         reco_columns[i] = "MElectron_ptRatio"
