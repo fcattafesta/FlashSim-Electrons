@@ -79,14 +79,14 @@ def process_column_var(column_name, operations, df):
     return df[column_name]
 
 
-def postprocessing(df, vars_dictionary):
+def postprocessing(df, vars_dictionary, scale_file):
     """
     Postprocessing general function given any dataframe and its dictionary
     """
 
     with open(
         os.path.join(
-            os.path.dirname(__file__), "..", "preprocessing", "scale_factors.json"
+            os.path.dirname(__file__), "..", "preprocessing", scale_file
         )
     ) as scale_file:
         scale_dict = json.load(scale_file)
