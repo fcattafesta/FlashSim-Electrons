@@ -163,11 +163,18 @@ def process_column_var(column_name, operations, df):
     return df[column_name]
 
 
-def preprocessing(df, vars_dictionary):
+def preprocessing(df, vars_dictionary, scale_factor_name):
     """
     Preprocessing general function given any dataframe and its dictionary
     """
     dict_to_save = {}
+
+    if "ele" in scale_factor_name:
+        tag = "ele"
+    elif "pho" in scale_factor_name:
+        tag = "pho"
+    else:
+        tag = "jet"
 
     print(f"Num. before processing: {df.shape}")
 
@@ -181,44 +188,39 @@ def preprocessing(df, vars_dictionary):
         df[column_name], scale = fix_range(column_name, df)
         dict_to_save[column_name] = float(scale)
         axs[1].hist(df[column_name], bins=30, histtype="step")
-        plt.savefig(f"processed_figures/{column_name}.pdf", format="pdf")
+        plt.savefig(f"figures/{tag}/{column_name}.pdf", format="pdf")
         plt.close()  # produces MatplotlibDeprecationWarning. It is a bug (https://github.com/matplotlib/matplotlib/issues/23921)
 
     df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
 
     print(f"Num. after processing: {df.shape}")
 
-    f = open("scale_factors.json", "w")
+    f = open(scale_factor_name, "w")
     f.write(json.dumps(dict_to_save))
     f.close()
-
-    os.system("cp scale_factors.json ../../training/electrons/")
 
     return df
 
 
-if __name__ == "__main__":
-
-    root_files = [os.path.join(os.path.dirname(__file__) , "..", "extraction", f"{file}:MElectrons") for file in extracted]
-
-    print(root_files)
-
-    tree = uproot.open(root_files[0], num_workers=20)
-    print(type(tree))
+def make_dataset(files, outname, scale_factors_name):
+    """
+    Makes dataset from given files and saves it to outname
+    """
+    tree = uproot.open(files[0], num_workers=20)
     df = dataset(tree)
 
-    for file in root_files[1:]:
+    for file in files[1:]:
         tree = uproot.open(file, num_workers=20)
         df = pd.concat([df, dataset(tree)], axis=0)
         df.reset_index(drop=True)
 
-    df = preprocessing(df, target_dictionary)
+    df = preprocessing(df, target_dictionary, scale_factors_name)
 
     print(df.columns)
-    file = h5py.File(f"MElectrons_1.hdf5", "w")
+    file = h5py.File(f"{outname}.hdf5", "w")
 
     dset = file.create_dataset("data", data=df.values, dtype="f4")
 
     file.close()
 
-    os.system("mv MElectrons_1.hdf5 ../training")
+    os.system(f"mv {outname}.hdf5 ../training")
