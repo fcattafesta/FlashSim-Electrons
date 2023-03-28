@@ -35,6 +35,8 @@ def dataset(tree, cols, version=0, dictionary=False, *args, **kwargs):
         .dropna
     )
 
+    print(type(df))
+
     if dictionary:
         val = input("Are you sure to make a new empty vars_dictionary? (y/n)\n")
         if val == "y":
