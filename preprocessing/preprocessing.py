@@ -13,10 +13,6 @@ warnings.filterwarnings("ignore")  # temporary for MatPlotLibDeprecationWarning 
 
 from prep_actions import target_dictionary  # operation dictionary
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "extraction"))
-
-from make_dataset import extracted
-
 
 np.random.seed(0)  # fixed seed for random smearing
 
