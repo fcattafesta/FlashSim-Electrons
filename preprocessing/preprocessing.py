@@ -35,7 +35,7 @@ def dataset(tree, cols, version=0, dictionary=False, *args, **kwargs):
         .dropna
     )
 
-    print(type(df))
+    print(df)
 
     if dictionary:
         val = input("Are you sure to make a new empty vars_dictionary? (y/n)\n")
@@ -183,7 +183,7 @@ def preprocessing(df, vars_dictionary, scale_factor_name):
     df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
 
     for column_name, operation in vars_dictionary.items():
-        fig, axs = plt.subplots(1, 2)
+        fig, axs = plt.subplots(1, 2, figsize=(10, 5))
         plt.suptitle(f"{column_name}")
         axs[0].hist(df[column_name], bins=30, histtype="step")
         df[column_name] = process_column_var(column_name, operation, df)
