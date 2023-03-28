@@ -212,7 +212,7 @@ def make_dataset(files, outname, scale_factors_name, gen_cols):
     df = dataset(tree, cols)
 
     for file in files[1:]:
-        tree = uproot.open(file, cols, num_workers=20)
+        tree = uproot.open(file, num_workers=20)
         df = pd.concat([df, dataset(tree, cols)], axis=0)
         df.reset_index(drop=True)
 
