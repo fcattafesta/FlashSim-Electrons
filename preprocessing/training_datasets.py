@@ -10,7 +10,7 @@ dataset_path = os.path.join(os.path.dirname(__file__), "..", "extraction", "data
 
 # GenElectron training dataset
 
-filenames = [f"MElectrons_{i}_ele.root:MElectrons" for i in range(9)]
+filenames = [f"MElectrons_{i}_ele.root:MElectrons" for i in range(11)]
 
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
@@ -21,7 +21,7 @@ make_dataset(filepaths, "MElectrons_ele", scale_name, gen_ele)
 
 # GenPhoton training dataset
 
-filenames = [f"MElectrons_{i}_pho.root:MElectrons" for i in range(9)]
+filenames = [f"MElectrons_{i}_pho.root:MElectrons" for i in range(11)]
 
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
@@ -32,7 +32,7 @@ make_dataset(filepaths, "MElectrons_pho", scale_name, gen_pho)
 
 # GenJet training dataset
 
-filenames = [f"MElectrons_{i}_jet.root:MElectrons" for i in range(9)]
+filenames = [f"MElectrons_{i}_jet.root:MElectrons" for i in range(11)]
 
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
