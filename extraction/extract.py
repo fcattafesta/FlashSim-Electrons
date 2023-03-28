@@ -500,7 +500,7 @@ def jet_ele(matched):
     return to_reco
 
 
-def make_file(inputname, outname, dict):
+def make_files(inputname, outname, dict):
 
     print(f"Processing {inputname}...")
 
