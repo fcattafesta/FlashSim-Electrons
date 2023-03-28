@@ -368,55 +368,55 @@ def ele_ele(matched):
             "GenElectron_statusFlag14", "BitwiseDecoder(GenElectron_statusFlags, 14)"
         )
         .Define(
-            "ClosestJet_dr",
+            "GClosestJet_dr",
             "closest_jet_dr(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi)",
         )
         .Define(
-            "ClosestJet_dphi",
+            "GClosestJet_dphi",
             "closest_jet_dphi(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi)",
         )
         .Define(
-            "ClosestJet_deta",
+            "GClosestJet_deta",
             "closest_jet_deta(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi)",
         )
         .Define(
-            "ClosestJet_pt",
+            "GClosestJet_pt",
             "closest_jet_pt(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_pt)",
         )
         .Define(
-            "ClosestJet_mass",
+            "GClosestJet_mass",
             "closest_jet_mass(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_mass)",
         )
         .Define(
-            "ClosestJet_EncodedPartonFlavour_light",
+            "GClosestJet_EncodedPartonFlavour_light",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{1,2,3})",
         )
         .Define(
-            "ClosestJet_EncodedPartonFlavour_gluon",
+            "GClosestJet_EncodedPartonFlavour_gluon",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{21})",
         )
         .Define(
-            "ClosestJet_EncodedPartonFlavour_c",
+            "GClosestJet_EncodedPartonFlavour_c",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{4})",
         )
         .Define(
-            "ClosestJet_EncodedPartonFlavour_b",
+            "GClosestJet_EncodedPartonFlavour_b",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{5})",
         )
         .Define(
-            "ClosestJet_EncodedPartonFlavour_undefined",
+            "GClosestJet_EncodedPartonFlavour_undefined",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_partonFlavour, ROOT::VecOps::RVec<int>{0})",
         )
         .Define(
-            "ClosestJet_EncodedHadronFlavour_b",
+            "GClosestJet_EncodedHadronFlavour_b",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{5})",
         )
         .Define(
-            "ClosestJet_EncodedHadronFlavour_c",
+            "GClosestJet_EncodedHadronFlavour_c",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{4})",
         )
         .Define(
-            "ClosestJet_EncodedHadronFlavour_light",
+            "GClosestJet_EncodedHadronFlavour_light",
             "closest_jet_flavour_encoder(CleanGenJet_eta, CleanGenJet_phi, GenElectron_eta, GenElectron_phi, CleanGenJet_hadronFlavour, ROOT::VecOps::RVec<int>{0})",
         )
     )

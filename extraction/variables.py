@@ -33,7 +33,8 @@ gen_ele = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
-eff_ele = [var.replace("M", "", 1) for var in gen_ele if var.startswith("M")]
+eff_ele = [var.replace("M", "", 1) for var in gen_ele]
+eff_ele = [var.replace("C", "GC", 1) for var in eff_ele]
 
 gen_pho = [
     "MGenPhoton_eta",
