@@ -11,7 +11,7 @@ import warnings
 
 warnings.filterwarnings("ignore")  # temporary for MatPlotLibDeprecationWarning bug
 
-from prep_actions import target_dictionary  # operation dictionary
+ # operation dictionary
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
@@ -202,7 +202,7 @@ def preprocessing(df, vars_dictionary, scale_factor_name):
     return df
 
 
-def make_dataset(files, outname, scale_factors_name, gen_cols):
+def make_dataset(files, outname, target_dictionary, scale_factors_name, gen_cols):
     """
     Makes dataset from given files and saves it to outname
     """
