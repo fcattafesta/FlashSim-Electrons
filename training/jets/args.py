@@ -12,7 +12,7 @@ LAYERS = [
     "concatscale",
 ]
 
-Y_DIM = 38
+Y_DIM = 18
 Z_DIM = 48
 
 
@@ -112,7 +112,7 @@ def add_args(parser):
     parser.add_argument(
         "--batch_size",
         type=int,
-        default=512,
+        default=8192,
         help="Batch size (of datasets) for training",
     )
     parser.add_argument(
@@ -171,11 +171,11 @@ def add_args(parser):
 
     # logging and saving frequency
     parser.add_argument(
-        "--log_name", type=str, default="EEM", help="Name for the log dir"
+        "--log_name", type=str, default="EJM", help="Name for the log dir"
     )
-    parser.add_argument("--val_freq", type=int, default=2)
+    parser.add_argument("--val_freq", type=int, default=5)
     parser.add_argument("--log_freq", type=int, default=10)
-    parser.add_argument("--save_freq", type=int, default=2)
+    parser.add_argument("--save_freq", type=int, default=5)
 
     # validation options
     parser.add_argument("--validate_at_0", default=False, action="store_true")

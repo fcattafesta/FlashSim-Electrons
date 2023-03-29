@@ -16,10 +16,10 @@ sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessin
 sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
-from post_actions import target_dictionary
+from post_actions import target_dictionary, context_dictionary
 from corner_plots import make_corner
 
-from columns import gen_ele, reco_columns
+from columns import gen_jet, reco_columns
 
 
 def validate_electrons(
@@ -70,15 +70,15 @@ def validate_electrons(
     reco = np.array(reco).reshape((-1, args.zdim))
     samples = np.array(samples).reshape((-1, args.zdim))
 
-    gen = pd.DataFrame(data=gen, columns=gen_ele)
+    gen = pd.DataFrame(data=gen, columns=gen_jet)
     reco = pd.DataFrame(data=reco, columns=reco_columns)
     samples = pd.DataFrame(data=samples, columns=reco_columns)
 
     # Postprocessing
 
-    reco = postprocessing(reco, target_dictionary, "scale_factors_ele.json")
+    reco = postprocessing(reco, target_dictionary, "scale_factors_jet.json")
 
-    samples = postprocessing(samples, target_dictionary, "scale_factors_ele.json")
+    samples = postprocessing(samples, target_dictionary, "scale_factors_jet.json")
 
     # New DataFrame containing FullSim-range saturated samples
 
@@ -137,9 +137,9 @@ def validate_electrons(
     # Return to physical kinematic variables
 
     for df in [reco, samples, saturated_samples]:
-        df["MElectron_pt"] = df["MElectron_ptRatio"] * gen["MGenElectron_pt"]
-        df["MElectron_eta"] = df["MElectron_etaMinusGen"] + gen["MGenElectron_eta"]
-        df["MElectron_phi"] = df["MElectron_phiMinusGen"] + gen["MGenElectron_phi"]
+        df["MElectron_pt"] = df["MElectron_ptRatio"] * gen["MGenJet_pt"]
+        df["MElectron_eta"] = df["MElectron_etaMinusGen"] + gen["MGenJet_eta"]
+        df["MElectron_phi"] = df["MElectron_phiMinusGen"] + gen["MGenJet_phi"]
 
     # Zoom-in for high ws distributions
 
@@ -269,17 +269,11 @@ def validate_electrons(
 
     ranges = [[0, 0.1], [0, 10], [0, 5]]
 
-    conds = [f"MGenElectron_statusFlag{i}" for i in (0, 2, 7)]
-    conds.append("ClosestJet_EncodedPartonFlavour_b")
+    conds = ["GenJet_EncodedPartonFlavour_b", "GenJet_EncodedPartonFlavour_c"]
 
-    names = [
-        "isPrompt",
-        "isTauDecayProduct",
-        "isHardProcess",
-        "ClosestJet_partonFlavour_is_b",
-    ]
+    names = conds
 
-    colors = ["tab:red", "tab:green", "tab:blue", "tab:orange"]
+    colors = ["tab:red", "tab:green"]
 
     for target, rangeR in zip(targets, ranges):
 

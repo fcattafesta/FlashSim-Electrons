@@ -153,14 +153,14 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
     dirpath = os.path.dirname(__file__)
 
     tr_dataset = ElectronDataset(
-        [os.path.join(dirpath, "MElectrons_ele.hdf5")],
+        [os.path.join(dirpath, "MElectrons_jet.hdf5")],
         x_dim=args.zdim,
         y_dim=args.y_dim,
         start=0,
         limit=args.train_limit,
     )
     te_dataset = ElectronDataset(
-        [os.path.join(dirpath, "MElectrons_ele.hdf5")],
+        [os.path.join(dirpath, "MElectrons_jet.hdf5")],
         x_dim=args.zdim,
         y_dim=args.y_dim,
         start=args.train_limit,

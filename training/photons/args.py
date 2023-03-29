@@ -12,8 +12,8 @@ LAYERS = [
     "concatscale",
 ]
 
-Y_DIM = 38
-Z_DIM = 47
+Y_DIM = 24
+Z_DIM = 48
 
 
 def add_args(parser):
@@ -71,7 +71,7 @@ def add_args(parser):
         "--batch_norm_arqs", type=eval, default=True, choices=[True, False]
     )
     parser.add_argument("--num_bins", type=int, default=64)
-    parser.add_argument("--tail_bound", type=float, default=3.0)
+    parser.add_argument("--tail_bound", type=float, default=1.0)
     parser.add_argument("--hidden_dim_maf", type=int, default=128)
     parser.add_argument("--hidden_dim_arqs", type=int, default=300)
     parser.add_argument(
@@ -171,7 +171,7 @@ def add_args(parser):
 
     # logging and saving frequency
     parser.add_argument(
-        "--log_name", type=str, default="EM1", help="Name for the log dir"
+        "--log_name", type=str, default="EPM", help="Name for the log dir"
     )
     parser.add_argument("--val_freq", type=int, default=2)
     parser.add_argument("--log_freq", type=int, default=10)

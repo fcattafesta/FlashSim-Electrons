@@ -12,14 +12,14 @@ import corner
 
 from scipy.stats import wasserstein_distance
 
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "postprocessing"))
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
+sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
+sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
-from post_actions import target_dictionary, context_dictionary
+from post_actions import target_dictionary
 from corner_plots import make_corner
 
-from columns import gen_columns, reco_columns
+from columns import gen_pho, reco_columns
 
 
 def validate_electrons(
@@ -70,15 +70,15 @@ def validate_electrons(
     reco = np.array(reco).reshape((-1, args.zdim))
     samples = np.array(samples).reshape((-1, args.zdim))
 
-    gen = pd.DataFrame(data=gen, columns=gen_columns)
+    gen = pd.DataFrame(data=gen, columns=gen_pho)
     reco = pd.DataFrame(data=reco, columns=reco_columns)
     samples = pd.DataFrame(data=samples, columns=reco_columns)
 
     # Postprocessing
 
-    reco = postprocessing(reco, target_dictionary)
+    reco = postprocessing(reco, target_dictionary, "scale_factors_pho.json")
 
-    samples = postprocessing(samples, target_dictionary)
+    samples = postprocessing(samples, target_dictionary, "scale_factors_pho.json")
 
     # New DataFrame containing FullSim-range saturated samples
 
@@ -137,9 +137,9 @@ def validate_electrons(
     # Return to physical kinematic variables
 
     for df in [reco, samples, saturated_samples]:
-        df["MElectron_pt"] = df["MElectron_ptRatio"] * gen["MGenElectron_pt"]
-        df["MElectron_eta"] = df["MElectron_etaMinusGen"] + gen["MGenElectron_eta"]
-        df["MElectron_phi"] = df["MElectron_phiMinusGen"] + gen["MGenElectron_phi"]
+        df["MElectron_pt"] = df["MElectron_ptRatio"] * gen["MGenPhoton_pt"]
+        df["MElectron_eta"] = df["MElectron_etaMinusGen"] + gen["MGenPhoton_eta"]
+        df["MElectron_phi"] = df["MElectron_phiMinusGen"] + gen["MGenPhoton_phi"]
 
     # Zoom-in for high ws distributions
 
@@ -270,16 +270,14 @@ def validate_electrons(
     ranges = [[0, 0.1], [0, 10], [0, 5]]
 
     conds = [f"MGenElectron_statusFlag{i}" for i in (0, 2, 7)]
-    conds.append("ClosestJet_EncodedPartonFlavour_b")
 
     names = [
         "isPrompt",
         "isTauDecayProduct",
         "isHardProcess",
-        "ClosestJet_partonFlavour_is_b",
     ]
 
-    colors = ["tab:red", "tab:green", "tab:blue", "tab:orange"]
+    colors = ["tab:red", "tab:green", "tab:blue"]
 
     for target, rangeR in zip(targets, ranges):
 
@@ -332,47 +330,6 @@ def validate_electrons(
             )
 
             del full, flash
-
-        mask = (
-            gen["ClosestJet_EncodedPartonFlavour_gluon"].values
-            + gen["ClosestJet_EncodedPartonFlavour_light"].values
-        ).astype(bool)
-        full = reco[target].values
-        full = full[mask]
-        full = full[~np.isnan(full)]
-        full = np.where(full > sup, sup, full)
-        full = np.where(full < inf, inf, full)
-
-        flash = samples[target].values
-        flash = flash[mask]
-        flash = flash[~np.isnan(flash)]
-        flash = np.where(flash > sup, sup, flash)
-        flash = np.where(flash < inf, inf, flash)
-
-        axs[0].hist(
-            full, bins=50, range=rangeR, histtype="step", ls="--", color="tab:purple"
-        )
-        axs[0].hist(
-            flash,
-            bins=50,
-            range=rangeR,
-            histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
-            color="tab:purple",
-        )
-
-        axs[1].hist(
-            full, bins=50, range=rangeR, histtype="step", ls="--", color="tab:purple"
-        )
-        axs[1].hist(
-            flash,
-            bins=50,
-            range=rangeR,
-            histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
-            color="tab:purple",
-        )
-        del full, flash
 
         axs[0].legend(frameon=False, loc="upper right")
         # plt.savefig(f"{save_dir}/{target}_conditioning.png", format="png")
@@ -449,61 +406,6 @@ def validate_electrons(
 
             del full, flash
 
-        mask = (
-            gen["ClosestJet_EncodedPartonFlavour_gluon"].values
-            + gen["ClosestJet_EncodedPartonFlavour_light"].values
-        ).astype(bool)
-        full = reco[target].values
-        full = full[mask]
-        full = full[~np.isnan(full)]
-        full = np.where(full > sup, sup, full)
-        full = np.where(full < inf, inf, full)
-
-        flash = samples[target].values
-        flash = flash[mask]
-        flash = flash[~np.isnan(flash)]
-        flash = np.where(flash > sup, sup, flash)
-        flash = np.where(flash < inf, inf, flash)
-
-        axs[0].hist(
-            full,
-            bins=50,
-            range=rangeR,
-            histtype="step",
-            ls="--",
-            color="tab:purple",
-            density=True,
-        )
-        axs[0].hist(
-            flash,
-            bins=50,
-            range=rangeR,
-            histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
-            color="tab:purple",
-            density=True,
-        )
-
-        axs[1].hist(
-            full,
-            bins=50,
-            range=rangeR,
-            histtype="step",
-            ls="--",
-            color="tab:purple",
-            density=True,
-        )
-        axs[1].hist(
-            flash,
-            bins=50,
-            range=rangeR,
-            histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
-            color="tab:purple",
-            density=True,
-        )
-        del full, flash
-
         axs[0].legend(frameon=False, loc="upper right")
         # plt.savefig(f"{save_dir}/{target}_conditioning_normalized.png", format="png")
         writer.add_figure(
@@ -529,7 +431,21 @@ def validate_electrons(
         "MElectron_pfRelIso03_chg",
     ]
 
-    fig = make_corner(reco, saturated_samples, labels, "Isolation")
+    ranges = [
+        (0, 200),
+        (-2, 2),
+        (0, 0.5),
+        (0, 0.5),
+        (0, 0.5),
+        (-1, 1),
+        (-1, 1),
+        (-1, 1),
+        (-1, 1),
+        (0, 0.5),
+        (0, 0.5),
+    ]
+
+    fig = make_corner(reco, saturated_samples, labels, "Isolation", ranges=ranges)
     writer.add_figure("Corner_plots/Isolation", fig, global_step=epoch)
 
     # Impact parameter (range)

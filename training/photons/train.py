@@ -13,8 +13,8 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from tensorboardX import SummaryWriter
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "models"))
 
 from dataset import ElectronDataset
 from modded_basic_nflow import (
@@ -153,14 +153,14 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
     dirpath = os.path.dirname(__file__)
 
     tr_dataset = ElectronDataset(
-        [os.path.join(dirpath, "MElectrons_1.hdf5")],
+        [os.path.join(dirpath, "MElectrons_pho.hdf5")],
         x_dim=args.zdim,
         y_dim=args.y_dim,
         start=0,
         limit=args.train_limit,
     )
     te_dataset = ElectronDataset(
-        [os.path.join(dirpath, "MElectrons_1.hdf5")],
+        [os.path.join(dirpath, "MElectrons_pho.hdf5")],
         x_dim=args.zdim,
         y_dim=args.y_dim,
         start=args.train_limit,
@@ -186,7 +186,7 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
 
     test_loader = torch.utils.data.DataLoader(
         dataset=te_dataset,
-        batch_size=args.batch_size,  # manually set batch size to avoid diff shapes
+        batch_size=8192,  # manually set batch size to avoid diff shapes
         shuffle=False,
         num_workers=0,
         pin_memory=True,
