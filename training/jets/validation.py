@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 
 import torch
 
@@ -84,6 +85,8 @@ def validate_electrons(
 
     saturated_samples = pd.DataFrame()
 
+    range_dict = {}
+
     # 1D FlashSim/FullSim comparison
 
     for column in reco_columns:
@@ -106,6 +109,8 @@ def validate_electrons(
             np.max(rangeR),
             saturated_samples[column],
         )
+
+        range_dict[column] = [np.min(rangeR), np.max(rangeR)]
 
         # Samples histogram
         axs[0].hist(
@@ -133,6 +138,9 @@ def validate_electrons(
         writer.add_figure(f"1D_Distributions/{column}", fig, global_step=epoch)
         writer.add_scalar(f"ws/{column}_wasserstein_distance", ws, global_step=epoch)
         plt.close()
+
+    with open(os.path.join(os.path.dirname(__file__), "range_dict.json"), "w") as f:
+        json.dump(range_dict, f)
 
     # Return to physical kinematic variables
 
