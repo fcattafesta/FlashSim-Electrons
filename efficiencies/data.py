@@ -14,11 +14,11 @@ class isReco_Dataset(torch.utils.data.Dataset):
     def __init__(self, filepath, input_dim, start, stop):
         h5py_file = h5py.File(filepath, "r")
         self.X = torch.tensor(
-            h5py_file["GenElectrons"][start : (start + stop), 0:input_dim],
+            h5py_file["data"][start : (start + stop), 0:input_dim],
             dtype=torch.float32,
         )
         self.y = torch.tensor(
-            h5py_file["GenElectrons"][start : (start + stop), -1], dtype=torch.float32
+            h5py_file["data"][start : (start + stop), -1], dtype=torch.float32
         ).view(-1, 1)
 
     def __len__(self):
@@ -38,7 +38,7 @@ def make_pd_dataframe(tree, cols, *args, **kwargs):
     return df
 
 
-def dataset_from_root(files, cols, *args, **kwargs):
+def dataset_from_root(files, cols, name, *args, **kwargs):
 
     tree = uproot.open(files[0], num_workers=20)
     df = make_pd_dataframe(tree, eff_ele)
@@ -50,8 +50,8 @@ def dataset_from_root(files, cols, *args, **kwargs):
 
     print(df.columns, df.shape)
 
-    f = h5py.File("GenElectrons.hdf5", "w")
-    f.create_dataset("GenElectrons", data=df.values, dtype="float32")
+    f = h5py.File(f"{name}.hdf5", "w")
+    f.create_dataset("data", data=df.values, dtype="float32")
     f.close()
 
 
@@ -71,8 +71,8 @@ files = [
 
 if __name__ == "__main__":
 
-    dataset_from_root(files[0], eff_ele)
+    dataset_from_root(files[0], eff_ele, "GenElectrons")
 
-    dataset_from_root(files[1], eff_pho)
+    dataset_from_root(files[1], eff_pho, "GenPhotons")
 
-    dataset_from_root(files[2], eff_jet)
+    dataset_from_root(files[2], eff_jet, "GenJets")
