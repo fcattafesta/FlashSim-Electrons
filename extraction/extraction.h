@@ -60,10 +60,11 @@ auto GenJetMatch(float dr, float closest_dr, int clean) {
   return 0;
 }
 
-auto GenPhotonMatch(float dr, float closest_dr, int pdgid, int status) {
+auto GenPhotonMatch(float dr, float closest_dr, float pt_gen, int pdgid,
+                    int status) {
   int num = pow(2, 13);
   int bAND = status & num;
-  if (dr < closest_dr && pdgid == 22 && num == bAND) {
+  if (dr < closest_dr && pt_gen >= 10 && pdgid == 22 && num == bAND) {
     return 1;
   }
   return 0;
@@ -112,8 +113,8 @@ auto Electron_genObjMatch(
             objmatch[i] = type;
           }
         } else if (type == 1) {
-          if (GenPhotonMatch(dr, closest_dr, gen_pdgid[j], gen_status[j]) ==
-              1) {
+          if (GenPhotonMatch(dr, closest_dr, gen_pt[i], gen_pdgid[j],
+                             gen_status[j]) == 1) {
             closest_dr = dr;
             objmatch[i] = type;
           }
@@ -164,7 +165,8 @@ auto Electron_genObjIdx(
           idx[i] = j;
         }
       } else if (type == 1) {
-        if (GenPhotonMatch(dr, closest_dr, gen_pdgid[j], gen_status[j]) == 1) {
+        if (GenPhotonMatch(dr, closest_dr, gen_pt[i], gen_pdgid[j],
+                           gen_status[j]) == 1) {
           closest_dr = dr;
           idx[i] = j;
         }
@@ -446,8 +448,8 @@ auto GenPart_ElectronIdx(
             idx[i] = j;
           }
         } else if (type == 1) {
-          if (GenPhotonMatch(dr, closest_dr, gen_pdgid[i], gen_status[i]) ==
-              1) {
+          if (GenPhotonMatch(dr, closest_dr, gen_pt[i], gen_pdgid[i],
+                             gen_status[i]) == 1) {
             closest_dr = dr;
             closest_pt_rel = dpt_rel;
             idx[i] = j;
