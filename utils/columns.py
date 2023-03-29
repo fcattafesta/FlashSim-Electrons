@@ -34,7 +34,7 @@ ele_cond = [
 ]
 
 eff_ele = [var.replace("C", "GC", 1) for var in ele_cond] + [
-    "MGenElectron_isReco"
+    "GenElectron_isReco"
 ]  # for efficiency
 
 gen_ele = [var.replace("G", "MG", 1) for var in ele_cond]  # for flow
