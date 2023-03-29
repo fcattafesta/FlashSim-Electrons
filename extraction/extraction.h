@@ -113,7 +113,7 @@ auto Electron_genObjMatch(
             objmatch[i] = type;
           }
         } else if (type == 1) {
-          if (GenPhotonMatch(dr, closest_dr, gen_pt[i], gen_pdgid[j],
+          if (GenPhotonMatch(dr, closest_dr, gen_pt[j], gen_pdgid[j],
                              gen_status[j]) == 1) {
             closest_dr = dr;
             objmatch[i] = type;
@@ -165,7 +165,7 @@ auto Electron_genObjIdx(
           idx[i] = j;
         }
       } else if (type == 1) {
-        if (GenPhotonMatch(dr, closest_dr, gen_pt[i], gen_pdgid[j],
+        if (GenPhotonMatch(dr, closest_dr, gen_pt[j], gen_pdgid[j],
                            gen_status[j]) == 1) {
           closest_dr = dr;
           idx[i] = j;
