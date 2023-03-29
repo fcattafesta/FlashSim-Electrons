@@ -112,13 +112,13 @@ def add_args(parser):
     parser.add_argument(
         "--batch_size",
         type=int,
-        default=512,
+        default=8192,
         help="Batch size (of datasets) for training",
     )
     parser.add_argument(
         "--lr",
         type=float,
-        default=1e-5,
+        default=1e-6,
         help="Latent learning rate for the Adam optimizer.",
     )
     parser.add_argument("--beta1", type=float, default=0.9, help="Beta1 for Adam.")
@@ -165,9 +165,9 @@ def add_args(parser):
         "--shuffle_train", type=eval, default=True, choices=[True, False]
     )
     parser.add_argument("--train_start", type=int, default=0)
-    parser.add_argument("--train_limit", type=int, default=3800000)
+    parser.add_argument("--train_limit", type=int, default=4005888)
     parser.add_argument("--test_start", type=int, default=0)
-    parser.add_argument("--test_limit", type=int, default=100000)
+    parser.add_argument("--test_limit", type=int, default=130000)
 
     # logging and saving frequency
     parser.add_argument(
