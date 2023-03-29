@@ -173,9 +173,9 @@ def add_args(parser):
     parser.add_argument(
         "--log_name", type=str, default="EEM", help="Name for the log dir"
     )
-    parser.add_argument("--val_freq", type=int, default=2)
+    parser.add_argument("--val_freq", type=int, default=5)
     parser.add_argument("--log_freq", type=int, default=10)
-    parser.add_argument("--save_freq", type=int, default=2)
+    parser.add_argument("--save_freq", type=int, default=5)
 
     # validation options
     parser.add_argument("--validate_at_0", default=False, action="store_true")
