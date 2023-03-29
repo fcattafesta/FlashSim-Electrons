@@ -17,7 +17,7 @@ sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessin
 sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
-from post_actions import target_dictionary
+from post_actions_pho import target_dictionary
 from corner_plots import make_corner
 
 from columns import gen_pho, reco_columns

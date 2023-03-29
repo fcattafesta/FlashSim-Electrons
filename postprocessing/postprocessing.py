@@ -7,12 +7,6 @@ import h5py
 
 from matplotlib import pyplot as plt
 
-from post_actions import target_dictionary
-
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
-
-from columns import reco_columns, gen_ele, gen_pho, gen_jet, eff_ele, eff_pho, eff_jet
-
 
 def restore_range(column_name, scale_dict, df):
     """
@@ -85,9 +79,7 @@ def postprocessing(df, vars_dictionary, scale_file):
     """
 
     with open(
-        os.path.join(
-            os.path.dirname(__file__), "..", "preprocessing", scale_file
-        )
+        os.path.join(os.path.dirname(__file__), "..", "preprocessing", scale_file)
     ) as scale_file:
         scale_dict = json.load(scale_file)
 
@@ -120,16 +112,3 @@ def postprocessing_test(df, vars_dictionary):
     df = df[~df.isin([np.nan, np.inf, -np.inf]).any(axis="columns")]
 
     return df
-
-
-if __name__ == "__main__":
-
-    f = h5py.File("MElectrons.hdf5", "r")
-    df = pd.DataFrame(data=f.get("data"), columns=gen_ele + reco_columns)
-    f.close()
-
-    df = postprocessing_test(df, target_dictionary)
-
-    file = h5py.File(f"MElectrons_post.hdf5", "w")
-    dset = file.create_dataset("data", data=df.values, dtype="f4")
-    file.close()
