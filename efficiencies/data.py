@@ -50,7 +50,9 @@ def dataset_from_root(files, cols, name, *args, **kwargs):
 
     print(df.columns, df.shape)
 
-    f = h5py.File(f"{name}.hdf5", "w")
+    f = h5py.File(
+        os.path.join(os.path.dirname(__file__), "dataset", f"{name}.hdf5"), "w"
+    )
     f.create_dataset("data", data=df.values, dtype="float32")
     f.close()
 
