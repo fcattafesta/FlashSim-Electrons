@@ -2,12 +2,11 @@ import torch
 from torch import nn
 
 
-
 class BinaryClassifier(nn.Module):
-    def __init__(self, input_dim, hidden_dim):
+    def __init__(self, input_dim):
         super().__init__()
-        self.fc1 = nn.Linear(input_dim, hidden_dim)
-        self.fc2 = nn.Linear(hidden_dim, 128)
+        self.fc1 = nn.Linear(input_dim, 512)
+        self.fc2 = nn.Linear(512, 128)
         self.fc3 = nn.Linear(128, 32)
         self.fc4 = nn.Linear(32, 1)
         self.relu = nn.ReLU()
@@ -21,7 +20,7 @@ class BinaryClassifier(nn.Module):
         x = self.relu(x)
         x = self.fc4(x)
         return x
-    
+
     def predict(self, x):
         pred = torch.sigmoid(self.forward(x))
         return pred
@@ -35,7 +34,9 @@ def accuracy(y_pred, y_true):
     return acc
 
 
-def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, scheduler, device):
+def train(
+    train_dataloader, test_dataloader, model, loss_fn, optimizer, scheduler, device
+):
     epoch_loss = 0
     epoch_acc = 0
 
@@ -57,10 +58,6 @@ def train(train_dataloader, test_dataloader, model, loss_fn, optimizer, schedule
 
     avg_loss = epoch_loss / len(train_dataloader)
     avg_acc = epoch_acc / len(train_dataloader)
-
-    # if batch % 100 == 0:
-    #     loss, current = loss.item(), (batch + 1) * len(X)
-    #     print(f"Loss: {loss}  [{current}/{size}]")
 
     scheduler.step(avg_acc)
 

@@ -33,7 +33,9 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
-eff_ele = [var.replace("C", "GC", 1) for var in ele_cond]  # for efficiency
+eff_ele = [var.replace("C", "GC", 1) for var in ele_cond].append(
+    "GenElectron_isReco"
+)  # for efficiency
 
 gen_ele = [var.replace("G", "MG", 1) for var in ele_cond]  # for flow
 
@@ -58,7 +60,7 @@ pho_cond = [
     "GenPhoton_statusFlag14",
 ]
 
-eff_pho = pho_cond  # for efficiency
+eff_pho = pho_cond.append("GenPhoton_isReco")  # for efficiency
 
 gen_pho = [var.replace("G", "MG", 1) for var in pho_cond]  # for flow
 
@@ -77,7 +79,7 @@ jet_cond = [
     "GenJet_EncodedHadronFlavour_light",
 ]
 
-eff_jet = jet_cond  # for efficiency
+eff_jet = jet_cond.append("GenJet_isReco")  # for efficiency
 
 gen_jet = [var.replace("G", "MG", 1) for var in jet_cond]  # for flow
 
