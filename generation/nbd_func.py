@@ -22,8 +22,8 @@ sys.path.insert(0, os.path.join(dirpath, "..", "utils"))
 sys.path.insert(0, os.path.join(dirpath, "..", "training"))
 sys.path.insert(0, os.path.join(dirpath, "..", "postprocessing"))
 
-from columns import reco_columns, ele_names, ele_cond
-from postprocessing import postprocessing
+# from columns import reco_columns, ele_names, ele_cond
+from postprocessing import postprocessing, reco_columns, gen_columns
 from post_actions import target_dictionary
 
 
@@ -73,7 +73,7 @@ def nbd(ele_model, root, file_path, new_root):
 
     # read jet data to df
     df = (
-        tree.arrays(ele_cond, library="pd", entry_stop=STOP)
+        tree.arrays(gen_columns, library="pd", entry_stop=STOP)
         .astype("float32")
         .dropna()
     )
@@ -116,7 +116,7 @@ def nbd(ele_model, root, file_path, new_root):
     print(sum(events_structure_ele))
 
     # define datasets
-    ele_dataset = GenDS(df, ele_cond)
+    ele_dataset = GenDS(df, gen_columns)
 
     # start electrons 1to1 generation
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
