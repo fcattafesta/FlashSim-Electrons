@@ -75,7 +75,7 @@ def validation(validation_dataloader, model, device, tag):
     X, _ = validation_dataloader.dataset[:]
     X = X.to(device)
 
-    ig = IntegratedGradients(model).to(device)
+    ig = IntegratedGradients(model)
     attributions = ig.attribute(X, return_convergence_delta=False)
     attributions = attributions.cpu().numpy()
 
