@@ -75,6 +75,7 @@ def validation(validation_dataloader, model, device, tag):
     y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
     X, _ = validation_dataloader.dataset[:50000]
+    print(X.shape)
     X = X.to(device)
 
     ig = IntegratedGradients(model)
