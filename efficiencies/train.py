@@ -11,9 +11,10 @@ def GenElectron_efficiency():
     epochs = 100
     lr = 0.001
     batch_size = 10000
+    weight = 1.0
     tag = "electrons"
 
-    training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, tag)
+    training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weight, tag)
 
 
 # GenJet classifier
@@ -26,9 +27,10 @@ def GenJet_efficiency():
     epochs = 100
     lr = 0.001
     batch_size = 10000
+    weight = 1.0
     tag = "jets"
 
-    training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, tag)
+    training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weight, tag)
 
 
 # GenPhoton classifier
@@ -41,12 +43,13 @@ def GenPhoton_efficiency():
     epochs = 100
     lr = 0.001
     batch_size = 10000
+    weight = 1.0
     tag = "photons"
 
-    training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, tag)
+    training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weight, tag)
 
 
 if __name__ == "__main__":
     GenElectron_efficiency()
-    GenJet_efficiency()
-    GenPhoton_efficiency()
+    # GenJet_efficiency()
+    # GenPhoton_efficiency()
