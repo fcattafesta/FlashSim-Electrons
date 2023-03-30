@@ -67,13 +67,14 @@ def validation(validation_dataloader, model, device, tag):
             y_pred_tag = torch.round(y_pred)
             y_pred_tag_list.append(y_pred_tag.cpu().numpy())
             y_true_list.append(y.cpu().numpy())
+            torch.cuda.empty_cache()
 
 
     y_pred_list = np.array(y_pred_list).flatten()
     y_true_list = np.array(y_true_list).flatten()
     y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
-    X, _ = validation_dataloader.dataset[:100000]
+    X, _ = validation_dataloader.dataset[:50000]
     X = X.to(device)
 
     ig = IntegratedGradients(model)
