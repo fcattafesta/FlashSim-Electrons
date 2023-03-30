@@ -279,15 +279,14 @@ def validate_electrons(
 
     ranges = [[0, 0.1], [0, 10], [0, 5]]
 
-    conds = [f"MGenPhoton_statusFlag{i}" for i in (0, 2, 7)]
+    conds = [f"MGenPhoton_statusFlag{i}" for i in (0, 2)]
 
     names = [
         "isPrompt",
         "isTauDecayProduct",
-        "isHardProcess",
     ]
 
-    colors = ["tab:red", "tab:green", "tab:blue"]
+    colors = ["tab:red", "tab:green"]
 
     for target, rangeR in zip(targets, ranges):
 
