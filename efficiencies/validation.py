@@ -31,11 +31,11 @@ def visualize_importances(
     plot=True,
     axis_title="Features",
 ):
-    if tag == "ele":
+    if tag == "electrons":
         feature_names = eff_ele[:-1]
-    elif tag == "jet":
+    elif tag == "jets":
         feature_names = eff_jet[:-1]
-    elif tag == "pho":
+    elif tag == "photons":
         feature_names = eff_pho[:-1]
 
     x_pos = np.arange(len(feature_names))
