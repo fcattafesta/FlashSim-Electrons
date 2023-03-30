@@ -21,7 +21,7 @@ def GenElectron_efficiency():
 
 
 def GenJet_efficiency():
-    input_dim = 12
+    input_dim = 18
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenJets.hdf5")
     train_size = 4000000
     epochs = 100
