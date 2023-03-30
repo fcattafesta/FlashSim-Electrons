@@ -12,7 +12,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
                    "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
                    "230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root";
 
-  auto flash_path = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1/230000/"
+  auto flash_path = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/"
                     "8244ED99-0F95-9D4F-B393-22EBC589A46D_synth.root";
 
   auto d_tmp = ROOT::RDataFrame("Events", full_path);
@@ -81,7 +81,7 @@ void pt_bias() {
                    "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
                    "230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root";
 
-  auto flash_path = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1/230000/"
+  auto flash_path = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/"
                     "8244ED99-0F95-9D4F-B393-22EBC589A46D_synth.root";
 
   auto d_tmp = ROOT::RDataFrame("Events", full_path);

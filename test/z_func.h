@@ -60,7 +60,7 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
   auto d_tmp = ROOT::RDataFrame("Events", g);
   auto d_full = match(d_tmp);
 
-  auto f = TFile::Open("/gpfs/ddn/cms/user/cattafe/DYJets/EM1/230000/"
+  auto f = TFile::Open("/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/"
                        "8244ED99-0F95-9D4F-B393-22EBC589A46D_synth.root",
                        "r");
 
