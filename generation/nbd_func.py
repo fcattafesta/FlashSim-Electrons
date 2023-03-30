@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.join(dirpath, "..", "training"))
 # sys.path.insert(0, os.path.join(dirpath, "..", "postprocessing"))
 
 # from columns import reco_columns, ele_names, ele_cond
+from colunms import ele_names
 from postprocessing import postprocessing, reco_columns, gen_columns
 from post_actions import target_dictionary
 
