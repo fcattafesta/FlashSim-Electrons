@@ -35,7 +35,6 @@ def make_pd_dataframe(tree, cols, *args, **kwargs):
         .astype("float32")
         .dropna()
     )
-    print(df)
     return df
 
 
