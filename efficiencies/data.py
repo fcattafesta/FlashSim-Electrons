@@ -31,10 +31,11 @@ class isReco_Dataset(torch.utils.data.Dataset):
 def make_pd_dataframe(tree, cols, *args, **kwargs):
     df = (
         tree.arrays(expressions=cols, library="pd", *args, **kwargs)
-        .reset_index(drop=True)
-        .astype("float32")
-        .dropna()
+        # .reset_index(drop=True)
+        # .astype("float32")
+        # .dropna()
     )
+    print(df)
     return df
 
 
@@ -73,8 +74,8 @@ files = [
 
 if __name__ == "__main__":
 
-    dataset_from_root(files[0], eff_ele, "GenElectrons")
+    #dataset_from_root(files[0], eff_ele, "GenElectrons")
 
-    dataset_from_root(files[1], eff_pho, "GenPhotons")
+    #dataset_from_root(files[1], eff_pho, "GenPhotons")
 
     dataset_from_root(files[2], eff_jet, "GenJets")
