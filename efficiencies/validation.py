@@ -68,11 +68,12 @@ def validation(validation_dataloader, model, device, tag):
             y_pred_tag_list.append(y_pred_tag.cpu().numpy())
             y_true_list.append(y.cpu().numpy())
 
+
     y_pred_list = np.array(y_pred_list).flatten()
     y_true_list = np.array(y_true_list).flatten()
     y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
-    X, _ = validation_dataloader.dataset[:]
+    X, _ = validation_dataloader.dataset[:100000]
     X = X.to(device)
 
     ig = IntegratedGradients(model)
