@@ -35,6 +35,9 @@ def training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weigh
     validation_dataset = isReco_Dataset(
         datapath, input_dim, train_size + 500000, 1000000
     )
+    print(f"Train size: {len(train_dataset)}")
+    print(f"Test size: {len(test_dataset)}")
+    print(f"Validation size: {len(validation_dataset)}")
 
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset, batch_size=batch_size, shuffle=True
@@ -51,13 +54,6 @@ def training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weigh
     train_history = []
     test_acc_history = []
     train_acc_history = []
-
-    validation(
-        model=model,
-        validation_dataloader=validation_dataloader,
-        device=device,
-        tag=tag,
-    )
 
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
