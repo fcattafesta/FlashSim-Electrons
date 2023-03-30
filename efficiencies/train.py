@@ -5,7 +5,7 @@ from training_loop import training_loop
 
 
 def GenElectron_efficiency():
-    input_dim = 38
+    input_dim = 33
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.hdf5")
     train_size = 4000000
     epochs = 100
@@ -20,7 +20,7 @@ def GenElectron_efficiency():
 
 
 def GenJet_efficiency():
-    input_dim = 18
+    input_dim = 13
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenJets.hdf5")
     train_size = 4000000
     epochs = 100
@@ -35,7 +35,7 @@ def GenJet_efficiency():
 
 
 def GenPhoton_efficiency():
-    input_dim = 24
+    input_dim = 19
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenPhotons.hdf5")
     train_size = 4000000
     epochs = 100
