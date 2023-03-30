@@ -51,6 +51,14 @@ def training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weigh
     train_history = []
     test_acc_history = []
     train_acc_history = []
+
+    validation(
+        model=model,
+        validation_dataloader=validation_dataloader,
+        device=device,
+        tag=tag,
+    )
+
     for epoch in range(epochs):
         print(f"Epoch {(epoch + 1):03}:")
         tr_loss, tr_acc, te_loss, te_acc = train(
