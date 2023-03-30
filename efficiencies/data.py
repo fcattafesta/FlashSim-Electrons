@@ -14,7 +14,7 @@ class isReco_Dataset(torch.utils.data.Dataset):
     def __init__(self, filepath, input_dim, start, stop):
         h5py_file = h5py.File(filepath, "r")
         self.X = torch.tensor(
-            h5py_file["data"][start : (start + stop), 0:input_dim],
+            h5py_file["data"][start : (start + stop), 0:(input_dim-1)],
             dtype=torch.float32,
         )
         self.y = torch.tensor(
