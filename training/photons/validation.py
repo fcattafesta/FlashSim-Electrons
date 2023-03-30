@@ -279,7 +279,7 @@ def validate_electrons(
 
     ranges = [[0, 0.1], [0, 10], [0, 5]]
 
-    conds = [f"MGenElectron_statusFlag{i}" for i in (0, 2, 7)]
+    conds = [f"MGenPhoton_statusFlag{i}" for i in (0, 2, 7)]
 
     names = [
         "isPrompt",
