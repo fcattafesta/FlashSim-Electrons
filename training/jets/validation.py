@@ -13,8 +13,8 @@ import corner
 
 from scipy.stats import wasserstein_distance
 
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
 from post_actions_jet import target_dictionary, context_dictionary
@@ -110,7 +110,7 @@ def validate_electrons(
             saturated_samples[column],
         )
 
-        range_dict[column] = [np.min(rangeR), np.max(rangeR)]
+        range_dict[column] = [float(np.min(rangeR)), float(np.max(rangeR))]
 
         # Samples histogram
         axs[0].hist(

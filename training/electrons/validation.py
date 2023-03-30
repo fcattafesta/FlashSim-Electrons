@@ -110,7 +110,7 @@ def validate_electrons(
             saturated_samples[column],
         )
 
-        range_dict[column] = [np.min(rangeR), np.max(rangeR)]
+        range_dict[column] = [float(np.min(rangeR)), float(np.max(rangeR))]
 
         # Samples histogram
         axs[0].hist(
