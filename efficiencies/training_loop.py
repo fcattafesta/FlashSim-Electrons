@@ -31,9 +31,9 @@ def training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weigh
 
     # Load data
     train_dataset = isReco_Dataset(datapath, input_dim, 0, train_size)
-    test_dataset = isReco_Dataset(datapath, input_dim, train_size, train_size + 500000)
+    test_dataset = isReco_Dataset(datapath, input_dim, train_size, 500000)
     validation_dataset = isReco_Dataset(
-        datapath, input_dim, train_size + 500000, train_size + 1500000
+        datapath, input_dim, train_size + 500000, 1000000
     )
 
     train_dataloader = torch.utils.data.DataLoader(
