@@ -65,7 +65,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   TLatex header;
   header.SetTextSize(0.03);
 
-  std::string filename = "figures/comparison_" + col + ".pdf";
+  std::string filename = "figures/190/comparison_" + col + ".pdf";
   c->SaveAs(filename.c_str());
 }
 
@@ -162,7 +162,7 @@ void pt_bias() {
   bias_label.SetTextSize(0.03);
   bias_label.DrawLatexNDC(0.2, 0.80, Form("Bias = %.2f%%", bias * 100));
 
-  std::string filename = "figures/bias_" + col + ".pdf";
+  std::string filename = "figures/190/bias_" + col + ".pdf";
   c->SaveAs(filename.c_str());
 }
 
