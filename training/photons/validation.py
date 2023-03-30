@@ -13,8 +13,8 @@ import corner
 
 from scipy.stats import wasserstein_distance
 
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
-sys.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
 from post_actions_pho import target_dictionary
