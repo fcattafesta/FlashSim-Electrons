@@ -13,7 +13,9 @@ import corner
 
 from scipy.stats import wasserstein_distance
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
+sys.path.insert(
+    0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing")
+)
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
@@ -277,7 +279,7 @@ def validate_electrons(
 
     ranges = [[0, 0.1], [0, 10], [0, 5]]
 
-    conds = ["GenJet_EncodedPartonFlavour_b", "GenJet_EncodedPartonFlavour_c"]
+    conds = ["MGenJet_EncodedPartonFlavour_b", "MGenJet_EncodedPartonFlavour_c"]
 
     names = conds
 
@@ -336,8 +338,8 @@ def validate_electrons(
             del full, flash
 
         mask = (
-            gen["ClosestJet_EncodedPartonFlavour_gluon"].values
-            + gen["ClosestJet_EncodedPartonFlavour_light"].values
+            gen["MGenJet_EncodedPartonFlavour_gluon"].values
+            + gen["MGenJet_EncodedPartonFlavour_light"].values
         ).astype(bool)
         full = reco[target].values
         full = full[mask]
@@ -359,7 +361,7 @@ def validate_electrons(
             bins=50,
             range=rangeR,
             histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
+            label="MGenJet_partonFlavour_is_guds",
             color="tab:purple",
         )
 
@@ -371,7 +373,7 @@ def validate_electrons(
             bins=50,
             range=rangeR,
             histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
+            label="MGenJet_partonFlavour_is_guds",
             color="tab:purple",
         )
         del full, flash
@@ -452,8 +454,8 @@ def validate_electrons(
             del full, flash
 
         mask = (
-            gen["ClosestJet_EncodedPartonFlavour_gluon"].values
-            + gen["ClosestJet_EncodedPartonFlavour_light"].values
+            gen["MGenJet_EncodedPartonFlavour_gluon"].values
+            + gen["MGenJet_EncodedPartonFlavour_light"].values
         ).astype(bool)
         full = reco[target].values
         full = full[mask]
@@ -481,7 +483,7 @@ def validate_electrons(
             bins=50,
             range=rangeR,
             histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
+            label="MGenJet_partonFlavour_is_guds",
             color="tab:purple",
             density=True,
         )
@@ -500,7 +502,7 @@ def validate_electrons(
             bins=50,
             range=rangeR,
             histtype="step",
-            label="ClosestJet_partonFlavour_is_guds",
+            label="MGenJet_partonFlavour_is_guds",
             color="tab:purple",
             density=True,
         )
