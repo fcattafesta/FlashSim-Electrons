@@ -1,10 +1,12 @@
 import os
+import sys
 
 import numpy as np
 
 import torch
 from torch import nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+from captum.attr import IntegratedGradients
 
 import seaborn as sns
 from matplotlib import pyplot as plt
@@ -16,6 +18,37 @@ from sklearn.metrics import (
 )
 
 from model import BinaryClassifier
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
+
+from columns import eff_ele, eff_jet, eff_pho
+
+
+def visualize_importances(
+    importances,
+    tag,
+    title="Average Feature Importances",
+    plot=True,
+    axis_title="Features",
+):
+    if tag == "ele":
+        feature_names = eff_ele[:-1]
+    elif tag == "jet":
+        feature_names = eff_jet[:-1]
+    elif tag == "pho":
+        feature_names = eff_pho[:-1]
+    
+    x_pos = np.arange(len(feature_names))
+    if plot:
+        plt.figure(figsize=(12, 6))
+        plt.bar(x_pos, importances, align="center")
+        plt.xticks(x_pos, feature_names, wrap=True)
+        plt.xlabel(axis_title)
+        plt.title(title)
+        plt.savefig(
+            os.path.join(os.path.dirname(__file__), "figures", tag, "importances.pdf"),
+            format="pdf",
+        )
 
 
 def validation(validation_dataloader, model, device, tag):
@@ -38,6 +71,16 @@ def validation(validation_dataloader, model, device, tag):
     y_pred_list = np.array(y_pred_list).flatten()
     y_true_list = np.array(y_true_list).flatten()
     y_pred_tag_list = np.array(y_pred_tag_list).flatten()
+
+    X, y = validation_dataloader.dataset[:]
+    X.requires_grad()
+    y.requires_grad()
+
+    ig = IntegratedGradients(model)
+    attributions, delta = ig.attribute(X, y, return_convergence_delta=True)
+    attributions = attributions.cpu().numpy()
+
+    visualize_importances(np.mean(attributions, axis=0), tag)
 
     cm = confusion_matrix(y_true_list, y_pred_tag_list, normalize="true")
 

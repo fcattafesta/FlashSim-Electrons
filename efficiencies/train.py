@@ -50,6 +50,6 @@ def GenPhoton_efficiency():
 
 
 if __name__ == "__main__":
-    GenElectron_efficiency()
-    # GenJet_efficiency()
+    # GenElectron_efficiency()
+    GenJet_efficiency()
     # GenPhoton_efficiency()
