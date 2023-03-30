@@ -112,7 +112,6 @@ def analysis(full_path, flash_path, pt_cut, label, filename):
     df_flash = ROOT.RDataFrame("Events", flash_path)
 
     df_full = ROOT.match(df_full)
-    df_flash = ROOT.match(df_flash)
 
     df_full = search_z(df_full, pt_cut, "full")
     df_flash = search_z(df_flash, pt_cut, "flash")
