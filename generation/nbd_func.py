@@ -26,6 +26,7 @@ sys.path.insert(0, os.path.join(dirpath, "..", "training"))
 from postprocessing import postprocessing, reco_columns, gen_columns
 from post_actions import target_dictionary
 
+gen_columns = [var.replace("MG", "G", 1) for var in gen_columns]
 
 class GenDS(Dataset):
     """A dumb dataset for storing gen-conditioning for generation
