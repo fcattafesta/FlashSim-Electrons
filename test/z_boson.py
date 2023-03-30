@@ -19,8 +19,8 @@ labels = [
     "",
 ]
 
-filenames = [f"figures/z_boson_{i}bin_@190.pdf" for i in range(1, len(cuts))]
-filenames.append(f"figures/z_boson_all_@190.pdf")
+filenames = [f"figures/190/z_boson_{i}bin_@190_1.pdf" for i in range(1, len(cuts))]
+filenames.append(f"figures/190/z_boson_all_@190_1.pdf")
 
 ROOT.pt_bias()
 

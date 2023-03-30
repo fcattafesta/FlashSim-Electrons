@@ -65,7 +65,7 @@ void compare(std::string col, float min, float max, int nbins = 50) {
   TLatex header;
   header.SetTextSize(0.03);
 
-  std::string filename = "figures/190/comparison_" + col + ".pdf";
+  std::string filename = "figures/190/comparison_" + col + "_1.pdf";
   c->SaveAs(filename.c_str());
 }
 
@@ -82,10 +82,10 @@ void pt_bias() {
   auto full_path = "/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/"
                    "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/"
                    "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
-                   "230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root";
+                   "230000/2E88EB28-11AB-414B-8485-E239270F1F94.root";
 
   auto flash_path = "/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/"
-                    "8244ED99-0F95-9D4F-B393-22EBC589A46D_synth.root";
+                    "2E88EB28-11AB-414B-8485-E239270F1F94_synth.root";
 
   auto d_tmp = ROOT::RDataFrame("Events", full_path);
   auto d_full = match(d_tmp);
@@ -162,7 +162,7 @@ void pt_bias() {
   bias_label.SetTextSize(0.03);
   bias_label.DrawLatexNDC(0.2, 0.80, Form("Bias = %.2f%%", bias * 100));
 
-  std::string filename = "figures/190/bias_" + col + ".pdf";
+  std::string filename = "figures/190/bias_" + col + "_.pdf";
   c->SaveAs(filename.c_str());
 }
 

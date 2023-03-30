@@ -54,14 +54,14 @@ void z_boson(std::string pt_cut, std::string label, std::string filename) {
       TFile::Open("/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/"
                   "DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/"
                   "NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/"
-                  "230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root",
+                  "230000/2E88EB28-11AB-414B-8485-E239270F1F94.root",
                   "r");
 
   auto d_tmp = ROOT::RDataFrame("Events", g);
   auto d_full = match(d_tmp);
 
   auto f = TFile::Open("/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/"
-                       "8244ED99-0F95-9D4F-B393-22EBC589A46D_synth.root",
+                       "2E88EB28-11AB-414B-8485-E239270F1F94_synth.root",
                        "r");
 
   auto d_flash = ROOT::RDataFrame("Events", f);
