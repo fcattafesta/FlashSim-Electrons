@@ -1,4 +1,4 @@
-#ifdef COMPARISON_H
+#ifndef COMPARISON_H
 #define COMPARISON_H
 
 #include "TLatex.h"

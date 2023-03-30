@@ -1,4 +1,4 @@
-#ifdef MATCH_H
+#ifndef MATCH_H
 #define MATCH_H
 auto clean_genjet_mask(ROOT::VecOps::RVec<float> &jet_pt,
                        ROOT::VecOps::RVec<float> &jet_eta,
