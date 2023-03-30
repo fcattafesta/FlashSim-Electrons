@@ -42,7 +42,7 @@ def visualize_importances(
     if plot:
         plt.figure(figsize=(12, 6))
         plt.bar(x_pos, importances, align="center")
-        plt.xticks(x_pos, feature_names, wrap=True)
+        plt.xticks(x_pos, feature_names, wrap=True, rotation="vertical")
         plt.xlabel(axis_title)
         plt.title(title)
         plt.savefig(
