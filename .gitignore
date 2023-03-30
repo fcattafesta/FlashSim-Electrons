@@ -138,8 +138,8 @@ dmypy.json
 *.hdf5
 
 # Model saves
-training/runs/
-training/checkpoints/
+training/*/runs/
+training/*/checkpoints/
 
 # dataset
 extraction/dataset
