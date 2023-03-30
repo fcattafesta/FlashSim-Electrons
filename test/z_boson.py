@@ -133,5 +133,5 @@ if __name__ == "__main__":
     flash_path = f"/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/{file}_synth.root"
 
     for i, (cut, label) in enumerate(zip(cuts, labels)):
-        filename = f"figures/z_{i}_bins.pdf"
+        filename = f"figures/190/z_{i}_bins.pdf"
         analysis(full_path, flash_path, cut, label, filename)
