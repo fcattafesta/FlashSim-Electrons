@@ -1,3 +1,6 @@
+#ifdef COMPARISON_H
+#define COMPARISON_H
+
 #include "TLatex.h"
 #include "TLegend.h"
 #include "match.h"
@@ -162,3 +165,5 @@ void pt_bias() {
   std::string filename = "figures/bias_" + col + ".pdf";
   c->SaveAs(filename.c_str());
 }
+
+#endif

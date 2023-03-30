@@ -1,4 +1,5 @@
-
+#ifdef MATCH_H
+#define MATCH_H
 auto clean_genjet_mask(ROOT::VecOps::RVec<float> &jet_pt,
                        ROOT::VecOps::RVec<float> &jet_eta,
                        ROOT::VecOps::RVec<float> &jet_phi,
@@ -667,7 +668,8 @@ auto match(ROOT::RDataFrame &d) {
           .Define("Electron_genElectronIdx", genElectronIdx_maker,
                   {"Electron_genPartIdx", "GenPart_pdgId"})
           .Define("Electron_MGenElectronMask", "Electron_genElectronIdx >= 0")
-          .Define("MElectron_charge", "Electron_charge[Electron_MGenElectronMask]")
+          .Define("MElectron_charge",
+                  "Electron_charge[Electron_MGenElectronMask]")
           .Define("MElectron_convVeto",
                   "Electron_convVeto[Electron_MGenElectronMask]")
           .Define("MElectron_deltaEtaSC",
@@ -691,8 +693,7 @@ auto match(ROOT::RDataFrame &d) {
                   "Electron_eInvMinusPInv[Electron_MGenElectronMask]")
           .Define("MElectron_energyErr",
                   "Electron_energyErr[Electron_MGenElectronMask]")
-          .Define("MElectron_eta",
-                  "Electron_eta[Electron_MGenElectronMask]")
+          .Define("MElectron_eta", "Electron_eta[Electron_MGenElectronMask]")
           .Define("MElectron_hoe", "Electron_hoe[Electron_MGenElectronMask]")
           .Define("MElectron_ip3d", "Electron_ip3d[Electron_MGenElectronMask]")
           .Define("MElectron_isPFcand",
@@ -748,8 +749,7 @@ auto match(ROOT::RDataFrame &d) {
           .Define("MElectron_phi", "Electron_phi[Electron_MGenElectronMask]")
           .Define("MElectron_phiMinusGen", DeltaPhi,
                   {"MElectron_phi", "MGenElectron_phi"})
-          .Define("MElectron_pt",
-                  "Electron_pt[Electron_MGenElectronMask]")
+          .Define("MElectron_pt", "Electron_pt[Electron_MGenElectronMask]")
           .Define("MElectron_r9", "Electron_r9[Electron_MGenElectronMask]")
           .Define("MElectron_seedGain",
                   "Electron_seedGain[Electron_MGenElectronMask]")
@@ -761,6 +761,7 @@ auto match(ROOT::RDataFrame &d) {
                   "Electron_tightCharge[Electron_MGenElectronMask]")
           .Define("MnElectron", "Electron_MGenElectronMask.size()");
 
-
   return matched;
 }
+
+#endif

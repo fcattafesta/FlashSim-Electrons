@@ -1,6 +1,6 @@
 import ROOT
 
-# ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
+ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
 ROOT.gInterpreter.ProcessLine('#include "comparison.h"')
 
 cuts = [
@@ -19,10 +19,10 @@ labels = [
     "",
 ]
 
-filenames = [f"figures/z_boson_{i}bin.pdf" for i in range(1, len(cuts))]
-filenames.append(f"figures/z_boson_all.pdf")
+filenames = [f"figures/z_boson_{i}bin_@190.pdf" for i in range(1, len(cuts))]
+filenames.append(f"figures/z_boson_all_@190.pdf")
 
 ROOT.pt_bias()
 
-# for cut, label, filename in zip(cuts, labels, filenames):
-#     ROOT.z_boson(cut, label, filename)
+for cut, label, filename in zip(cuts, labels, filenames):
+     ROOT.z_boson(cut, label, filename)
