@@ -69,7 +69,12 @@ def training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, tag):
 
         if epoch % 10 == 0:
             # Save the model
-            torch.save(model.state_dict(), f"efficiency_{tag}.pt")
+            torch.save(
+                model.state_dict(),
+                os.path.join(
+                    os.path.dirname(__file__), "models", f"efficiency_{tag}.pt"
+                ),
+            )
             # Plot loss and accuracy
             loss_plot(train_history, test_history, tag)
             accuracy_plot(train_acc_history, test_acc_history, tag)

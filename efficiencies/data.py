@@ -41,7 +41,7 @@ def make_pd_dataframe(tree, cols, *args, **kwargs):
 def dataset_from_root(files, cols, name, *args, **kwargs):
 
     tree = uproot.open(files[0], num_workers=20)
-    df = make_pd_dataframe(tree, eff_ele)
+    df = make_pd_dataframe(tree, cols)
 
     for file in files[1:]:
         tree = uproot.open(file, num_workers=20)
@@ -73,8 +73,8 @@ files = [
 
 if __name__ == "__main__":
 
-    #dataset_from_root(files[0], eff_ele, "GenElectrons")
+    dataset_from_root(files[0], eff_ele, "GenElectrons")
 
     dataset_from_root(files[1], eff_pho, "GenPhotons")
 
-    # dataset_from_root(files[2], eff_jet, "GenJets")
+    dataset_from_root(files[2], eff_jet, "GenJets")
