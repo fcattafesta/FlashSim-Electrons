@@ -37,7 +37,7 @@ def visualize_importances(
         feature_names = eff_jet[:-1]
     elif tag == "pho":
         feature_names = eff_pho[:-1]
-    
+
     x_pos = np.arange(len(feature_names))
     if plot:
         plt.figure(figsize=(12, 6))
