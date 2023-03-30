@@ -73,12 +73,14 @@ def validation(validation_dataloader, model, device, tag):
     y_pred_tag_list = np.array(y_pred_tag_list).flatten()
 
     X, y = validation_dataloader.dataset[:]
-    X.to(device).requires_grad_()
-    y.to(device).requires_grad_()
+    X = X.cpu().requires_grad_()
+    y = y.cpu().requires_grad_()
 
-    ig = IntegratedGradients(model)
+    ig = IntegratedGradients(model.cpu())
     attributions, delta = ig.attribute(X, target=y, return_convergence_delta=True)
     attributions = attributions.cpu().numpy()
+
+    model.to(device)
 
     visualize_importances(np.mean(attributions, axis=0), tag)
 
