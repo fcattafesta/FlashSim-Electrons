@@ -20,7 +20,7 @@ if __name__ == "__main__":
         for f in os.listdir(os.path.join(root, d))
     ]
 
-    # files_paths = files_paths[:2]
+    files_paths = files_paths[:2]
 
     print(f"We will process a total of {len(files_paths)} files")
 
