@@ -9,11 +9,11 @@ def GenElectron_efficiency():
     input_dim = 32
     model = ElectronClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.hdf5")
-    train_size = 4000000
+    train_size = 10000000
     epochs = 100
-    lr = 0.001
+    lr = 1e-4
     batch_size = 10000
-    weight = 9.0
+    weight = 10.0
     tag = "electrons"
 
     training_loop(
@@ -32,7 +32,7 @@ def GenJet_efficiency():
     epochs = 100
     lr = 1e-4
     batch_size = 10000
-    weight = 19.0
+    weight = 20.0
     tag = "jets"
 
     training_loop(
@@ -51,7 +51,7 @@ def GenPhoton_efficiency():
     epochs = 100
     lr = 1e-4
     batch_size = 10000
-    weight = 6.0
+    weight = 7.0
     tag = "photons"
 
     training_loop(

@@ -33,9 +33,9 @@ def training_loop(
 
     # Load data
     train_dataset = isReco_Dataset(datapath, input_dim, 0, train_size)
-    test_dataset = isReco_Dataset(datapath, input_dim, train_size, 500000)
+    test_dataset = isReco_Dataset(datapath, input_dim, train_size, 3000000)
     validation_dataset = isReco_Dataset(
-        datapath, input_dim, train_size + 500000, 1000000
+        datapath, input_dim, train_size + 3000000, 3000000
     )
     print(f"Train size: {len(train_dataset)}")
     print(f"Test size: {len(test_dataset)}")
