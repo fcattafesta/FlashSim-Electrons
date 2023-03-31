@@ -17,8 +17,6 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 
-from model import BinaryClassifier
-
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
 from columns import eff_ele, eff_jet, eff_pho
