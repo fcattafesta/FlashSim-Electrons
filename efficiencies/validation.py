@@ -38,9 +38,9 @@ def visualize_importances(
 
     x_pos = np.arange(len(feature_names))
     if plot:
-        plt.figure(figsize=(12, 12))
+        plt.figure(figsize=(12, 8))
         plt.bar(x_pos, importances, align="center")
-        plt.xticks(x_pos, feature_names, wrap=True, rotation="vertical")
+        plt.xticks(x_pos, feature_names, wrap=True, rotation=45, ha="right")
         plt.xlabel(axis_title)
         plt.title(title)
         plt.savefig(
