@@ -73,7 +73,11 @@ def training_loop(
         test_acc_history.append(te_acc)
         train_acc_history.append(tr_acc)
 
-        if epoch % 10 == 0:
+        # Plot loss and accuracy
+        loss_plot(train_history, test_history, tag)
+        accuracy_plot(train_acc_history, test_acc_history, tag)
+
+        if epoch % 5 == 0:
             # Save the model
             torch.save(
                 model.state_dict(),
@@ -81,9 +85,6 @@ def training_loop(
                     os.path.dirname(__file__), "models", f"efficiency_{tag}.pt"
                 ),
             )
-            # Plot loss and accuracy
-            loss_plot(train_history, test_history, tag)
-            accuracy_plot(train_acc_history, test_acc_history, tag)
             # Validation
             validation(
                 model=model,
