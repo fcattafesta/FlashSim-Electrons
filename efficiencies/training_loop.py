@@ -9,7 +9,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 import seaborn as sns
 from matplotlib import pyplot as plt
 
-from model import BinaryClassifier, train
+from model import train
 from data import isReco_Dataset
 from validation import validation, loss_plot, accuracy_plot
 
