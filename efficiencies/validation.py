@@ -27,7 +27,6 @@ def visualize_importances(
     tag,
     title="Average Feature Importances",
     plot=True,
-    axis_title="Features",
 ):
     if tag == "electrons":
         feature_names = eff_ele[:-1]
@@ -41,7 +40,6 @@ def visualize_importances(
         plt.figure(figsize=(12, 8))
         plt.bar(x_pos, importances, align="center")
         plt.xticks(x_pos, feature_names, wrap=True, rotation=45, ha="right")
-        plt.xlabel(axis_title)
         plt.title(title)
         plt.savefig(
             os.path.join(os.path.dirname(__file__), "figures", tag, "importances.pdf"),
@@ -107,7 +105,6 @@ def validation(validation_dataloader, model, device, tag):
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
     plt.title("ROC Curve")
-    plt.legend()
     plt.savefig(
         os.path.join(os.path.dirname(__file__), "figures", tag, "roc_curve.pdf"),
         format="pdf",
@@ -119,8 +116,30 @@ def validation(validation_dataloader, model, device, tag):
     negative = y_pred_list[y_true_list == 0]
 
     plt.figure(figsize=(10, 10))
-    plt.hist(positive, bins=20, histtype="step", label="Positive", color="b")
-    plt.hist(negative, bins=20, histtype="step", label="Negative", color="r")
+    plt.title("Predictions")
+    plt.hist(
+        positive,
+        bins=20,
+        histtype="step",
+        label="isReco",
+        linewidth=2,
+        edgecolor="b",
+        fc=(0, 0, 1, 0.3),
+        fill=True,
+    )
+    plt.hist(
+        negative,
+        bins=20,
+        histtype="step",
+        label="isNotReco",
+        linewidth=2,
+        edgecolor="r",
+        fc=(1, 0, 0, 0.3),
+        fill=True,
+    )
+    plt.yscale("log")
+    plt.xlabel("Classifier output")
+    plt.legend(frameon=False)
     plt.savefig(
         os.path.join(os.path.dirname(__file__), "figures", tag, "predictions.pdf")
     )
@@ -132,7 +151,7 @@ def loss_plot(train_history, test_history, tag):
     plt.plot(test_history, label="Test loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
-    plt.legend()
+    plt.legend(frameon=False)
     plt.savefig(
         os.path.join(os.path.dirname(__file__), "figures", tag, "loss.pdf"),
         format="pdf",
@@ -146,7 +165,7 @@ def accuracy_plot(train_history, test_history, tag):
     plt.plot(test_history, label="Test accuracy")
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
-    plt.legend()
+    plt.legend(frameon=False)
     plt.savefig(
         os.path.join(os.path.dirname(__file__), "figures", tag, "accuracy.pdf"),
         format="pdf",
