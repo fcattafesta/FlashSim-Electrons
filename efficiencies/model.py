@@ -2,7 +2,64 @@ import torch
 from torch import nn
 
 
-class BinaryClassifier(nn.Module):
+class ElectronClassifier(nn.Module):
+    def __init__(self, input_dim):
+        super().__init__()
+        self.fc1 = nn.Linear(input_dim, 512)
+        self.fc2 = nn.Linear(512, 128)
+        self.fc3 = nn.Linear(128, 32)
+        self.fc4 = nn.Linear(32, 1)
+        self.drop = nn.Dropout(0.1)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.drop(x)
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        x = self.drop(x)
+        x = self.relu(x)
+        x = self.fc3(x)
+        x = self.relu(x)
+        x = self.fc4(x)
+        return x
+
+    def predict(self, x):
+        pred = torch.sigmoid(self.forward(x))
+        return pred
+
+
+class PhotonClassifier(nn.Module):
+    def __init__(self, input_dim):
+        super().__init__()
+        self.fc1 = nn.Linear(input_dim, 512)
+        self.fc2 = nn.Linear(512, 512)
+        self.fc2_1 = nn.Linear(512, 128)
+        self.fc2_2 = nn.Linear(128, 128)
+        self.fc3 = nn.Linear(128, 32)
+        self.fc4 = nn.Linear(32, 1)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        x = self.fc1(x)
+        x = self.relu(x)
+        x = self.fc2(x)
+        x = self.relu(x)
+        x = self.fc2_1(x)
+        x = self.relu(x)
+        x = self.fc2_2(x)
+        x = self.relu(x)
+        x = self.fc3(x)
+        x = self.relu(x)
+        x = self.fc4(x)
+        return x
+
+    def predict(self, x):
+        pred = torch.sigmoid(self.forward(x))
+        return pred
+
+
+class JetClassifier(nn.Module):
     def __init__(self, input_dim):
         super().__init__()
         self.fc1 = nn.Linear(input_dim, 512)
@@ -59,7 +116,7 @@ def train(
     avg_loss = epoch_loss / len(train_dataloader)
     avg_acc = epoch_acc / len(train_dataloader)
 
-    scheduler.step(avg_acc)
+    scheduler.step(avg_loss)
 
     print(f"Train | Loss = {avg_loss:.4f} | Acc. = {avg_acc:.2f} | ")
 

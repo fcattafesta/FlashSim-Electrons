@@ -40,7 +40,7 @@ def visualize_importances(
 
     x_pos = np.arange(len(feature_names))
     if plot:
-        plt.figure(figsize=(12, 6))
+        plt.figure(figsize=(12, 12))
         plt.bar(x_pos, importances, align="center")
         plt.xticks(x_pos, feature_names, wrap=True, rotation="vertical")
         plt.xlabel(axis_title)
@@ -68,7 +68,6 @@ def validation(validation_dataloader, model, device, tag):
             y_pred_tag_list.append(y_pred_tag.cpu().numpy())
             y_true_list.append(y.cpu().numpy())
             torch.cuda.empty_cache()
-
 
     y_pred_list = np.array(y_pred_list).flatten()
     y_true_list = np.array(y_true_list).flatten()

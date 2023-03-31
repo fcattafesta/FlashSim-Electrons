@@ -14,17 +14,19 @@ from data import isReco_Dataset
 from validation import validation, loss_plot, accuracy_plot
 
 
-def training_loop(input_dim, datapath, train_size, epochs, lr, batch_size, weight, tag):
+def training_loop(
+    model, input_dim, datapath, train_size, epochs, lr, batch_size, weight, tag
+):
 
     # Set device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Device: {device}")
 
     # Initialize model
-    model = BinaryClassifier(input_dim).to(device)
+    model.to(device)
     loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([weight], device=device))
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    scheduler = ReduceLROnPlateau(optimizer, "max", patience=3)
+    scheduler = ReduceLROnPlateau(optimizer, "min", patience=3)
     print(
         f"Parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}"
     )
