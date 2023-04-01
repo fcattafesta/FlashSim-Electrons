@@ -126,6 +126,7 @@ def validation(validation_dataloader, model, device, tag):
         edgecolor="b",
         fc=(0, 0, 1, 0.3),
         fill=True,
+        range=(0, 1),
     )
     plt.hist(
         negative,
@@ -136,6 +137,7 @@ def validation(validation_dataloader, model, device, tag):
         edgecolor="r",
         fc=(1, 0, 0, 0.3),
         fill=True,
+        range=(0, 1),
     )
     plt.yscale("log")
     plt.xlabel("Classifier output")
