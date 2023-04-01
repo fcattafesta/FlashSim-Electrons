@@ -10,7 +10,7 @@ def GenElectron_efficiency():
     model = ElectronClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.hdf5")
     train_size = 10000000
-    epochs = 100
+    epochs = 500
     lr = 1e-4
     batch_size = 10000
     weight = 10.0
