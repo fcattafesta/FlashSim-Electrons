@@ -29,7 +29,7 @@ def GenJet_efficiency():
     model = JetClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenJets.hdf5")
     train_size = 10000000
-    epochs = 100
+    epochs = 500
     lr = 1e-4
     batch_size = 10000
     weight = 20.0
@@ -48,7 +48,7 @@ def GenPhoton_efficiency():
     model = PhotonClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenPhotons.hdf5")
     train_size = 10000000
-    epochs = 100
+    epochs = 500
     lr = 1e-4
     batch_size = 10000
     weight = 7.0
