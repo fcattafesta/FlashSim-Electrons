@@ -118,7 +118,7 @@ def add_args(parser):
     parser.add_argument(
         "--lr",
         type=float,
-        default=1e-4,
+        default=1e-5,
         help="Latent learning rate for the Adam optimizer.",
     )
     parser.add_argument("--beta1", type=float, default=0.9, help="Beta1 for Adam.")
