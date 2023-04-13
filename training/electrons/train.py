@@ -35,7 +35,6 @@ def init_np_seed(worker_id):
 
 
 def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
-
     # basic setup
     cudnn.benchmark = False  # to be tried later
     args.gpu = gpu
@@ -280,7 +279,6 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
             test_log_det = 0.0
 
             for z, y in test_loader:
-
                 if gpu is not None:
                     z = z.cuda(args.gpu, non_blocking=True)
                     y = y.cuda(args.gpu, non_blocking=True)
@@ -351,7 +349,9 @@ def main():
     print(args)
 
     args.log_name = args.log_name
-    save_dir = os.path.join("checkpoints", args.log_name)
+    save_dir = os.path.join(
+        "/m100/home/userexternal/fcattafe", "checkpoints", args.log_name
+    )
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
@@ -369,5 +369,4 @@ def main():
 
 
 if __name__ == "__main__":
-
     main()

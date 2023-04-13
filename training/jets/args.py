@@ -174,7 +174,7 @@ def add_args(parser):
         "--log_name", type=str, default="EJM", help="Name for the log dir"
     )
     parser.add_argument("--val_freq", type=int, default=5)
-    parser.add_argument("--log_freq", type=int, default=10)
+    parser.add_argument("--log_freq", type=int, default=5)
     parser.add_argument("--save_freq", type=int, default=5)
 
     # validation options
