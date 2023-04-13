@@ -54,9 +54,9 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
         )
 
     if args.log_name is not None:
-        log_dir = "/m100/home/userexternal/fcattafe/runs/%s" % args.log_name
+        log_dir = "/m100_scratch/userexternal/fcattafe/runs/%s" % args.log_name
     else:
-        log_dir = "/m100/home/userexternal/fcattafe/runs/time-%d" % time.time()
+        log_dir = "/m100_scratch/userexternal/fcattafe/runs/time-%d" % time.time()
 
     if not args.distributed or (args.rank % ngpus_per_node == 0):
         writer = SummaryWriter(logdir=log_dir)
@@ -350,7 +350,7 @@ def main():
 
     args.log_name = args.log_name
     save_dir = os.path.join(
-        "/m100/home/userexternal/fcattafe", "checkpoints", args.log_name
+        "/m100_scratch/userexternal/fcattafe", "checkpoints", args.log_name
     )
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
