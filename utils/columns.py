@@ -1,12 +1,3 @@
-pu = [
-    "Pileup_gpudensity",
-    "Pileup_nPU",
-    "Pileup_nTrueInt",
-    "Pileup_pudensity",
-    "Pileup_sumEOOT",
-    "Pileup_sumLOOT",
-]
-
 ele_cond = [
     "GenElectron_eta",
     "GenElectron_phi",
@@ -42,8 +33,7 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
-eff_ele = ele_cond + pu
-eff_ele = [var.replace("C", "GC", 1) for var in eff_ele] + [
+eff_ele = [var.replace("C", "GC", 1) for var in ele_cond] + [
     "GenElectron_isReco"
 ]  # for efficiency
 
@@ -70,8 +60,7 @@ pho_cond = [
     "GenPhoton_statusFlag14",
 ]
 
-eff_pho = pho_cond + pu
-eff_pho = eff_pho + ["GenPhoton_isReco"]  # for efficiency
+eff_pho = pho_cond + ["GenPhoton_isReco"]  # for efficiency
 
 gen_pho = [var.replace("G", "MG", 1) for var in pho_cond]  # for flow
 
@@ -90,8 +79,7 @@ jet_cond = [
     "GenJet_EncodedHadronFlavour_light",
 ]
 
-eff_jet = jet_cond + pu
-eff_jet = eff_jet + ["GenJet_isReco"]  # for efficiency
+eff_jet = jet_cond + ["GenJet_isReco"]  # for efficiency
 
 gen_jet = [var.replace("G", "MG", 1) for var in jet_cond]  # for flow
 
@@ -155,6 +143,16 @@ for i, name in enumerate(reco_columns):
         reco_columns[i] = "MElectron_phiMinusGen"
     elif name == "MElectron_eta":
         reco_columns[i] = "MElectron_etaMinusGen"
+
+
+pu = [
+    "Pileup_gpudensity",
+    "Pileup_nPU",
+    "Pileup_nTrueInt",
+    "Pileup_pudensity",
+    "Pileup_sumEOOT",
+    "Pileup_sumLOOT",
+]
 
 gen_ele = gen_ele + pu
 gen_pho = gen_pho + pu
