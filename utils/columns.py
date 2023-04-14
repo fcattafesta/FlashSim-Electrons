@@ -1,3 +1,12 @@
+pu = [
+    "Pileup_gpudensity",
+    "Pileup_nPU",
+    "Pileup_nTrueInt",
+    "Pileup_pudensity",
+    "Pileup_sumEOOT",
+    "Pileup_sumLOOT",
+]
+
 ele_cond = [
     "GenElectron_eta",
     "GenElectron_phi",
@@ -33,6 +42,7 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
+eff_ele = ele_cond + pu
 eff_ele = [var.replace("C", "GC", 1) for var in ele_cond] + [
     "GenElectron_isReco"
 ]  # for efficiency
@@ -143,16 +153,6 @@ for i, name in enumerate(reco_columns):
         reco_columns[i] = "MElectron_phiMinusGen"
     elif name == "MElectron_eta":
         reco_columns[i] = "MElectron_etaMinusGen"
-
-
-pu = [
-    "Pileup_gpudensity",
-    "Pileup_nPU",
-    "Pileup_nTrueInt",
-    "Pileup_pudensity",
-    "Pileup_sumEOOT",
-    "Pileup_sumLOOT",
-]
 
 gen_ele = gen_ele + pu
 gen_pho = gen_pho + pu

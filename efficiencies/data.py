@@ -73,8 +73,8 @@ files = [
 
 if __name__ == "__main__":
 
-    #dataset_from_root(files[0], eff_ele, "GenElectrons")
+    dataset_from_root(files[0], eff_ele, "GenElectrons")
 
-    #dataset_from_root(files[1], eff_pho, "GenPhotons")
+    dataset_from_root(files[1], eff_pho, "GenPhotons")
 
     dataset_from_root(files[2], eff_jet, "GenJets")

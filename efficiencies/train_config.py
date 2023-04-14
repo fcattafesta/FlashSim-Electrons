@@ -6,7 +6,7 @@ from model import ElectronClassifier, JetClassifier, PhotonClassifier
 
 
 def GenElectron_efficiency():
-    input_dim = 32
+    input_dim = 38
     model = ElectronClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.hdf5")
     train_size = 10000000
@@ -25,7 +25,7 @@ def GenElectron_efficiency():
 
 
 def GenJet_efficiency():
-    input_dim = 12
+    input_dim = 18
     model = JetClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenJets.hdf5")
     train_size = 10000000
@@ -44,7 +44,7 @@ def GenJet_efficiency():
 
 
 def GenPhoton_efficiency():
-    input_dim = 18
+    input_dim = 24
     model = PhotonClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenPhotons.hdf5")
     train_size = 10000000
