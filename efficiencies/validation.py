@@ -10,6 +10,8 @@ from captum.attr import IntegratedGradients
 
 import seaborn as sns
 from matplotlib import pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 
 from sklearn.metrics import (
     roc_curve,
