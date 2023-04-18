@@ -39,5 +39,5 @@ if __name__ == "__main__":
     for file_in, file_out in zip(file_paths, extracted):
         make_files(file_in, file_out, d)
 
-    with open(os.path.join(os.path.dirname(__file__), "match_dict.json"), "w") as f:
-        json.dump(d, f)
+    # with open(os.path.join(os.path.dirname(__file__), "match_dict.json"), "w") as f:
+    #     json.dump(d, f)
