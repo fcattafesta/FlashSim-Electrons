@@ -112,7 +112,7 @@ def add_args(parser):
     parser.add_argument(
         "--batch_size",
         type=int,
-        default=2048,
+        default=512,
         help="Batch size (of datasets) for training",
     )
     parser.add_argument(
