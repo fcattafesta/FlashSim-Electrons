@@ -19,7 +19,7 @@ labels = [
 ]
 
 
-def get_df_flash(df):
+def get_nelectron(df):
     df = df.Define("nElectron", "Electron_pt.size()")
     return df
 
@@ -105,6 +105,8 @@ def analysis(flash_path, pt_cut, label, filename):
 
     df_full = ROOT.RDataFrame("FullSim", flash_path)
     df_flash = ROOT.RDataFrame("Events", flash_path)
+
+    df_flash = get_nelectron(df_flash)
 
     df_full = search_z(df_full, pt_cut)
     df_flash = search_z(df_flash, pt_cut)
