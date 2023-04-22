@@ -1,7 +1,6 @@
 import ROOT
 
 ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
-ROOT.gInterpreter.ProcessLine('#include "comparison.h"')
 
 cuts = [
     "Z_pt < 50",
@@ -20,23 +19,20 @@ labels = [
 ]
 
 
-def search_z(df, pt_cut, tag):
+def get_df_flash(df):
+    df = df.Define("nElectron", "Electron_pt.size()")
+    return df
 
-    if tag == "flash":
-        z_pt = "z_pt"
-        invariant_mass = "InvariantMass"
-    elif tag == "full":
-        z_pt = "z_pt_float"
-        invariant_mass = "InvariantMass_float"
 
+def search_z(df, pt_cut):
     df_cut = (
         df.Filter("nElectron == 2")
         .Filter("All(abs(Electron_eta) < 2.5)")
         .Filter("All(Electron_pt > 20)")
         .Filter("Sum(Electron_charge) == 0")
-        .Define("Z_pt", f"{z_pt}(Electron_pt, Electron_eta, Electron_phi)")
+        .Define("Zpt", "z_pt(Electron_pt, Electron_eta, Electron_phi)")
         .Filter(pt_cut)
-        .Define("Z_mass", f"{invariant_mass}(Electron_pt, Electron_eta, Electron_phi)")
+        .Define("Z_mass", "InvariantMass(Electron_pt, Electron_eta, Electron_phi)")
     )
 
     return df_cut
@@ -104,17 +100,14 @@ def plot(h_full, f_full, h_flash, f_flash, bias, label):
     return c
 
 
-def analysis(full_path, flash_path, pt_cut, label, filename):
-
+def analysis(flash_path, pt_cut, label, filename):
     ROOT.EnableImplicitMT()
 
-    df_full = ROOT.RDataFrame("Events", full_path)
+    df_full = ROOT.RDataFrame("FullSim", flash_path)
     df_flash = ROOT.RDataFrame("Events", flash_path)
 
-    df_full = ROOT.match(df_full)
-
-    df_full = search_z(df_full, pt_cut, "full")
-    df_flash = search_z(df_flash, pt_cut, "flash")
+    df_full = search_z(df_full, pt_cut)
+    df_flash = search_z(df_flash, pt_cut)
 
     f_full, h_full = fit(df_full)
     f_flash, h_flash = fit(df_flash)
@@ -126,11 +119,8 @@ def analysis(full_path, flash_path, pt_cut, label, filename):
 
 
 if __name__ == "__main__":
-
-    file = "2E88EB28-11AB-414B-8485-E239270F1F94"
-    full_path = f"/gpfs/ddn/srm/cms//store/mc/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/{file}.root"
-    flash_path = f"/gpfs/ddn/cms/user/cattafe/DYJets/EM1_190/230000/{file}_synth.root"
+    flash_path = "/home/users/cattafe/FlashSim/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root"
 
     for i, (cut, label) in enumerate(zip(cuts, labels)):
         filename = f"figures/190/z_{i}_bins.pdf"
-        analysis(full_path, flash_path, cut, label, filename)
+        analysis(flash_path, cut, label, filename)
