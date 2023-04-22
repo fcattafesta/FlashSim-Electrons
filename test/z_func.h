@@ -13,8 +13,9 @@ auto InvariantMass(ROOT::VecOps::RVec<T> &pt, ROOT::VecOps::RVec<T> &eta,
   return (p1 + p2).mass();
 }
 
+template <typename T>
 auto Zpt(ROOT::VecOps::RVec<T> &pt, ROOT::VecOps::RVec<T> &eta,
-          ROOT::VecOps::RVec<T> &phi) {
+         ROOT::VecOps::RVec<T> &phi) {
 
   auto m = 0.51099895000e-3; // GeV
 
