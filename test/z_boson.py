@@ -20,7 +20,7 @@ labels = [
 
 
 def get_nelectron(df):
-    df = df.Define("nElectron", "Electron_pt.size()")
+    df = df.Define("nElectron", "Sum(Electron_pt > 0)")
     return df
 
 
