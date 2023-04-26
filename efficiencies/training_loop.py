@@ -24,7 +24,8 @@ def training_loop(
 
     # Initialize model
     model.to(device)
-    loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([weight], device=device))
+    loss_fn = nn.BCEWithLogitsLoss()
+    # loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([weight], device=device)) # Weighted loss
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     scheduler = ReduceLROnPlateau(optimizer, "min", patience=3)
     print(
