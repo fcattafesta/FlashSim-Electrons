@@ -11,7 +11,8 @@ from captum.attr import IntegratedGradients
 import seaborn as sns
 from matplotlib import pyplot as plt
 import matplotlib
-matplotlib.use('Agg')
+
+matplotlib.use("Agg")
 
 from sklearn.metrics import (
     roc_curve,
@@ -70,6 +71,18 @@ def validation(validation_dataloader, model, device, tag):
     y_pred_list = np.array(y_pred_list).flatten()
     y_true_list = np.array(y_true_list).flatten()
     y_pred_tag_list = np.array(y_pred_tag_list).flatten()
+
+    # Check if output is a probability
+    sum_pred = np.sum(y_pred_list)
+    sum_true = np.sum(y_true_list)
+
+    # save sum of predictions and true values to file
+    with open(
+        os.path.join(os.path.dirname(__file__), "figures", tag, "sum_pred_true.txt"),
+        "w",
+    ) as f:
+        f.write(f"sum_pred: {sum_pred}\n")
+        f.write(f"sum_true: {sum_true}\n")
 
     X, _ = validation_dataloader.dataset[:10000]
     X = X.to(device)
