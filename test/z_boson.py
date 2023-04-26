@@ -121,8 +121,8 @@ def analysis(flash_path, pt_cut, label, filename):
 
 
 if __name__ == "__main__":
-    # flash_path = "/home/users/cattafe/FlashSim/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root"
-    flash_path = "/home/users/cattafe/FlashSim/RunIISummer20UL18NanoAODv9/TTJets_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/8FD97FDE-6234-E144-99F9-CF3AB6C750AD.root"
+    flash_path = "/home/users/cattafe/FlashSim/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root"
+    # flash_path = "/home/users/cattafe/FlashSim/RunIISummer20UL18NanoAODv9/TTJets_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v1/2520000/8FD97FDE-6234-E144-99F9-CF3AB6C750AD.root"
     for i, (cut, label) in enumerate(zip(cuts, labels)):
-        filename = f"figures/190/z_{i}_bins.pdf"
+        filename = f"figures/prova/z_{i}_bins.pdf"
         analysis(flash_path, cut, label, filename)
