@@ -25,6 +25,8 @@ def compute_efficiency(model, model_path, datapath, device="cuda", batch_size=10
     y_true = np.array([])
     with torch.no_grad():
         for x, y in loader:
+            x = x.to(device)
+            y = y.to(device)
             out = model.predict(x)  # predict
             y_pred = np.concatenate((y_pred, out.cpu().numpy().flatten()))
             y_true = np.concatenate((y_true, y.cpu().numpy().flatten()))
