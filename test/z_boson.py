@@ -25,7 +25,7 @@ def search_z(df, pt_cut):
         .Filter("All(abs(Electron_eta) < 2.5)")
         .Filter("All(Electron_pt > 20)")
         .Filter("Sum(Electron_charge) == 0")
-        .Define("Zpt", "Zpt(Electron_pt, Electron_eta, Electron_phi)")
+        .Define("Z_pt", "Zpt(Electron_pt, Electron_eta, Electron_phi)")
         .Filter(pt_cut)
         .Define("Z_mass", "InvariantMass(Electron_pt, Electron_eta, Electron_phi)")
     )
