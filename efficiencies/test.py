@@ -40,7 +40,8 @@ if __name__ == "__main__":
     train_size = 10000000
     model_path = os.path.join(os.path.dirname(__file__), "models", "efficiency_electrons.pt")
 
-
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
     y_pred, y_true = compute_efficiency(model, model_path, datapath, train_size)
     
     mask = isReco(y_pred)
