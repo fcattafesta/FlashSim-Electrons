@@ -35,8 +35,9 @@ def search_z(df, pt_cut):
 
 def fit(df):
     h = df.Histo1D(("Z_mass", "Z_mass", 50, 60, 120), "Z_mass")
-    h.Scale(1 / h.Integral())
-
+    if h.Integral() > 0:
+        h.Scale(1 / h.Integral())
+    
     f = ROOT.TF1("f", "gaus", 87, 93)
     f.SetParameters(0.1, 90, 3)
 
