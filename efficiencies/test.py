@@ -15,7 +15,7 @@ def isReco(y_pred):
     return y_pred > p
 
 
-def compute_efficiency(model, model_path, datapath, device="cuda:0", batch_size=10000):
+def compute_efficiency(model, model_path, datapath, device="cuda", batch_size=10000):
     model.load_state_dict(torch.load(model_path))
     model = model.to(device)
     model.eval()
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     train_size = 10000000
     model_path = os.path.join(os.path.dirname(__file__), "models", "efficiency_electrons.pt")
 
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     y_pred, y_true = compute_efficiency(model, model_path, datapath, train_size)
     
