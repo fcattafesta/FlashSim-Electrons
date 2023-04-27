@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
-    y_pred, y_true = compute_efficiency(model, model_path, datapath, train_size, device=device)
+    y_pred, y_true = compute_efficiency(model, model_path, datapath, device=device)
     
     mask = isReco(y_pred)
 
