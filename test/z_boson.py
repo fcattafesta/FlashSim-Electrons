@@ -21,7 +21,7 @@ labels = [
 
 def search_z(df, pt_cut):
     df_cut = (
-        df.Filter("nElectron == 2")
+        df.Filter("Electron_pt.size() == 2")
         .Filter("All(abs(Electron_eta) < 2.5)")
         .Filter("All(Electron_pt > 20)")
         .Filter("Sum(Electron_charge) == 0")
