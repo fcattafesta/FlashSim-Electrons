@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from matplotlib import pyplot as plt
 import torch
 
 
@@ -31,7 +32,6 @@ def compute_efficiency(model, model_path, datapath, device="cuda", batch_size=10
             y_pred = np.concatenate((y_pred, out.cpu().numpy().flatten()))
             y_true = np.concatenate((y_true, y.cpu().numpy().flatten()))
 
-
     return y_pred, y_true
 
 
@@ -40,12 +40,14 @@ if __name__ == "__main__":
     model = ElectronClassifier(input_dim)
     datapath = os.path.join(os.path.dirname(__file__), "dataset", "GenElectrons.hdf5")
     train_size = 10000000
-    model_path = os.path.join(os.path.dirname(__file__), "models", "efficiency_electrons.pt")
+    model_path = os.path.join(
+        os.path.dirname(__file__), "models", "efficiency_electrons.pt"
+    )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     y_pred, y_true = compute_efficiency(model, model_path, datapath, device=device)
-    
+
     mask = isReco(y_pred)
 
     cut = 100
@@ -54,5 +56,31 @@ if __name__ == "__main__":
     y_true = y_true[:cut]
     mask = mask[:cut]
 
-    for a, b, c in zip(y_pred, mask, y_true):
-        print(f"Prob:{a} -> Mask:{b} | True {c}")
+    # for a, b, c in zip(y_pred, mask, y_true):
+    #     print(f"Prob:{a} -> Mask:{b} | True {c}")
+
+    plt.hist(
+        y_pred[mask],
+        bins=20,
+        range=(0, 1),
+        fill=True,
+        fc=(1, 0, 0, 0.3),
+        histtype="step",
+        linewidth=2,
+        edgecolor="r",
+        label="Reco",
+    )
+    plt.hist(
+        y_pred[np.logical_not(mask)],
+        bins=20,
+        range=(0, 1),
+        label="Not reco",
+        fc=(0, 1, 0, 0.3),
+        histtype="step",
+        linewidth=2,
+        edgecolor="g",
+    )
+
+    plt.yscale("log")
+    plt.legend(frameon=False)
+    plt.savefig(os.path.join(os.path.dirname(__file__), "figures", "electrons", "efficiency_test.pdf"))
