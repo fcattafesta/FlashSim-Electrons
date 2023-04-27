@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     mask = isReco(y_pred)
 
-    cut = 100
+    cut = -1
 
     y_pred = y_pred[:cut]
     y_true = y_true[:cut]
@@ -74,6 +74,7 @@ if __name__ == "__main__":
         y_pred[np.logical_not(mask)],
         bins=20,
         range=(0, 1),
+        fill=True,
         label="Not reco",
         fc=(0, 1, 0, 0.3),
         histtype="step",
@@ -84,3 +85,6 @@ if __name__ == "__main__":
     plt.yscale("log")
     plt.legend(frameon=False)
     plt.savefig(os.path.join(os.path.dirname(__file__), "figures", "electrons", "efficiency_test.pdf"))
+    plt.close()
+
+    print(f"Reco: {np.sum(mask)} | True: {np.sum(y_true)}")
