@@ -3,7 +3,7 @@ import ROOT
 from z_boson import analysis
 from collection_comparison import comparison
 
-ROOT.gIntepreter.ProcessLine('#include "match.h"')
+ROOT.gInterpreter.ProcessLine('#include "match.h"')
 
 
 if __name__ == "__main__":
