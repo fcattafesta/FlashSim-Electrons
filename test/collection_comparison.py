@@ -37,8 +37,8 @@ def comparison(df_full, df_flash, variable, range, nbins):
     legend.SetFillStyle(0)
     legend.SetBorderSize(0)
     legend.SetTextSize(0.02)
-    legend.AddEntry(h_flash, "FullSim", "l")
-    legend.AddEntry(h_full, "FlashSim", "l")
+    legend.AddEntry("FullSim", "FullSim", "l")
+    legend.AddEntry("FlashSim", "FlashSim", "l")
     legend.DrawClone("NDC NB")
 
     cms_label = ROOT.TLatex()
