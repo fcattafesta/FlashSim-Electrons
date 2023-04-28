@@ -48,10 +48,8 @@ def comparison(rdf, variable, range, nbins):
     return c
 
 
-def ratio(rdf, variable, title):
-    h_full = rdf.Histo2D(
-        ("ratio", "", 100, 0, 100, 100, 0, 100), variable, "MGenElectron_pt"
-    )
+def ratio(rdf, reco_var, gen_var, title):
+    h_full = rdf.Histo2D(("ratio", "", 100, 0, 100, 100, 0, 100), reco_var, gen_var)
     h_full.Scale(1.0 / h_full.Integral())
 
     ROOT.gStyle.SetOptStat(0)
