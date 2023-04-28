@@ -2,22 +2,6 @@ import ROOT
 
 ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
 
-cuts = [
-    "Z_pt < 50",
-    "Z_pt >= 50 && Z_pt < 100",
-    "Z_pt >= 100 && Z_pt < 150",
-    "Z_pt >= 150",
-    "1",
-]
-
-labels = [
-    "p^{Z}_{T} < 50",
-    "50 #leq p^{Z}_{T} < 100",
-    "100 #leq p^{Z}_{T} < 150",
-    "p^{Z}_{T} #geq 150",
-    "",
-]
-
 
 def search_z(df, pt_cut):
     df_cut = (
@@ -45,6 +29,7 @@ def fit(df, sim):
     f.SetParameters(*res.Get().Parameters())
 
     return f, h
+
 
 def analysis(df_full, df_flash, pt_cut, label):
     df_full = search_z(df_full, pt_cut)
@@ -102,10 +87,3 @@ def analysis(df_full, df_flash, pt_cut, label):
     c.Update()
 
     return c
-
-
-if __name__ == "__main__":
-    flash_path = "/gpfs/ddn/cms/user/cattafe/FlashSim/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root"
-    for i, (cut, label) in enumerate(zip(cuts, labels)):
-        filename = f"figures/prova/z_{i}_bins.pdf"
-        analysis(flash_path, cut, label, filename)

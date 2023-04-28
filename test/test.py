@@ -12,10 +12,16 @@ if __name__ == "__main__":
 
     ROOT.EnableImplicitMT()
 
-    df_flash = ROOT.RDataFrame("Events", path)
-    df_full = ROOT.RDataFrame("FullSim", path)
+    file = ROOT.TFile(path)
 
-    c_pt = comparison(df_full, df_flash, "Electron_pt", [0, 100], 100)
+    flash = file.Events
+    full = file.FullSim
+
+    flash.AddFriend(full, "FullSim")
+
+    rdf = ROOT.RDataFrame(flash)
+
+    c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
     c_pt.SaveAs(os.path.join(save_path, "Electron_pt.pdf"))
 
     # Z boson
@@ -36,7 +42,9 @@ if __name__ == "__main__":
         "",
     ]
 
+    df_full = ROOT.RDataFrame(full)
+
     for i, (cut, label) in enumerate(zip(cuts, labels)):
         filename = f"z_{i}_bin.pdf"
-        c_z = analysis(df_full, df_flash, cut, label)
+        c_z = analysis(df_full, rdf, cut, label)
         c_z.SaveAs(os.path.join(save_path, filename))

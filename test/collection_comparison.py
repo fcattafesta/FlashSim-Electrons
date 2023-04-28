@@ -1,14 +1,14 @@
 import ROOT
 
 
-def comparison(df_full, df_flash, variable, range, nbins):
+def comparison(rdf, variable, range, nbins):
     inf = range[0]
     sup = range[1]
 
-    h_full = df_full.Histo1D(("FullSim", "", nbins, inf, sup), variable)
+    h_full = rdf.Histo1D(("FullSim", "", nbins, inf, sup), f"FullSim.{variable}")
     h_full.Scale(1.0 / h_full.Integral())
 
-    h_flash = df_flash.Histo1D(("FlashSim", "", nbins, inf, sup), variable)
+    h_flash = rdf.Histo1D(("FlashSim", "", nbins, inf, sup), variable)
     h_flash.Scale(1.0 / h_flash.Integral())
 
     ROOT.gStyle.SetOptStat(0)
