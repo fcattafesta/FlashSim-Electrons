@@ -9,12 +9,13 @@ auto GenEleMatch(float dr, float closest_dr, float pt_rel, float closest_pt_rel,
   return 0;
 }
 
+template <typename T, typename U>
 auto GenPart_ElectronIdx(
     ROOT::VecOps::RVec<float> &gen_pt, ROOT::VecOps::RVec<float> &gen_eta,
     ROOT::VecOps::RVec<float> &gen_phi, ROOT::VecOps::RVec<int> &gen_pdgid,
-    ROOT::VecOps::RVec<int> &gen_status, ROOT::VecOps::RVec<float> &ele_pt,
-    ROOT::VecOps::RVec<float> &ele_eta, ROOT::VecOps::RVec<float> &ele_phi,
-    ROOT::VecOps::RVec<int> &ele_charge) {
+    ROOT::VecOps::RVec<int> &gen_status, ROOT::VecOps::RVec<T> &ele_pt,
+    ROOT::VecOps::RVec<T> &ele_eta, ROOT::VecOps::RVec<T> &ele_phi,
+    ROOT::VecOps::RVec<U> &ele_charge) {
 
   auto size_outer = gen_pt.size();
   auto size_inner = ele_pt.size();
