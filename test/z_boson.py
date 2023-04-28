@@ -79,8 +79,8 @@ def plot(h_full, f_full, h_flash, f_flash, bias, label):
     legend.SetFillStyle(0)
     legend.SetBorderSize(0)
     legend.SetTextSize(0.02)
-    legend.AddEntry("FullSim", "FullSim", "l")
-    legend.AddEntry("FlashSim", "FlashSim", "l")
+    legend.AddEntry(h_flash, "FullSim", "l")
+    legend.AddEntry(h_full, "FlashSim", "l")
     legend.DrawClone("NDC NB")
 
     cms_label = ROOT.TLatex()
@@ -97,12 +97,7 @@ def plot(h_full, f_full, h_flash, f_flash, bias, label):
     return c
 
 
-def analysis(flash_path, pt_cut, label, filename):
-    ROOT.EnableImplicitMT()
-
-    df_full = ROOT.RDataFrame("FullSim", flash_path)
-    df_flash = ROOT.RDataFrame("Events", flash_path)
-
+def analysis(df_full, df_flash, pt_cut, label):
     df_full = search_z(df_full, pt_cut)
     df_flash = search_z(df_flash, pt_cut)
 
@@ -111,8 +106,53 @@ def analysis(flash_path, pt_cut, label, filename):
 
     bias = (f_flash.GetParameter(1) - f_full.GetParameter(1)) / f_full.GetParameter(1)
 
-    c = plot(h_full, f_full, h_flash, f_flash, bias, label)
-    c.SaveAs(filename)
+    ROOT.gStyle.SetOptStat(0)
+    ROOT.gStyle.SetOptFit(0)
+    ROOT.gStyle.SetTextFont(42)
+    c = ROOT.TCanvas("c", "c", 800, 700)
+    c.SetLeftMargin(0.15)
+
+    h_full.SetTitle("")
+    h_full.GetXaxis().SetTitle("m_{ee} [GeV]")
+    h_full.GetXaxis().SetTitleSize(0.04)
+    h_full.GetYaxis().SetTitle("Normalized Events / 1 GeV")
+    h_full.GetYaxis().SetTitleSize(0.04)
+    h_full.SetLineColor(ROOT.kBlack)
+    h_full.SetLineWidth(2)
+    h_full.SetLineStyle(2)
+
+    h_flash.SetLineColor(ROOT.kOrange + 7)
+    h_flash.SetLineWidth(2)
+
+    f_full.SetLineColor(ROOT.kBlue)
+    f_flash.SetLineColor(ROOT.kBlue)
+
+    h_full.DrawClone("hist")
+    h_flash.DrawClone("hist same")
+    f_full.DrawClone("same")
+    f_flash.DrawClone("same")
+
+    legend = ROOT.TLegend(0.72, 0.75, 0.89, 0.88)
+    legend.SetFillColor(0)
+    legend.SetFillStyle(0)
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.02)
+    legend.AddEntry(h_flash, "FullSim", "l")
+    legend.AddEntry(h_full, "FlashSim", "l")
+    legend.DrawClone("NDC NB")
+
+    cms_label = ROOT.TLatex()
+    cms_label.SetTextSize(0.04)
+    cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
+    bin = ROOT.TLatex()
+    bin.SetTextSize(0.03)
+    bin.DrawLatexNDC(0.2, 0.86, label)
+    bias_label = ROOT.TLatex()
+    bias_label.SetTextSize(0.03)
+    bias_label.DrawLatexNDC(0.2, 0.80, f"Bias = {bias*100:.2f}%")
+    c.Update()
+
+    return c
 
 
 if __name__ == "__main__":

@@ -1,34 +1,48 @@
-import os
-import json
-import sys
 import ROOT
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
-from columns import ele_names
+def comparison(df_full, df_flash, variable, range, nbins):
+    inf = range[0]
+    sup = range[1]
 
-ROOT.gInterpreter.Declare('#include "comparison.h"')
+    h_full = df_full.Histo1D((variable, variable, nbins, inf, sup), variable)
+    h_full = h_full.Scale(1.0 / h_full.Integral())
 
-if __name__ == "__main__":
+    h_flash = df_flash.Histo1D((variable, variable, nbins, inf, sup), variable)
+    h_flash = h_flash.Scale(1.0 / h_flash.Integral())
 
-    ele_aod = [f"Electron_{name}" for name in ele_names]
+    ROOT.gStyle.SetOptStat(0)
+    ROOT.gStyle.SetOptFit(0)
+    ROOT.gStyle.SetTextFont(42)
+    c = ROOT.TCanvas("c", "c", 800, 700)
+    c.SetLeftMargin(0.15)
 
-    with open(
-        os.path.join(os.path.dirname(__file__), "..", "generation", "range_dict.json")
-    ) as f:
-        ranges_dict = json.load(f)
+    h_full.SetTitle("")
+    h_full.GetXaxis().SetTitle("")
+    h_full.GetXaxis().SetTitleSize(0.04)
+    h_full.GetYaxis().SetTitle("Normalized Events / 1 GeV")  # pt comparison
+    h_full.GetYaxis().SetTitleSize(0.04)
+    h_full.SetLineColor(ROOT.kBlack)
+    h_full.SetLineWidth(2)
+    h_full.SetLineStyle(2)
 
-    # Correction for the following variables:
-    
-    ranges_dict["MElectron_ptRatio"] = [0, 100]
-    ranges_dict["MElectron_etaMinusGen"] = [-5, 5]
-    ranges_dict["MElectron_phiMinusGen"] = [-3.2, 3.2]
-    ranges_dict["MElectron_charge"] = [-1, 1]
+    h_flash.SetLineColor(ROOT.kOrange + 7)
+    h_flash.SetLineWidth(2)
 
-    for col, range in zip(ele_aod, ranges_dict.values()):
-        if col == "Electron_pt":
-            ROOT.compare(col, range[0], range[1], 100)
-        else:
-            pass
-   
+    h_full.DrawClone("hist")
+    h_flash.DrawClone("hist same")
 
+    legend = ROOT.TLegend(0.72, 0.75, 0.89, 0.88)
+    legend.SetFillColor(0)
+    legend.SetFillStyle(0)
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.02)
+    legend.AddEntry(h_flash, "FullSim", "l")
+    legend.AddEntry(h_full, "FlashSim", "l")
+    legend.DrawClone("NDC NB")
+
+    cms_label = ROOT.TLatex()
+    cms_label.SetTextSize(0.04)
+    cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
+    c.Update()
+    return c
