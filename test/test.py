@@ -19,6 +19,9 @@ if __name__ == "__main__":
 
     rdf = ROOT.RDataFrame(events)
 
+    h = rdf.Histo1D(("h", "", 100, 0, 100), "Electron_pt")
+    h_f = rdf.Histo1D(("h_f", "", 100, 0, 100), "full.Electron_pt")
+
     c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
     c_pt.SaveAs(os.path.join(save_path, "Electron_pt.pdf"))
 
