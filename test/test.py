@@ -23,11 +23,11 @@ if __name__ == "__main__":
     sup = 100
     nbins = 100
 
-    # h_full = rdf.Histo1D(("FullSim", "", nbins, inf, sup), "FullSim.Electron_pt")
-    # h_full.Scale(1.0 / h_full.Integral())
+    h_full = rdf.Histo1D(("FullSim", "", nbins, inf, sup), "FullSim.Electron_pt")
+    h_full.Scale(1.0 / h_full.Integral())
 
-    h_flash = rdf.Histo1D(("FlashSim", "", nbins, inf, sup), "Electron_pt")
-    h_flash.Scale(1.0 / h_flash.Integral())
+    # h_flash = rdf.Histo1D(("FlashSim", "", nbins, inf, sup), "Electron_pt")
+    # h_flash.Scale(1.0 / h_flash.Integral())
 
     # ROOT.gStyle.SetOptStat(0)
     # ROOT.gStyle.SetOptFit(0)
