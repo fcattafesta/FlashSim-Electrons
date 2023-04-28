@@ -7,8 +7,8 @@ ROOT.gInterpreter.ProcessLine('#include "match.h"')
 
 
 if __name__ == "__main__":
-    # path = "/gpfs/ddn/cms/user/cattafe/FlashSim/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root"
-    path = "/gpfs/ddn/cms/user/cattafe/FlashSim/RunIIAutumn18NanoAODv6/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/230000/C159CB51-6BC4-E448-AD9E-59CC2A5920F5.root"
+    path = "/gpfs/ddn/cms/user/cattafe/FlashSim/RunIIAutumn18NanoAODv6/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/230000/8244ED99-0F95-9D4F-B393-22EBC589A46D.root"
+    # path = "/gpfs/ddn/cms/user/cattafe/FlashSim/RunIIAutumn18NanoAODv6/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20_ext1-v1/230000/C159CB51-6BC4-E448-AD9E-59CC2A5920F5.root"
     save_path = os.path.join(os.path.dirname(__file__), "figures", "EEM_90")
 
     ROOT.EnableImplicitMT()
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
     c.Update()
 
-    c.SaveAs(os.path.join(save_path, "TT_ratio.pdf"))
+    c.SaveAs(os.path.join(save_path, "DY_ratio.pdf"))
 
     # c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
     # c_pt.SaveAs(os.path.join(save_path, "TT_Electron_pt.pdf"))
