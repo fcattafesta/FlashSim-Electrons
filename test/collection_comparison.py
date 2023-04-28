@@ -72,3 +72,4 @@ def ratio(rdf, variable, title):
     cms_label.SetTextSize(0.04)
     cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
     c.Update()
+    return c
