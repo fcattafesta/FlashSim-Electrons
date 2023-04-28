@@ -30,14 +30,15 @@ if __name__ == "__main__":
         .Define("MatchedIdx", "GenPart_ElectronIdx[GenPart_ElectronIdx >= 0]")
         .Define("MGenElectron_pt", "GenPart_pt[GenPart_ElectronIdx >= 0]")
         .Define("MElectron_pt", "Take(FullSim.Electron_pt, MatchedIdx)")
-        .Define("GenElectronMask", "abs(GenPart_pdgId) == 11 && GenPart_statusFlags & (1 << 13)")
-        .Define("GenElectron_pt", "GenPart_pt[GenElectronMask]")
+        .Define("PGenPart_ElectronIdx", "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge)")
+        .Define("PMatchedIdx", "GenPart_ElectronIdx[GenPart_ElectronIdx >= 0]")
+        .Define("PGenElectron_pt", "GenPart_pt[GenPart_ElectronIdx >= 0]")
     )
 
     c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
     c_pt.SaveAs(os.path.join(save_path, "TT_Electron_pt.pdf"))
 
-    c_1 = ratio(rdf, "Electron_pt", "GenElectron_pt", "FlashSim")
+    c_1 = ratio(rdf, "Electron_pt", "PGenElectron_pt", "FlashSim")
     c_1.SaveAs(os.path.join(save_path, "TT_2D_pt_Flash.pdf"))
 
     c_2 = ratio(rdf, "MElectron_pt", "FullSim")
