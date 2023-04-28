@@ -15,7 +15,7 @@ if __name__ == "__main__":
     events = file.Events
     full = file.FullSim
 
-    events.AddFriend(full, path)
+    events.AddFriend("FlashSim", path)
 
     rdf = ROOT.RDataFrame(events)
 
