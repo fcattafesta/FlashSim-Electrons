@@ -31,8 +31,8 @@ if __name__ == "__main__":
         .Define("MGenElectron_pt", "GenPart_pt[MGenPart_ElectronIdx >= 0]")
         .Define("MElectron_pt", "Take(FullSim.Electron_pt, MatchedIdx)")
         .Define("PGenPart_ElectronIdx", "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge)")
-        .Define("PMatchedIdx", "GenPart_ElectronIdx[GenPart_ElectronIdx >= 0]")
-        .Define("PGenElectron_pt", "GenPart_pt[GenPart_ElectronIdx >= 0]")
+        .Define("PMatchedIdx", "PGenPart_ElectronIdx[PGenPart_ElectronIdx >= 0]")
+        .Define("PGenElectron_pt", "GenPart_pt[PGenPart_ElectronIdx >= 0]")
     )
 
     c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
