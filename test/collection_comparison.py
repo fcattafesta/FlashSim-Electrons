@@ -6,10 +6,10 @@ def comparison(df_full, df_flash, variable, range, nbins):
     sup = range[1]
 
     h_full = df_full.Histo1D(("FullSim", "", nbins, inf, sup), variable)
-    h_full = h_full.Scale(1.0 / h_full.Integral())
+    h_full.Scale(1.0 / h_full.Integral())
 
     h_flash = df_flash.Histo1D(("FlashSim", "", nbins, inf, sup), variable)
-    h_flash = h_flash.Scale(1.0 / h_flash.Integral())
+    h_flash.Scale(1.0 / h_flash.Integral())
 
     ROOT.gStyle.SetOptStat(0)
     ROOT.gStyle.SetOptFit(0)
