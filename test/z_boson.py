@@ -51,7 +51,7 @@ def analysis(df_full, df_flash, pt_cut, label):
     df_flash = search_z(df_flash, pt_cut)
 
     f_full, h_full = fit(df_full, "FullSim")
-    f_flash, h_flash = fit(df_flash), "FlashSim")
+    f_flash, h_flash = fit(df_flash, "FlashSim")
 
     bias = (f_flash.GetParameter(1) - f_full.GetParameter(1)) / f_full.GetParameter(1)
 
