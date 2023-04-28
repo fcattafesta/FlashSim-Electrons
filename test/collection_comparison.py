@@ -18,7 +18,7 @@ def comparison(rdf, variable, range, nbins):
     c.SetLeftMargin(0.15)
 
     h_full.SetTitle("")
-    h_full.GetXaxis().SetTitle("#p_{T} [GeV]")
+    h_full.GetXaxis().SetTitle("p_{T} [GeV]")
     h_full.GetXaxis().SetTitleSize(0.04)
     h_full.GetYaxis().SetTitle("Normalized Events / 1 GeV")  # pt comparison
     h_full.GetYaxis().SetTitleSize(0.04)
