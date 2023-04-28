@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     ROOT.EnableImplicitMT()
 
-    file = ROOT.TFile(path)
+    file = ROOT.TFile.Open(path)
 
     flash = file.Events
     full = file.FullSim
