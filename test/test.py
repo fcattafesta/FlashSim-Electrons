@@ -42,7 +42,7 @@ if __name__ == "__main__":
     c_1 = ratio(rdf, "PElectron_pt", "PGenElectron_pt", "FlashSim")
     c_1.SaveAs(os.path.join(save_path, "TT_2D_pt_Flash.pdf"))
 
-    c_2 = ratio(rdf, "MElectron_pt", "FullSim")
+    c_2 = ratio(rdf, "MElectron_pt", "MGenElectron_pt", "FullSim")
     c_2.SaveAs(os.path.join(save_path, "TT_2D_pt_Full.pdf"))
 
 
