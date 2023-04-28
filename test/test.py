@@ -27,7 +27,7 @@ if __name__ == "__main__":
             "MGenPart_ElectronIdx",
             "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, FullSim.Electron_pt, FullSim.Electron_eta, FullSim.Electron_phi, FullSim.Electron_charge)",
         )
-        .Define("MatchedIdx", "MGenPart_ElectronIdx[GenPart_ElectronIdx >= 0]")
+        .Define("MatchedIdx", "MGenPart_ElectronIdx[MGenPart_ElectronIdx >= 0]")
         .Define("MGenElectron_pt", "GenPart_pt[MGenPart_ElectronIdx >= 0]")
         .Define("MElectron_pt", "Take(FullSim.Electron_pt, MatchedIdx)")
         .Define("PGenPart_ElectronIdx", "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge)")
