@@ -30,20 +30,64 @@ if __name__ == "__main__":
         .Define("MatchedIdx", "MGenPart_ElectronIdx[MGenPart_ElectronIdx >= 0]")
         .Define("MGenElectron_pt", "GenPart_pt[MGenPart_ElectronIdx >= 0]")
         .Define("MElectron_pt", "Take(FullSim.Electron_pt, MatchedIdx)")
+        .Define("MRatio", "MElectron_pt / MGenElectron_pt")
         .Define("PGenPart_ElectronIdx", "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, Electron_pt, Electron_eta, Electron_phi, Electron_charge)")
         .Define("PMatchedIdx", "PGenPart_ElectronIdx[PGenPart_ElectronIdx >= 0]")
         .Define("PGenElectron_pt", "GenPart_pt[PGenPart_ElectronIdx >= 0]")
         .Define("PElectron_pt", "Take(Electron_pt, PMatchedIdx)")
+        .Define("PRatio", "PElectron_pt / PGenElectron_pt")
     )
 
-    c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
-    c_pt.SaveAs(os.path.join(save_path, "TT_Electron_pt.pdf"))
+    h_full = rdf.Histo1D(("h_full", "h_full", 100, 0, 4), "MRatio")
+    h_full.Scale(1 / h_full.Integral())
+    h_flash = rdf.Histo1D(("h_flash", "h_flash", 100, 0, 4), "PRatio")
+    h_flash.Scale(1 / h_flash.Integral())
 
-    c_1 = ratio(rdf, "PElectron_pt", "PGenElectron_pt", "FlashSim")
-    c_1.SaveAs(os.path.join(save_path, "TT_2D_pt_Flash.pdf"))
+    ROOT.gStyle.SetOptStat(0)
+    ROOT.gStyle.SetOptFit(0)
+    ROOT.gStyle.SetTextFont(42)
+    c = ROOT.TCanvas("c", "c", 800, 700)
+    c.SetLeftMargin(0.15)
 
-    c_2 = ratio(rdf, "MElectron_pt", "MGenElectron_pt", "FullSim")
-    c_2.SaveAs(os.path.join(save_path, "TT_2D_pt_Full.pdf"))
+    h_full.SetTitle("")
+    h_full.GetXaxis().SetTitle("p_{T} / p_{T}^{G}")
+    h_full.GetXaxis().SetTitleSize(0.04)
+    h_full.GetYaxis().SetTitle("Normalized Events")  # pt comparison
+    h_full.GetYaxis().SetTitleSize(0.04)
+    h_full.SetLineColor(ROOT.kBlack)
+    h_full.SetLineWidth(2)
+    h_full.SetLineStyle(2)
+
+    h_flash.SetLineColor(ROOT.kOrange + 7)
+    h_flash.SetLineWidth(2)
+
+    h_full.DrawClone("hist")
+    h_flash.DrawClone("hist same")
+
+    legend = ROOT.TLegend(0.72, 0.75, 0.89, 0.88)
+    legend.SetFillColor(0)
+    legend.SetFillStyle(0)
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.02)
+    legend.AddEntry("FullSim", "FullSim", "l")
+    legend.AddEntry("FlashSim", "FlashSim", "l")
+    legend.DrawClone("NDC NB")
+
+    cms_label = ROOT.TLatex()
+    cms_label.SetTextSize(0.04)
+    cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
+    c.Update()
+
+    c.SaveAs(os.path.join(save_path, "TT_ratio.pdf"))
+
+    # c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
+    # c_pt.SaveAs(os.path.join(save_path, "TT_Electron_pt.pdf"))
+
+    # c_1 = ratio(rdf, "PElectron_pt", "PGenElectron_pt", "FlashSim")
+    # c_1.SaveAs(os.path.join(save_path, "TT_2D_pt_Flash.pdf"))
+
+    # c_2 = ratio(rdf, "MElectron_pt", "MGenElectron_pt", "FullSim")
+    # c_2.SaveAs(os.path.join(save_path, "TT_2D_pt_Full.pdf"))
 
 
     # Z boson
