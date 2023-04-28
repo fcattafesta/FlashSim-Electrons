@@ -31,7 +31,7 @@ if __name__ == "__main__":
     )
 
     c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
-    c_pt.SaveAs(os.path.join(save_path, "Electron_pt.pdf"))
+    c_pt.SaveAs(os.path.join(save_path, "DY_Electron_pt.pdf"))
 
     # Z boson
 
