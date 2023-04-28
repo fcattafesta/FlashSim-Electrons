@@ -27,25 +27,25 @@ if __name__ == "__main__":
 
     # Z boson
 
-    cuts = [
-        "Z_pt < 50",
-        "Z_pt >= 50 && Z_pt < 100",
-        "Z_pt >= 100 && Z_pt < 150",
-        "Z_pt >= 150",
-        "1",
-    ]
+    # cuts = [
+    #     "Z_pt < 50",
+    #     "Z_pt >= 50 && Z_pt < 100",
+    #     "Z_pt >= 100 && Z_pt < 150",
+    #     "Z_pt >= 150",
+    #     "1",
+    # ]
 
-    labels = [
-        "p^{Z}_{T} < 50",
-        "50 #leq p^{Z}_{T} < 100",
-        "100 #leq p^{Z}_{T} < 150",
-        "p^{Z}_{T} #geq 150",
-        "",
-    ]
+    # labels = [
+    #     "p^{Z}_{T} < 50",
+    #     "50 #leq p^{Z}_{T} < 100",
+    #     "100 #leq p^{Z}_{T} < 150",
+    #     "p^{Z}_{T} #geq 150",
+    #     "",
+    # ]
 
-    df_full = ROOT.RDataFrame(full)
+    # df_full = ROOT.RDataFrame(full)
 
-    for i, (cut, label) in enumerate(zip(cuts, labels)):
-        filename = f"z_{i}_bin.pdf"
-        c_z = analysis(df_full, rdf, cut, label)
-        c_z.SaveAs(os.path.join(save_path, filename))
+    # for i, (cut, label) in enumerate(zip(cuts, labels)):
+    #     filename = f"z_{i}_bin.pdf"
+    #     c_z = analysis(df_full, rdf, cut, label)
+    #     c_z.SaveAs(os.path.join(save_path, filename))
