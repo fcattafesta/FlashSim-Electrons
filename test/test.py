@@ -69,8 +69,8 @@ if __name__ == "__main__":
     legend.SetFillStyle(0)
     legend.SetBorderSize(0)
     legend.SetTextSize(0.02)
-    legend.AddEntry("FullSim", "FullSim", "l")
-    legend.AddEntry("FlashSim", "FlashSim", "l")
+    legend.AddEntry("h_full", "FullSim", "l")
+    legend.AddEntry("h_flash", "FlashSim", "l")
     legend.DrawClone("NDC NB")
 
     cms_label = ROOT.TLatex()
