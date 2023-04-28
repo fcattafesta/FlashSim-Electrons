@@ -1,7 +1,7 @@
 import os
 import ROOT
 from z_boson import analysis
-from collection_comparison import comparison
+from collection_comparison import comparison, ratio
 
 ROOT.gInterpreter.ProcessLine('#include "match.h"')
 
@@ -28,11 +28,19 @@ if __name__ == "__main__":
             "GenPart_ElectronIdx(GenPart_pt, GenPart_eta, GenPart_phi, GenPart_pdgId, GenPart_statusFlags, FullSim.Electron_pt, FullSim.Electron_eta, FullSim.Electron_phi, FullSim.Electron_charge)",
         )
         .Define("MatchedIdx", "GenPart_ElectronIdx[GenPart_ElectronIdx >= 0]")
+        .Define("MGenElectron_pt", "GenPart_pt[GenPart_ElectronIdx >= 0]")
         .Define("MElectron_pt", "Take(FullSim.Electron_pt, MatchedIdx)")
     )
 
     c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
     c_pt.SaveAs(os.path.join(save_path, "TT_Electron_pt.pdf"))
+
+    # c_1 = ratio(rdf, "Electron_pt", "FlashSim")
+    # c_1.SaveAs(os.path.join(save_path, "TT_2D_pt_Flash.pdf"))
+
+    c_2 = ratio(rdf, "MElectron_pt", "FullSim")
+    c_2.SaveAs(os.path.join(save_path, "TT_2D_pt_Full.pdf"))
+
 
     # Z boson
 

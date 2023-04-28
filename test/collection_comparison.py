@@ -46,3 +46,29 @@ def comparison(rdf, variable, range, nbins):
     cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
     c.Update()
     return c
+
+
+def ratio(rdf, variable, title):
+    h_full = rdf.Histo2D(
+        ("ratio", "", 100, 0, 100, 100, 0, 100), variable, "MGenElectron_pt"
+    )
+    h_full.Scale(1.0 / h_full.Integral())
+
+    ROOT.gStyle.SetOptStat(0)
+    ROOT.gStyle.SetOptFit(0)
+    ROOT.gStyle.SetTextFont(42)
+    c = ROOT.TCanvas("c", "c", 800, 700)
+    c.SetLeftMargin(0.15)
+
+    h_full.SetTitle(title)
+    h_full.GetXaxis().SetTitle("p_{T} [GeV]")
+    h_full.GetXaxis().SetTitleSize(0.04)
+    h_full.GetYaxis().SetTitle("p_{T}^{G} [GeV]")
+    h_full.GetYaxis().SetTitleSize(0.04)
+
+    h_full.DrawClone("colz")
+
+    cms_label = ROOT.TLatex()
+    cms_label.SetTextSize(0.04)
+    cms_label.DrawLatexNDC(0.16, 0.92, "#bf{CMS} #it{Private Work}")
+    c.Update()
