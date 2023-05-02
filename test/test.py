@@ -13,12 +13,12 @@ if __name__ == "__main__":
 
     ROOT.EnableImplicitMT()
 
-    file = ROOT.TFile.Open(path)
+    # file = ROOT.TFile.Open(path)
 
-    events = file.Events
-    full = file.FullSim
+    # events = file.Events
+    # full = file.FullSim
 
-    events.AddFriend(full, "FullSim")
+    # events.AddFriend(full, "FullSim")
 
     # rdf = ROOT.RDataFrame(events)
 
