@@ -35,7 +35,7 @@ if __name__ == "__main__":
         .Define("PMatchedIdx", "PGenPart_ElectronIdx[PGenPart_ElectronIdx >= 0]")
         .Define("PGenElectron_pt", "GenPart_pt[PGenPart_ElectronIdx >= 0]")
         .Define("PElectron_pt", "Take(Electron_pt, PMatchedIdx)")
-        .Define("PRatio", "PElectron_pt / PGenElectron_pt * 0.97")
+        .Define("PRatio", "PElectron_pt / PGenElectron_pt")
     )
 
     h_full = rdf.Histo1D(("h_full", "h_full", 100, 0.5, 1.5), "MRatio")
