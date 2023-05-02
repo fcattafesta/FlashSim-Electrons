@@ -80,8 +80,8 @@ if __name__ == "__main__":
 
     c.SaveAs(os.path.join(save_path, "DY_ratio.pdf"))
 
-    # c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
-    # c_pt.SaveAs(os.path.join(save_path, "TT_Electron_pt.pdf"))
+    c_pt = comparison(rdf, "Electron_pt", [0, 100], 100)
+    c_pt.SaveAs(os.path.join(save_path, "DY_Electron_pt.pdf"))
 
     # c_1 = ratio(rdf, "PElectron_pt", "PGenElectron_pt", "FlashSim")
     # c_1.SaveAs(os.path.join(save_path, "TT_2D_pt_Flash.pdf"))
