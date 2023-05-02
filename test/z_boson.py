@@ -3,7 +3,7 @@ import ROOT
 ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
 
 
-def search_z(df, pt_cut, factor=[1, 1, 1]):
+def search_z(df, pt_cut):
     df_cut = (
         df.Filter("Electron_pt.size() == 2")
         .Filter("All(abs(Electron_eta) < 2.5)")
@@ -11,7 +11,7 @@ def search_z(df, pt_cut, factor=[1, 1, 1]):
         .Filter("Sum(Electron_charge) == 0")
         .Define("Z_pt", "Zpt(Electron_pt, Electron_eta, Electron_phi)")
         .Filter(pt_cut)
-        .Define("Z_mass", f"InvariantMass(Electron_pt * {factor[0]}, Electron_eta * {factor[1]}, Electron_phi * {factor[2]})")
+        .Define("Z_mass", "InvariantMass(Electron_pt, Electron_eta, Electron_phi)")
     )
 
     return df_cut
@@ -31,9 +31,9 @@ def fit(df, sim):
     return f, h
 
 
-def analysis(df_full, df_flash, pt_cut, label, factor=[1, 1, 1]):
+def analysis(df_full, df_flash, pt_cut, label):
     df_full = search_z(df_full, pt_cut)
-    df_flash = search_z(df_flash, pt_cut, factor=[0.97, 0.91, 0.92])
+    df_flash = search_z(df_flash, pt_cut)
 
     f_full, h_full = fit(df_full, "FullSim")
     f_flash, h_flash = fit(df_flash, "FlashSim")
