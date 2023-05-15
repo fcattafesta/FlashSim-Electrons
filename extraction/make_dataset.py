@@ -30,6 +30,8 @@ ttbar_training_files = [
     "120000/1CD61F25-9DE8-D741-9200-CCBBA61E5A0A.root",
     "120000/1D885366-E280-1243-AE4F-532D326C2386.root",
     "120000/23AD2392-C48B-D643-9E16-C93730AA4A02.root",
+    "120000/245961C8-DE06-8F4F-9E92-ED6F30A097C4.root",
+    "120000/262EAEE2-14CC-2A44-8F4B-B1A339882B25.root",
 ]
 
 
@@ -49,7 +51,6 @@ d = {
 if __name__ == "__main__":
     for file_in, file_out in zip(file_paths, extracted):
         make_files(file_in, file_out, d)
-        
 
     with open(os.path.join(os.path.dirname(__file__), "match_dict.json"), "w") as f:
         json.dump(d, f)
