@@ -66,7 +66,7 @@ files = [
             "dataset",
             f"MElectrons_{i}_{tag}.root:MElectrons",
         )
-        for i in range(11)
+        for i in range(9)
     ]
     for tag in ["ele", "pho", "jet"]
 ]

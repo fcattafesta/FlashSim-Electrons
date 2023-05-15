@@ -12,9 +12,11 @@ from prep_actions_jet import target_dictionary as target_dictionary_jet
 
 dataset_path = os.path.join(os.path.dirname(__file__), "..", "extraction", "dataset")
 
+nfiles = 9
+
 # GenElectron training dataset
 
-filenames = [f"MElectrons_{i}_ele.root:MElectrons" for i in range(11)]
+filenames = [f"MElectrons_{i}_ele.root:MElectrons" for i in range(nfiles)]
 
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
@@ -25,7 +27,7 @@ make_dataset(filepaths, "MElectrons_ele", target_dictionary_ele, scale_name, gen
 
 # GenPhoton training dataset
 
-filenames = [f"MElectrons_{i}_pho.root:MElectrons" for i in range(11)]
+filenames = [f"MElectrons_{i}_pho.root:MElectrons" for i in range(nfiles)]
 
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
@@ -36,7 +38,7 @@ make_dataset(filepaths, "MElectrons_pho", target_dictionary_pho, scale_name, gen
 
 # GenJet training dataset
 
-filenames = [f"MElectrons_{i}_jet.root:MElectrons" for i in range(11)]
+filenames = [f"MElectrons_{i}_jet.root:MElectrons" for i in range(nfiles)]
 
 filepaths = [os.path.join(dataset_path, f) for f in filenames]
 
