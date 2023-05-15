@@ -520,32 +520,32 @@ def make_files(inputname, outname, dict):
     d = match(d)
     d = gen_to_reco(d)
 
-    # ele = ele_match(d)
-    # ele = reco_match(ele, "Electron_genObjMatch == 0")
-    # ele = ele_ele(ele)
+    ele = ele_match(d)
+    ele = reco_match(ele, "Electron_genObjMatch == 0")
+    ele = ele_ele(ele)
 
     n_reco_match, n_reco = dict["RECOELE_GENELE"]
 
-    # n_reco_match += ele.Histo1D("MElectron_ptRatio").GetEntries()
-    # n_reco += ele.Histo1D("Electron_pt").GetEntries()
+    n_reco_match += ele.Histo1D("MElectron_ptRatio").GetEntries()
+    n_reco += ele.Histo1D("Electron_pt").GetEntries()
 
-    # dict["RECOELE_GENELE"] = (n_reco_match, n_reco)
+    dict["RECOELE_GENELE"] = (n_reco_match, n_reco)
 
-    # n_gen_match, n_gen = dict["GENELE_RECOELE"]
+    n_gen_match, n_gen = dict["GENELE_RECOELE"]
 
-    # n_gen_match += (
-    #     ele.Define("tmp", "GenElectron_pt[GenElectron_isReco]")
-    #     .Histo1D("tmp")
-    #     .GetEntries()
-    # )
-    # n_gen += ele.Histo1D("GenElectron_pt").GetEntries()
+    n_gen_match += (
+        ele.Define("tmp", "GenElectron_pt[GenElectron_isReco]")
+        .Histo1D("tmp")
+        .GetEntries()
+    )
+    n_gen += ele.Histo1D("GenElectron_pt").GetEntries()
 
-    # dict["GENELE_RECOELE"] = (n_gen_match, n_gen)
+    dict["GENELE_RECOELE"] = (n_gen_match, n_gen)
 
-    # cols = gen_ele + reco_columns + eff_ele
-    # ele.Snapshot("MElectrons", f"{outname}_ele.root", cols)
+    cols = gen_ele + reco_columns + eff_ele
+    ele.Snapshot("MElectrons", f"{outname}_ele.root", cols)
 
-    # print(f"{outname}_ele.root saved")
+    print(f"{outname}_ele.root saved")
 
     pho = pho_match(d)
     pho = reco_match(pho, "Electron_genObjMatch == 1")
@@ -571,26 +571,26 @@ def make_files(inputname, outname, dict):
 
     print(f"{outname}_pho.root saved")
 
-    # jet = jet_match(d)
-    # jet = reco_match(jet, "Electron_genObjMatch == 2")
-    # jet = jet_ele(jet)
+    jet = jet_match(d)
+    jet = reco_match(jet, "Electron_genObjMatch == 2")
+    jet = jet_ele(jet)
 
-    # n_reco_match, _ = dict["RECOELE_GENJET"]
+    n_reco_match, _ = dict["RECOELE_GENJET"]
 
-    # n_reco_match += jet.Histo1D("MElectron_ptRatio").GetEntries()
+    n_reco_match += jet.Histo1D("MElectron_ptRatio").GetEntries()
 
-    # dict["RECOELE_GENJET"] = (n_reco_match, n_reco)
+    dict["RECOELE_GENJET"] = (n_reco_match, n_reco)
 
-    # n_gen_match, n_gen = dict["GENJET_RECOELE"]
+    n_gen_match, n_gen = dict["GENJET_RECOELE"]
 
-    # n_gen_match += (
-    #     jet.Define("tmp", "GenJet_pt[GenJet_isReco]").Histo1D("tmp").GetEntries()
-    # )
-    # n_gen += jet.Histo1D("GenJet_pt").GetEntries()
+    n_gen_match += (
+        jet.Define("tmp", "GenJet_pt[GenJet_isReco]").Histo1D("tmp").GetEntries()
+    )
+    n_gen += jet.Histo1D("GenJet_pt").GetEntries()
 
-    # dict["GENJET_RECOELE"] = (n_gen_match, n_gen)
+    dict["GENJET_RECOELE"] = (n_gen_match, n_gen)
 
-    # cols = gen_jet + reco_columns + eff_jet
-    # jet.Snapshot("MElectrons", f"{outname}_jet.root", cols)
+    cols = gen_jet + reco_columns + eff_jet
+    jet.Snapshot("MElectrons", f"{outname}_jet.root", cols)
 
-    # print(f"{outname}_jet.root saved")
+    print(f"{outname}_jet.root saved")
