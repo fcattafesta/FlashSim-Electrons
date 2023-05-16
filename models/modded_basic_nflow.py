@@ -112,7 +112,7 @@ class MLP(nn.Module):
         hidden_sizes,
         activation=F.relu,
         activate_output=False,
-        batch_norm=True,
+        batch_norm=False,
         dropout_probability=0.0,
     ):
         """
