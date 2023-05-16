@@ -196,10 +196,6 @@ class CouplingTransformM(Transform):
         )
 
         assert self.num_identity_features + self.num_transform_features == self.features
-        print(
-            self.num_identity_features,
-            self.num_transform_features * self._transform_dim_multiplier(),
-        )
         self.transform_net = transform_net_create_fn(
             self.num_identity_features,
             self.num_transform_features * self._transform_dim_multiplier(),
