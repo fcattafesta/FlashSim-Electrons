@@ -126,6 +126,7 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
                 device_ids=[args.gpu],
                 output_device=args.gpu,
                 check_reduction=True,
+                find_unused_parameters=True,
             )
             args.batch_size = int(args.batch_size / ngpus_per_node)
             args.workers = 0
@@ -219,7 +220,7 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
                     args,
                     args.gpu,
                 )
-                print('done with validation')
+                print("done with validation")
 
     if args.distributed:
         print("[Rank %d] World size : %d" % (args.rank, dist.get_world_size()))
@@ -249,7 +250,6 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
             loss = -log_p - log_det
 
             if ~(torch.isnan(loss.mean()) | torch.isinf(loss.mean())):
-
                 # Keep track of total loss.
                 train_loss += (loss.detach()).sum()
                 train_log_p += (-log_p.detach()).sum()
@@ -368,9 +368,7 @@ def main():
     print(args)
 
     args.log_name = args.log_name
-    save_dir = os.path.join(
-        ".", "checkpoints", args.log_name
-    )
+    save_dir = os.path.join(".", "checkpoints", args.log_name)
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
