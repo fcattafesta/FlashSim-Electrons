@@ -5,6 +5,7 @@ import torch
 from torch.nn.functional import softplus
 
 from nflows.transforms import splines
+from nflows import transforms
 from nflows.transforms.base import Transform
 from nflows.transforms.nonlinearities import (
     PiecewiseCubicCDF,
@@ -20,7 +21,13 @@ class CouplingTransformMM(Transform):
     images (NxCxHxW). For images the splitting is done on the channel dimension, using the
     provided 1D mask."""
 
-    def __init__(self, mask, transform_net_create_fn, unconditional_transform=None, init_identity=True):
+    def __init__(
+        self,
+        mask,
+        transform_net_create_fn,
+        unconditional_transform=None,
+        init_identity=True,
+    ):
         """
         Constructor.
         Args:
@@ -38,7 +45,7 @@ class CouplingTransformMM(Transform):
         self.features = len(mask)
         features_vector = torch.arange(self.features)
 
-        self.min_derivative=splines.rational_quadratic.DEFAULT_MIN_DERIVATIVE
+        self.min_derivative = splines.rational_quadratic.DEFAULT_MIN_DERIVATIVE
 
         self.register_buffer(
             "identity_features", features_vector.masked_select(mask <= 0)
@@ -55,11 +62,11 @@ class CouplingTransformMM(Transform):
         )
 
         if init_identity:
-          torch.nn.init.constant_(self.transform_net.final_layer.weight, 0.0)
-          torch.nn.init.constant_(
-              self.transform_net.final_layer.bias,
-              np.log(np.exp(1 - self.min_derivative) - 1),
-          )
+            torch.nn.init.constant_(self.transform_net.final_layer.weight, 0.0)
+            torch.nn.init.constant_(
+                self.transform_net.final_layer.bias,
+                np.log(np.exp(1 - self.min_derivative) - 1),
+            )
 
         if unconditional_transform is None:
             self.unconditional_transform = None
@@ -146,14 +153,20 @@ class CouplingTransformMM(Transform):
     def _coupling_transform_inverse(self, inputs, transform_params):
         """Inverse of the coupling transform."""
         raise NotImplementedError()
-    
+
 
 class CouplingTransformM(Transform):
     """A base class for coupling layers. Supports 2D inputs (NxD), as well as 4D inputs for
     images (NxCxHxW). For images the splitting is done on the channel dimension, using the
     provided 1D mask."""
 
-    def __init__(self, mask, transform_net_create_fn, unconditional_transform=None, init_identity=True):
+    def __init__(
+        self,
+        mask,
+        transform_net_create_fn,
+        unconditional_transform=None,
+        init_identity=True,
+    ):
         """
         Constructor.
         Args:
@@ -171,7 +184,9 @@ class CouplingTransformM(Transform):
         self.features = len(mask)
         features_vector = torch.arange(self.features)
 
-        self.min_derivative=transforms.splines.rational_quadratic.DEFAULT_MIN_DERIVATIVE
+        self.min_derivative = (
+            transforms.splines.rational_quadratic.DEFAULT_MIN_DERIVATIVE
+        )
 
         self.register_buffer(
             "identity_features", features_vector.masked_select(mask <= 0)
@@ -179,20 +194,23 @@ class CouplingTransformM(Transform):
         self.register_buffer(
             "transform_features", features_vector.masked_select(mask > 0)
         )
-        
+
         assert self.num_identity_features + self.num_transform_features == self.features
-        print(self.num_identity_features, self.num_transform_features * self._transform_dim_multiplier())
+        print(
+            self.num_identity_features,
+            self.num_transform_features * self._transform_dim_multiplier(),
+        )
         self.transform_net = transform_net_create_fn(
             self.num_identity_features,
             self.num_transform_features * self._transform_dim_multiplier(),
         )
 
         if init_identity:
-          torch.nn.init.constant_(self.transform_net.final_layer.weight, 0.0)
-          torch.nn.init.constant_(
-              self.transform_net.final_layer.bias,
-              0.5414,
-          )
+            torch.nn.init.constant_(self.transform_net.final_layer.weight, 0.0)
+            torch.nn.init.constant_(
+                self.transform_net.final_layer.bias,
+                0.5414,
+            )
 
         if unconditional_transform is None:
             self.unconditional_transform = None
@@ -279,8 +297,6 @@ class CouplingTransformM(Transform):
     def _coupling_transform_inverse(self, inputs, transform_params):
         """Inverse of the coupling transform."""
         raise NotImplementedError()
-
-
 
 
 class PiecewiseCouplingTransformMM(CouplingTransformMM):
