@@ -167,9 +167,9 @@ class MLP(nn.Module):
         outputs = temps
         outputs = self._activation(outputs)
 
-        for hidden_layer in self._hidden_layers:
+        for i, hidden_layer in enumerate(self._hidden_layers):
             if self._batch_norm:
-                outputs = self.batch_norm_layers[0](outputs)
+                outputs = self.batch_norm_layers[i](outputs)
             outputs = hidden_layer(outputs)
             outputs = self._activation(outputs)
             outputs = self.dropout(outputs)
