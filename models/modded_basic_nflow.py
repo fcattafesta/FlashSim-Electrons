@@ -44,8 +44,142 @@ from nflows.utils import torchutils
 # from nflows.transforms import splines
 from torch.nn.functional import softplus
 
-from modded_coupling import PiecewiseCouplingTransformM
+from modded_coupling import PiecewiseCouplingTransformMM, CouplingTransformM
 from modded_base_flow import FlowM
+
+
+class AffineCouplingTransform(CouplingTransformM):
+    """An affine coupling layer that scales and shifts part of the variables.
+
+    Reference:
+    > L. Dinh et al., Density estimation using Real NVP, ICLR 2017.
+
+    The user should supply `scale_activation`, the final activation function in the neural network producing the scale tensor.
+    Two options are predefined in the class.
+    `DEFAULT_SCALE_ACTIVATION` preserves backwards compatibility but only produces scales <= 1.001.
+    `GENERAL_SCALE_ACTIVATION` produces scales <= 3, which is more useful in general applications.
+    """
+
+    DEFAULT_SCALE_ACTIVATION = lambda x: torch.sigmoid(x + 2) + 1e-3
+    GENERAL_SCALE_ACTIVATION = lambda x: (softplus(x) + 1e-3).clamp(0, 10)
+
+    def __init__(
+        self,
+        mask,
+        transform_net_create_fn,
+        unconditional_transform=None,
+        scale_activation=GENERAL_SCALE_ACTIVATION,
+        init_identity=True,
+    ):
+        self.scale_activation = scale_activation
+        self.init_identity = init_identity
+        super().__init__(mask, transform_net_create_fn, unconditional_transform)
+
+    def _transform_dim_multiplier(self):
+        return 2
+
+    def _scale_and_shift(self, transform_params):
+        unconstrained_scale = transform_params[:, self.num_transform_features :, ...]
+        shift = transform_params[:, : self.num_transform_features, ...]
+        if self.init_identity:
+            shift = shift - 0.5414
+        scale = self.scale_activation(unconstrained_scale)
+        return scale, shift
+
+    def _coupling_transform_forward(self, inputs, transform_params):
+        scale, shift = self._scale_and_shift(transform_params)
+        log_scale = torch.log(scale)
+        outputs = inputs * scale + shift
+        logabsdet = torchutils.sum_except_batch(log_scale, num_batch_dims=1)
+        return outputs, logabsdet
+
+    def _coupling_transform_inverse(self, inputs, transform_params):
+        scale, shift = self._scale_and_shift(transform_params)
+        log_scale = torch.log(scale)
+        outputs = (inputs - shift) / scale
+        logabsdet = -torchutils.sum_except_batch(log_scale, num_batch_dims=1)
+        return outputs, logabsdet
+
+
+class MLP(nn.Module):
+    """A standard multi-layer perceptron."""
+
+    def __init__(
+        self,
+        in_shape,
+        out_shape,
+        context_features,
+        hidden_sizes,
+        activation=F.relu,
+        activate_output=False,
+        batch_norm=True,
+        dropout_probability=0.0,
+    ):
+        """
+        Args:
+            in_shape: tuple, list or torch.Size, the shape of the input.
+            out_shape: tuple, list or torch.Size, the shape of the output.
+            hidden_sizes: iterable of ints, the hidden-layer sizes.
+            activation: callable, the activation function.
+            activate_output: bool, whether to apply the activation to the output.
+        """
+        super().__init__()
+        self._in_shape = in_shape
+        self._out_shape = out_shape
+        self._hidden_sizes = hidden_sizes
+        self._activation = activation
+        self._activate_output = activate_output
+        self._batch_norm = batch_norm
+        self.dropout = nn.Dropout(p=dropout_probability)
+
+        if len(hidden_sizes) == 0:
+            raise ValueError("List of hidden sizes can't be empty.")
+
+        if context_features is not None:
+            self.initial_layer = nn.Linear(in_shape + context_features, hidden_sizes[0])
+        else:
+            self.initial_layer = nn.Linear(in_shape, hidden_sizes[0])
+
+        if self._batch_norm:
+            self.batch_norm_layers = nn.ModuleList(
+                [nn.BatchNorm1d(sizes, eps=1e-3) for sizes in hidden_sizes]
+            )
+        self._hidden_layers = nn.ModuleList(
+            [
+                nn.Linear(in_size, out_size)
+                for in_size, out_size in zip(hidden_sizes[:-1], hidden_sizes[1:])
+            ]
+        )
+        self.final_layer = nn.Linear(hidden_sizes[-1], np.prod(out_shape))
+
+    def forward(self, inputs, context=None):
+        # if inputs.shape[1:] != self._in_shape:
+        #     raise ValueError(
+        #         "Expected inputs of shape {}, got {}.".format(
+        #             self._in_shape, inputs.shape[1:]
+        #         )
+        #     )
+
+        if context is None:
+            temps = self.initial_layer(inputs)
+        else:
+            temps = self.initial_layer(torch.cat((inputs, context), dim=1))
+        outputs = temps
+        outputs = self._activation(outputs)
+
+        for hidden_layer in self._hidden_layers:
+            if self._batch_norm:
+                outputs = self.batch_norm_layers[0](outputs)
+            outputs = hidden_layer(outputs)
+            outputs = self._activation(outputs)
+            outputs = self.dropout(outputs)
+
+        outputs = self.final_layer(outputs)
+        if self._activate_output:
+            outputs = self._activation(outputs)
+        # outputs = outputs.reshape(-1, *torch.Size(self._out_shape))
+
+        return outputs
 
 
 class MaskedAffineAutoregressiveTransformM(AutoregressiveTransform):
@@ -229,7 +363,7 @@ class MaskedPiecewiseRationalQuadraticAutoregressiveTransformM(AutoregressiveTra
         return self._elementwise(inputs, autoregressive_params, inverse=True)
 
 
-class PiecewiseRationalQuadraticCouplingTransformM(PiecewiseCouplingTransformM):
+class PiecewiseRationalQuadraticCouplingTransformM(PiecewiseCouplingTransformMM):
     def __init__(
         self,
         mask,
@@ -244,7 +378,6 @@ class PiecewiseRationalQuadraticCouplingTransformM(PiecewiseCouplingTransformM):
         min_bin_height=modded_spline.DEFAULT_MIN_BIN_HEIGHT,
         min_derivative=modded_spline.DEFAULT_MIN_DERIVATIVE,
     ):
-
         self.num_bins = num_bins
         self.min_bin_width = min_bin_width
         self.min_bin_height = min_bin_height
@@ -625,6 +758,26 @@ def create_mixture_flow_model(input_dim, context_dim, base_kwargs, transform_typ
         )
         transform.append(create_random_transform(param_dim=input_dim))
 
+    for i in range(base_kwargs["num_steps_caf"]):
+        transform.append(
+            AffineCouplingTransform(
+                mask=utils.create_alternating_binary_mask(
+                    features=input_dim, even=(i % 2 == 0)
+                ),
+                transform_net_create_fn=(
+                    lambda in_features, out_features: MLP(
+                        in_shape=in_features,
+                        out_shape=out_features,
+                        hidden_sizes=base_kwargs[
+                            "hidden_dim_caf"
+                        ],  # list of hidden layer dimensions
+                        context_features=context_dim,
+                    )
+                ),
+            )
+        )
+        transform.append(create_random_transform(param_dim=input_dim))
+
     transform_fnal = transforms.CompositeTransform(transform)
 
     flow = FlowM(transform_fnal, distribution)
@@ -725,7 +878,6 @@ def test_epoch(flow, test_loader, epoch, device=None):
         flow.eval()
         test_loss = 0.0
         for z, y in test_loader:
-
             if device is not None:
                 z = z.to(device, non_blocking=True)
                 y = y.to(device, non_blocking=True)
@@ -773,7 +925,6 @@ def train(
     )
 
     for epoch in range(0 + res_epoch, epochs + 1 + res_epoch):
-
         print(
             "Learning rate: {}".format(optimizer.state_dict()["param_groups"][0]["lr"])
         )
@@ -804,7 +955,6 @@ def train(
             )
 
         if epoch % save_freq == 0:
-
             save_model(
                 epoch,
                 model,

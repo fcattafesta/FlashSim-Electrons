@@ -74,6 +74,7 @@ def add_args(parser):
     parser.add_argument("--tail_bound", type=float, default=1.0)
     parser.add_argument("--hidden_dim_maf", type=int, default=128)
     parser.add_argument("--hidden_dim_arqs", type=int, default=300)
+    parser.add_argument("--hidden_dim_caf", type=list, default=[128 for _ in range(8)])
     parser.add_argument(
         "--base_transform_type",
         type=str,
