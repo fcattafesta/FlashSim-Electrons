@@ -623,7 +623,7 @@ def validate_electrons(
 
     ranges = [(0, 200), (-4, 4), (-3.2, 3.2)]
 
-    fig = make_corner(reco, saturated_samples, labels, "Kinematics", renges=ranges)
+    fig = make_corner(reco, saturated_samples, labels, "Kinematics", ranges=ranges)
     plt.savefig(f"{save_dir}/Kinematics_corner.png", format="png")
     writer.add_figure("Corner_plots/Kinematics", fig, global_step=epoch)
 
