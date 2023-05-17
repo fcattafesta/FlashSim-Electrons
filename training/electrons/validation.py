@@ -13,7 +13,9 @@ import corner
 
 from scipy.stats import wasserstein_distance
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing"))
+sys.path.insert(
+    0, os.path.join(os.path.dirname(__file__), "..", "..", "postprocessing")
+)
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "utils"))
 
 from postprocessing import postprocessing
@@ -33,7 +35,6 @@ def validate_electrons(
     device,
     clf_loaders=None,
 ):
-
     if writer is not None:
         save_dir = os.path.join(save_dir, f"./figures/validation@epoch-{epoch}")
         if not os.path.isdir(save_dir):
@@ -44,13 +45,11 @@ def validate_electrons(
     model.eval()
     # Generate samples
     with torch.no_grad():
-
         gen = []
         reco = []
         samples = []
 
         for bid, data in enumerate(test_loader):
-
             z, y = data[0], data[1]
             inputs_y = y.cuda(device)
 
@@ -80,6 +79,9 @@ def validate_electrons(
     reco = postprocessing(reco, target_dictionary, "scale_factors_ele.json")
 
     samples = postprocessing(samples, target_dictionary, "scale_factors_ele.json")
+
+    # remove nan and inf values from samples
+    samples = samples[~samples.isin([np.nan, np.inf, -np.inf]).any(1)]
 
     # New DataFrame containing FullSim-range saturated samples
 
@@ -142,7 +144,6 @@ def validate_electrons(
 
     with open(os.path.join(os.path.dirname(__file__), "range_dict.json"), "w") as f:
         json.dump(range_dict, f)
-
 
     # Return to physical kinematic variables
 
@@ -293,7 +294,6 @@ def validate_electrons(
     colors = ["tab:red", "tab:green", "tab:blue", "tab:orange"]
 
     for target, rangeR in zip(targets, ranges):
-
         fig, axs = plt.subplots(1, 2, figsize=(9, 4.5), tight_layout=False)
 
         axs[0].set_xlabel(f"{target}")
@@ -395,7 +395,6 @@ def validate_electrons(
     # Normalized version
 
     for target, rangeR in zip(targets, ranges):
-
         fig, axs = plt.subplots(1, 2, figsize=(9, 4.5), tight_layout=False)
 
         axs[0].set_xlabel(f"{target}")
