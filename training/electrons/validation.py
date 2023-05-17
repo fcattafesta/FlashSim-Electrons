@@ -3,6 +3,7 @@ import sys
 import json
 
 import torch
+import time
 
 import numpy as np
 import pandas as pd
@@ -42,6 +43,7 @@ def validate_electrons(
     else:
         save_dir = None
 
+    times = []
     model.eval()
     # Generate samples
     with torch.no_grad():
@@ -52,10 +54,14 @@ def validate_electrons(
         for bid, data in enumerate(test_loader):
             z, y = data[0], data[1]
             inputs_y = y.cuda(device)
-
+            start = time.time()
             z_sampled = model.sample(
                 num_samples=1, context=inputs_y.view(-1, args.y_dim)
             )
+            t = time.time() - start
+            print(f"Time for sampling: {len(test_loader) / t} [Hz]")
+            times.append(t)
+
             z_sampled = z_sampled.cpu().detach().numpy()
             inputs_y = inputs_y.cpu().detach().numpy()
             z = z.cpu().detach().numpy()
@@ -63,6 +69,8 @@ def validate_electrons(
             gen.append(inputs_y)
             reco.append(z)
             samples.append(z_sampled)
+
+    print(f"Average time for sampling: {np.mean(np.array(times))}")
 
     # Making DataFrames
 
@@ -80,7 +88,6 @@ def validate_electrons(
 
     samples = postprocessing(samples, target_dictionary, "scale_factors_ele.json")
 
-    
     # New DataFrame containing FullSim-range saturated samples
 
     saturated_samples = pd.DataFrame()
