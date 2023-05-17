@@ -80,9 +80,7 @@ def validate_electrons(
 
     samples = postprocessing(samples, target_dictionary, "scale_factors_ele.json")
 
-    # remove nan and inf values from samples
-    samples = samples[~samples.isin([np.nan, np.inf, -np.inf]).any(1)]
-
+    
     # New DataFrame containing FullSim-range saturated samples
 
     saturated_samples = pd.DataFrame()
@@ -616,7 +614,9 @@ def validate_electrons(
 
     labels = ["MElectron_pt", "MElectron_eta", "MElectron_phi"]
 
-    fig = make_corner(reco, saturated_samples, labels, "Kinematics")
+    ranges = [(0, 200), (-4, 4), (-3.2, 3.2)]
+
+    fig = make_corner(reco, saturated_samples, labels, "Kinematics", renges=ranges)
     plt.savefig(f"{save_dir}/Kinematics_corner.png", format="png")
     writer.add_figure("Corner_plots/Kinematics", fig, global_step=epoch)
 
