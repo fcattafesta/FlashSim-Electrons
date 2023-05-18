@@ -282,9 +282,9 @@ def validate_electrons(
 
     # Conditioning
 
-    targets = ["MElectron_ip3d", "MElectron_sip3d", "MElectron_jetRelIso"]
+    targets = ["MElectron_ip3d", "MElectron_sip3d", "MElectron_pfRelIso03_all"]
 
-    ranges = [[0, 0.1], [0, 10], [0, 5]]
+    ranges = [[0, 0.1], [0, 10], [0, 0.5]]
 
     conds = [f"MGenElectron_statusFlag{i}" for i in (0, 2, 7)]
     conds.append("ClosestJet_EncodedPartonFlavour_b")
