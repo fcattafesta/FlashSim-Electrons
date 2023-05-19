@@ -246,6 +246,7 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
 
                 # loss = (w * loss).sum() / w.sum()
                 loss = (loss).mean()
+                print(loss)
 
                 loss.backward()
                 optimizer.step()
