@@ -250,12 +250,6 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
                 loss.backward()
                 optimizer.step()
 
-            # loss = (w * loss).sum() / w.sum()
-            loss = (loss).mean()
-
-            loss.backward()
-            optimizer.step()
-
             if (output_freq is not None) and (batch_idx % output_freq == 0):
                 duration = time.time() - start_time
                 start_time = time.time()
