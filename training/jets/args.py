@@ -13,7 +13,7 @@ LAYERS = [
 ]
 
 Y_DIM = 18
-Z_DIM = 48
+Z_DIM = 40
 
 
 def add_args(parser):
@@ -51,8 +51,8 @@ def add_args(parser):
     parser.add_argument("--bn_lag", type=float, default=0)
 
     # flow options
-    parser.add_argument("--num_steps_maf", type=int, default=6)
-    parser.add_argument("--num_steps_arqs", type=int, default=20)
+    parser.add_argument("--num_steps_maf", type=int, default=20)
+    parser.add_argument("--num_steps_arqs", type=int, default=0)
     parser.add_argument("--num_transform_blocks_maf", type=int, default=3)
     parser.add_argument("--num_transform_blocks_arqs", type=int, default=7)
     parser.add_argument("--activation", type=str, default="relu")
@@ -112,13 +112,13 @@ def add_args(parser):
     parser.add_argument(
         "--batch_size",
         type=int,
-        default=2048,
+        default=2048 * 3,
         help="Batch size (of datasets) for training",
     )
     parser.add_argument(
         "--lr",
         type=float,
-        default=1e-6,
+        default=1e-3,
         help="Latent learning rate for the Adam optimizer.",
     )
     parser.add_argument("--beta1", type=float, default=0.9, help="Beta1 for Adam.")
@@ -171,11 +171,11 @@ def add_args(parser):
 
     # logging and saving frequency
     parser.add_argument(
-        "--log_name", type=str, default="EJM", help="Name for the log dir"
+        "--log_name", type=str, default="EJMAF", help="Name for the log dir"
     )
-    parser.add_argument("--val_freq", type=int, default=5)
-    parser.add_argument("--log_freq", type=int, default=5)
-    parser.add_argument("--save_freq", type=int, default=5)
+    parser.add_argument("--val_freq", type=int, default=10)
+    parser.add_argument("--log_freq", type=int, default=10)
+    parser.add_argument("--save_freq", type=int, default=10)
 
     # validation options
     parser.add_argument("--validate_at_0", default=False, action="store_true")
