@@ -53,6 +53,7 @@ def add_args(parser):
     # flow options
     parser.add_argument("--num_steps_maf", type=int, default=20)
     parser.add_argument("--num_steps_arqs", type=int, default=0)
+    parser.add_argument("--num_steps_caf", type=int, default=0)
     parser.add_argument("--num_transform_blocks_maf", type=int, default=3)
     parser.add_argument("--num_transform_blocks_arqs", type=int, default=7)
     parser.add_argument("--activation", type=str, default="relu")
@@ -74,6 +75,7 @@ def add_args(parser):
     parser.add_argument("--tail_bound", type=float, default=1.0)
     parser.add_argument("--hidden_dim_maf", type=int, default=128)
     parser.add_argument("--hidden_dim_arqs", type=int, default=300)
+    parser.add_argument("--hidden_dim_caf", type=list, default=[128 for _ in range(8)])
     parser.add_argument(
         "--base_transform_type",
         type=str,
