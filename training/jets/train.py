@@ -246,25 +246,24 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
 
                 # loss = (w * loss).sum() / w.sum()
                 loss = (loss).mean()
-                print(loss)
 
                 loss.backward()
                 optimizer.step()
 
-            if (output_freq is not None) and (batch_idx % output_freq == 0):
-                duration = time.time() - start_time
-                start_time = time.time()
-                print(
-                    "[Rank %d] Epoch %d Batch [%2d/%2d] Time [%3.2fs] Loss %2.5f"
-                    % (
-                        args.rank,
-                        epoch,
-                        batch_idx,
-                        len(train_loader),
-                        duration,
-                        loss.item(),
+                if (output_freq is not None) and (batch_idx % output_freq == 0):
+                    duration = time.time() - start_time
+                    start_time = time.time()
+                    print(
+                        "[Rank %d] Epoch %d Batch [%2d/%2d] Time [%3.2fs] Loss %2.5f"
+                        % (
+                            args.rank,
+                            epoch,
+                            batch_idx,
+                            len(train_loader),
+                            duration,
+                            loss.item(),
+                        )
                     )
-                )
 
         train_loss = (train_loss.item() / len(train_loader.dataset)) * args.world_size
         train_log_p = (train_log_p.item() / len(train_loader.dataset)) * args.world_size
