@@ -17,7 +17,6 @@ Z_DIM = 40
 
 
 def add_args(parser):
-
     # model architecture options
     parser.add_argument("--use_context", type=eval, default=True, choices=[True, False])
     parser.add_argument("--y_dim", type=int, default=Y_DIM)

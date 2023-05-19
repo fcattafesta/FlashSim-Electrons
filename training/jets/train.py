@@ -77,6 +77,7 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
         "base_kwargs": {
             "num_steps_maf": args.num_steps_maf,
             "num_steps_arqs": args.num_steps_arqs,
+            "num_steps_caf": args.num_steps_caf,
             "num_transform_blocks_maf": args.num_transform_blocks_maf,  # DNN layers per coupling
             "num_transform_blocks_arqs": args.num_transform_blocks_arqs,  # DNN layers per coupling
             "activation": args.activation,
@@ -90,6 +91,7 @@ def trainer(gpu, save_dir, ngpus_per_node, args, val_func):
             "tail_bound_arqs": args.tail_bound,
             "hidden_dim_maf": args.hidden_dim_maf,
             "hidden_dim_arqs": args.hidden_dim_arqs,
+            "hidden_dim_caf": args.hidden_dim_caf,
             # "base_transform_type": args.base_transform_type,  # "rq-autoregressive",
             # "block_size": args.block_size,  # useless param if we have alternating-binary mask
             # "mask_type": args.mask_type,
