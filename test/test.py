@@ -12,7 +12,7 @@ if __name__ == "__main__":
     path = "/gpfs/ddn/cms/user/cattafe/FlashSim/RunIISummer20UL18NanoAODv9/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/230000/0CFD79EF-41AB-4B4A-8F62-06393273EEDE.root"
     save_path = os.path.join(os.path.dirname(__file__), "figures", "EEMAF_HF")
 
-    ROOT.EnableImplicitMT()
+    # ROOT.EnableImplicitMT()
 
     file = ROOT.TFile.Open(path)
 
