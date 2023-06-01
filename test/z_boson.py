@@ -5,13 +5,13 @@ ROOT.gInterpreter.ProcessLine('#include "z_func.h"')
 
 def search_z(df, pt_cut):
     df_cut = (
-        df.Filter("Electron_pt.size() == 2")
-        .Filter("All(abs(Electron_eta) < 2.5)")
-        .Filter("All(Electron_pt > 20)")
-        .Filter("Sum(Electron_charge) == 0")
-        .Define("Z_pt", "Zpt(Electron_pt, Electron_eta, Electron_phi)")
+        df.Filter("Muon_pt.size() == 2")
+        .Filter("All(abs(Muon_eta) < 2.5)")
+        .Filter("All(Muon_pt > 20)")
+        .Filter("Sum(Muon_charge) == 0")
+        .Define("Z_pt", "Zpt(Muon_pt, Muon_eta, Muon_phi)")
         .Filter(pt_cut)
-        .Define("Z_mass", "InvariantMass(Electron_pt, Electron_eta, Electron_phi)")
+        .Define("Z_mass", "InvariantMass(Muon_pt, Muon_eta, Muon_phi)")
     )
 
     return df_cut
@@ -47,7 +47,7 @@ def analysis(df_full, df_flash, pt_cut, label):
     c.SetLeftMargin(0.15)
 
     h_full.SetTitle("")
-    h_full.GetXaxis().SetTitle("m_{ee} [GeV]")
+    h_full.GetXaxis().SetTitle("m_{#mu#mu} [GeV]")
     h_full.GetXaxis().SetTitleSize(0.04)
     h_full.GetYaxis().SetTitle("Normalized Events / 1 GeV")
     h_full.GetYaxis().SetTitleSize(0.04)
