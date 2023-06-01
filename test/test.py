@@ -55,9 +55,9 @@ if __name__ == "__main__":
     n = rdf.Histo1D("FullSim.Jet_pt").GetEntries()
     print(f"Full: {n}")
 
-    h_full = rdf.Histo1D("MJet_pt")
+    h_full = rdf.Histo1D(("h_full", "h_full", 100, 0, 200), "MJet_pt")
     h_full.Scale(1 / h_full.Integral())
-    h_flash = rdf.Histo1D("Jet_pt")
+    h_flash = rdf.Histo1D(("h_flash", "h_flash", 100, 0, 200), "Jet_pt")
     h_flash.Scale(1 / h_flash.Integral())
 
     ROOT.gStyle.SetOptStat(0)
