@@ -45,16 +45,20 @@ if __name__ == "__main__":
     #     .Define("PRatio", "PElectron_pt / PGenElectron_pt")
     # )
 
+    rdf = (
+        rdf.Define("MJet_pt", "FullSim.Jet_pt[FullSim.Jet_genJetIdx >= 0]")
+    )
+
     n = rdf.Histo1D("Jet_pt").GetEntries()
     print(f"Flash: {n}")
 
     n = rdf.Histo1D("FullSim.Jet_pt").GetEntries()
     print(f"Full: {n}")
 
-    h_full = rdf.Histo1D("FullSim.Jet_pt")
-    # h_full.Scale(1 / h_full.Integral())
+    h_full = rdf.Histo1D("MJet_pt")
+    h_full.Scale(1 / h_full.Integral())
     h_flash = rdf.Histo1D("Jet_pt")
-    # h_flash.Scale(1 / h_flash.Integral())
+    h_flash.Scale(1 / h_flash.Integral())
 
     ROOT.gStyle.SetOptStat(0)
     ROOT.gStyle.SetOptFit(0)
