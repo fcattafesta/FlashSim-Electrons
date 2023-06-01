@@ -17,7 +17,13 @@ if __name__ == "__main__":
     file = ROOT.TFile.Open(path)
 
     events = file.Events
+
+    # reset kEntriesReshuffled
+    events.ResetBit(ROOT.TTree.EStatusBits.kEntriesReshuffled)
+
     full = file.FullSim
+
+    full.ResetBit(ROOT.TTree.EStatusBits.kEntriesReshuffled)
 
     events.AddFriend(full, "FullSim")
 
@@ -89,7 +95,6 @@ if __name__ == "__main__":
 
     # c_2 = ratio(rdf, "MElectron_pt", "MGenElectron_pt", "FullSim")
     # c_2.SaveAs(os.path.join(save_path, "TT_2D_pt_Full.pdf"))
-
 
     # # Z boson
 
