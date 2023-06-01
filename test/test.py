@@ -45,9 +45,15 @@ if __name__ == "__main__":
     #     .Define("PRatio", "PElectron_pt / PGenElectron_pt")
     # )
 
-    h_full = rdf.Histo1D(("h_full", "h_full", 100, 0, 400), "FullSim.Jet_pt")
+    n = rdf.Histo1D("Jet_pt").GetEntries()
+    print(f"Flash: {n}")
+
+    n = rdf.Histo1D("FullSim.Jet_pt").GetEntries()
+    print(f"Full: {n}")
+
+    h_full = rdf.Histo1D("FullSim.Jet_pt")
     # h_full.Scale(1 / h_full.Integral())
-    h_flash = rdf.Histo1D(("h_flash", "h_flash", 100, 0, 400), "Jet_pt")
+    h_flash = rdf.Histo1D("Jet_pt")
     # h_flash.Scale(1 / h_flash.Integral())
 
     ROOT.gStyle.SetOptStat(0)
@@ -57,7 +63,7 @@ if __name__ == "__main__":
     c.SetLeftMargin(0.15)
 
     h_full.SetTitle("")
-    h_full.GetXaxis().SetTitle("p_{T}") # / p_{T}^{G}")
+    h_full.GetXaxis().SetTitle("p_{T}")  # / p_{T}^{G}")
     h_full.GetXaxis().SetTitleSize(0.04)
     h_full.GetYaxis().SetTitle("Entries")  # pt comparison
     h_full.GetYaxis().SetTitleSize(0.04)
