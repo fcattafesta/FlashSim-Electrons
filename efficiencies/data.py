@@ -4,6 +4,7 @@ import h5py
 import torch
 import pandas as pd
 import uproot
+import awkward as ak
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "utils"))
 
@@ -30,7 +31,7 @@ class isReco_Dataset(torch.utils.data.Dataset):
 
 def make_pd_dataframe(tree, cols, *args, **kwargs):
     df = (
-        tree.arrays(expressions=cols, library="pd", *args, **kwargs)
+        ak.to_dataframe(tree.arrays(expressions=cols, library="ak", *args, **kwargs))
         .reset_index(drop=True)
         .astype("float32")
         .dropna()
@@ -39,7 +40,6 @@ def make_pd_dataframe(tree, cols, *args, **kwargs):
 
 
 def dataset_from_root(files, cols, name, *args, **kwargs):
-
     tree = uproot.open(files[0], num_workers=20)
     df = make_pd_dataframe(tree, cols)
 
@@ -72,7 +72,6 @@ files = [
 ]
 
 if __name__ == "__main__":
-
     dataset_from_root(files[0], eff_ele, "GenElectrons")
 
     dataset_from_root(files[1], eff_pho, "GenPhotons")
