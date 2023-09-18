@@ -35,10 +35,18 @@ def analysis(df_full, df_flash, pt_cut, label):
     df_full = search_z(df_full, pt_cut)
     df_flash = search_z(df_flash, pt_cut)
 
-    f_full, h_full = fit(df_full, "FullSim")
-    f_flash, h_flash = fit(df_flash, "FlashSim")
+    # f_full, h_full = fit(df_full, "FullSim")
+    # f_flash, h_flash = fit(df_flash, "FlashSim")
 
-    bias = (f_flash.GetParameter(1) - f_full.GetParameter(1)) / f_full.GetParameter(1)
+    h_full = df_full.Histo1D(("FullSim", "FullSim", 50, 60, 120), "Z_mass")
+    h_flash = df_flash.Histo1D(("FlashSim", "FlashSim", 50, 60, 120), "Z_mass")
+    if h_full.Integral() > 0 and h_flash.Integral() > 0:
+        h_full.Scale(1 / h_full.Integral())
+        h_flash.Scale(1 / h_flash.Integral())
+
+    bias = (h_flash.GetMean() - h_full.GetMean()) / h_full.GetMean()
+
+    widtj = h_flash.GetStdDev() / h_full.GetStdDev()
 
     ROOT.gStyle.SetOptStat(0)
     ROOT.gStyle.SetOptFit(0)
@@ -55,16 +63,11 @@ def analysis(df_full, df_flash, pt_cut, label):
     h_full.SetLineWidth(2)
     h_full.SetLineStyle(2)
 
-    h_flash.SetLineColor(ROOT.kOrange + 7)
+    h_flash.SetLineColor(ROOT.kOrange + 8)
     h_flash.SetLineWidth(2)
-
-    f_full.SetLineColor(ROOT.kBlue)
-    f_flash.SetLineColor(ROOT.kBlue)
 
     h_full.DrawClone("hist")
     h_flash.DrawClone("hist same")
-    f_full.DrawClone("same")
-    f_flash.DrawClone("same")
 
     legend = ROOT.TLegend(0.72, 0.75, 0.89, 0.88)
     legend.SetFillColor(0)
@@ -83,7 +86,14 @@ def analysis(df_full, df_flash, pt_cut, label):
     bin.DrawLatexNDC(0.2, 0.86, label)
     bias_label = ROOT.TLatex()
     bias_label.SetTextSize(0.03)
-    bias_label.DrawLatexNDC(0.2, 0.80, f"Bias = {bias*100:.2f}%")
+    bias_label.DrawLatexNDC(
+        0.2, 0.80, f"(#mu_{{Flash}} / #mu_{{Full}}) - 1 = {bias*100:.2f}%"
+    )
+    width_label = ROOT.TLatex()
+    width_label.SetTextSize(0.03)
+    width_label.DrawLatexNDC(
+        0.2, 0.74, f"({{#sigma}}_{{Flash}} / {{#sigma}}_{{Full}}) = {widtj:.2f}"
+    )
     c.Update()
 
     return c
