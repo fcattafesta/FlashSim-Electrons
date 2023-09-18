@@ -125,8 +125,5 @@ if __name__ == "__main__":
     ]
 
     df_full = ROOT.RDataFrame("FullSim", path)
-
-    for i, (cut, label) in enumerate(zip(cuts, labels)):
-        filename = f"z_{i}_bin_el.pdf"
-        c_z = analysis(df_full, rdf, cut, label)
-        c_z.SaveAs(os.path.join(save_path, filename))
+    c_z = analysis(df_full, rdf, cuts[-1], labels[-1])
+    c_z.SaveAs(os.path.join(save_path, "DY_Z_mass.pdf"))
