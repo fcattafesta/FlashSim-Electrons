@@ -99,7 +99,7 @@ im = ax.imshow(
     interpolation="none",
     origin="lower",
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
-    aspect="equal",
+    aspect="auto",
     cmap="cividis",
 )
 
