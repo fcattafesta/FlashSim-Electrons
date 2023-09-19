@@ -117,7 +117,7 @@ im = ax[0].imshow(
 )
 ax[0].set_xlabel(r"$p_{T}^{e}$ [GeV]")
 ax[0].set_ylabel(r"$\Delta R^{e-jet}$")
-ax[0].set_title("FlashSim")
+ax[0].set_title("FlashSim", loc="right")
 
 ax[1].imshow(
     full_eff.T,
@@ -185,7 +185,7 @@ im = ax[0].imshow(
 )
 ax[0].set_xlabel(r"$\eta^{e}$")
 ax[0].set_ylabel(r"$\phi^{e}$")
-ax[0].set_title("FlashSim")
+ax[0].set_title("FlashSim", loc="right")
 
 ax[1].imshow(
     full_eff.T,
