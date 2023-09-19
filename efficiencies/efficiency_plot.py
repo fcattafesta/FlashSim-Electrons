@@ -53,7 +53,7 @@ df = pd.DataFrame(f["data"][:], columns=eff_ele)
 df = df[df["GenElectron_pt"] > 20]
 
 # take 1M electrons
-df = df[:5000000]
+# df = df[:5000000]
 
 # load the model
 model = ElectronClassifier(32)
@@ -113,7 +113,7 @@ im = ax[0].imshow(
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
     aspect="auto",
     cmap="cividis",
-    vmin=0,
+    vmin=0.5,
     vmax=1,
 )
 ax[0].set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
@@ -127,7 +127,7 @@ ax[1].imshow(
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
     aspect="auto",
     cmap="cividis",
-    vmin=0,
+    vmin=0.5,
     vmax=1,
 )
 ax[1].set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
@@ -181,7 +181,7 @@ im = ax[0].imshow(
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
     aspect="auto",
     cmap="cividis",
-    vmin=0,
+    vmin=0.5,
     vmax=1,
 )
 ax[0].set_xlabel(r"$\eta^{GEN}$")
@@ -195,7 +195,7 @@ ax[1].imshow(
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
     aspect="auto",
     cmap="cividis",
-    vmin=0,
+    vmin=0.5,
     vmax=1,
 )
 ax[1].set_xlabel(r"$\eta^{GEN}$")
