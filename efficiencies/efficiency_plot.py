@@ -95,3 +95,10 @@ im = ax.imshow(
     aspect="auto",
     cmap="viridis",
 )
+
+ax.set_xlabel(r"$p_{T}^{e}$ [GeV]")
+ax.set_ylabel(r"$\Delta R^{e-jet}$")
+
+cbar = fig.colorbar(im, ax=ax)
+
+plt.savefig("efficiency_pt_dr.pdf")
