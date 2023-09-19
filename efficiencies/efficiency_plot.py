@@ -104,7 +104,7 @@ full_eff = full_bin_content_reco / bin_content
 
 # make the plot of the two efficiencies
 hep.style.use(hep.style.CMS)
-fig, ax = plt.subplots(1, 2, figsize=(40, 20), sharey=True, width_ratios=[1, 1.2])
+fig, ax = plt.subplots(1, 2, figsize=(30, 15), sharey=True, width_ratios=[1, 1.2])
 hep.cms.text("Private Work", loc=0, ax=ax[0])
 im = ax[0].imshow(
     eff.T,
@@ -172,7 +172,7 @@ full_bin_content_reco, xbins, ybins = np.histogram2d(
 full_eff = full_bin_content_reco / bin_content
 
 hep.style.use(hep.style.CMS)
-fig, ax = plt.subplots(1, 2, figsize=(40, 20), sharey=True, width_ratios=[1, 1.2])
+fig, ax = plt.subplots(1, 2, figsize=(30, 15), sharey=True, width_ratios=[1, 1.2])
 hep.cms.text("Private Work", loc=0, ax=ax[0])
 im = ax[0].imshow(
     eff.T,
