@@ -93,7 +93,7 @@ eff[np.isnan(eff)] = 0
 
 hep.style.use(hep.style.CMS)
 fig, ax = plt.subplots()
-hep.CMS.text("Private Work", loc=0)
+hep.cms.text("Private Work", loc=0)
 im = ax.imshow(
     eff,
     interpolation="nearest",
