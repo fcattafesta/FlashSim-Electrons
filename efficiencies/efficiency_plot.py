@@ -115,8 +115,8 @@ im = ax[0].imshow(
     vmin=0,
     vmax=1,
 )
-ax[0].set_xlabel(r"$p_{T}^{e}$ [GeV]")
-ax[0].set_ylabel(r"$\Delta R^{e-jet}$")
+ax[0].set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
+ax[0].set_ylabel(r"$\Delta R^{GEN}_{e-jet}$")
 ax[0].set_title("FlashSim", loc="right")
 
 ax[1].imshow(
@@ -129,8 +129,8 @@ ax[1].imshow(
     vmin=0,
     vmax=1,
 )
-ax[1].set_xlabel(r"$p_{T}^{e}$ [GeV]")
-ax[1].set_title("FullSim")
+ax[1].set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
+ax[1].set_title("FullSim", loc="right")
 
 cbar = fig.colorbar(im, ax=ax[1])
 
@@ -183,8 +183,8 @@ im = ax[0].imshow(
     vmin=0,
     vmax=1,
 )
-ax[0].set_xlabel(r"$\eta^{e}$")
-ax[0].set_ylabel(r"$\phi^{e}$")
+ax[0].set_xlabel(r"$\eta^{GEN}$")
+ax[0].set_ylabel(r"$\phi^{GEN}$")
 ax[0].set_title("FlashSim", loc="right")
 
 ax[1].imshow(
@@ -197,8 +197,8 @@ ax[1].imshow(
     vmin=0,
     vmax=1,
 )
-ax[1].set_xlabel(r"$\eta^{e}$")
-ax[1].set_title("FullSim")
+ax[1].set_xlabel(r"$\eta^{GEN}$")
+ax[1].set_title("FullSim", loc="right")
 
 cbar = fig.colorbar(im, ax=ax[1])
 
