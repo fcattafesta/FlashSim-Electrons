@@ -141,7 +141,7 @@ im = ax.imshow(
     eff,
     interpolation="nearest",
     origin="lower",
-    extent=[xxbins_[0], xbins_[-1], yybins_[0], yybins_[-1]],
+    extent=[xxbins_[0], xxbins_[-1], yybins_[0], yybins_[-1]],
     aspect="auto",
     cmap="cividis",
 )
