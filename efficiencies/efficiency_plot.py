@@ -112,8 +112,8 @@ plt.savefig("efficiency_pt_dr.pdf")
 
 # the same for GenElectron_eta and GenElectron_phi
 
-xbins_ = 20
-ybins = 20
+xbins_ = np.linspace(-3, 3, 20)
+ybins = np.linspace(-3.14, 3.14, 20)
 
 bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
