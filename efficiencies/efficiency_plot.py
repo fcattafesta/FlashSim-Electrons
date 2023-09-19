@@ -89,6 +89,8 @@ bin_content_reco, xbins, ybins = np.histogram2d(
 
 eff = bin_content_reco / bin_content
 
+eff[np.isnan(eff)] = 0
+
 fig, ax = plt.subplots()
 im = ax.imshow(
     eff,
