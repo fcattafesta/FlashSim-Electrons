@@ -6,6 +6,8 @@ import mplhep as hep
 import torch
 from model import ElectronClassifier
 
+np.random.seed(42)
+
 ele_cond = [
     "GenElectron_eta",
     "GenElectron_phi",
@@ -52,8 +54,6 @@ df = pd.DataFrame(f["data"][:], columns=eff_ele)
 # take 1M electrons
 df = df[:10000]
 
-df["Full_Efficency"] = df["GenElectron_isReco"] / df["GenElectron_isReco"].sum()
-
 # load the model
 model = ElectronClassifier(32)
 model.load_state_dict(torch.load("models/efficiency_electrons.pt"))
@@ -67,35 +67,31 @@ y_pred = model.predict(X)
 y_pred = y_pred.detach().cpu().numpy().flatten()
 p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
-df["Flash_Efficiency"] = (
-    np.where(y_pred > p, tmp, 0) / np.where(y_pred > p, tmp, 0).sum()
+df["isReco"] = np.where(y_pred > p, tmp, 0)
+
+bin_content, xbins, ybins, _ = np.histogram2d(
+    df["GenElectron_pt"],
+    df["ClosestJet_dr"],
+    bins=(20, 20),
+    range=((0, 300), (0, 10)),
 )
 
-# Make an heatmap of the efficiency in function of "GenElectron_pt" and "ClosestJet_dr"
+bin_content_reco, xbins, ybins, _ = np.histogram2d(
+    df["GenElectron_pt"],
+    df["ClosestJet_dr"],
+    bins=(20, 20),
+    range=((0, 300), (0, 10)),
+    weights=df["isReco"],
+)
 
-# define the bins
-pt_bins = np.linspace(0, 100, 10)
-dr_bins = np.linspace(0, 10, 10)
+eff = bin_content_reco / bin_content
 
-# compute the efficiency
-eff = np.zeros((len(pt_bins) - 1, len(dr_bins) - 1))
-for i in range(len(pt_bins) - 1):
-    for j in range(len(dr_bins) - 1):
-        mask = (
-            (df["GenElectron_pt"] > pt_bins[i])
-            & (df["GenElectron_pt"] < pt_bins[i + 1])
-            & (df["ClosestJet_dr"] > dr_bins[j])
-            & (df["ClosestJet_dr"] < dr_bins[j + 1])
-        )
-        eff[i, j] = df[mask]["GenElectron_isReco"].sum() / mask.sum()
-
-# plot the efficiency
-plt.figure(figsize=(10, 10))
-plt.imshow(eff, cmap="viridis", interpolation="nearest")
-plt.colorbar()
-plt.xlabel("GenElectron_pt")
-plt.ylabel("ClosestJet_dr")
-plt.xticks(np.arange(len(pt_bins) - 1), pt_bins)
-plt.yticks(np.arange(len(dr_bins) - 1), dr_bins)
-plt.title("Efficiency")
-plt.savefig("efficiency_ptVSdr.png")
+fig, ax = plt.subplots()
+im = ax.imshow(
+    eff,
+    interpolation="nearest",
+    origin="lower",
+    extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
+    aspect="auto",
+    cmap="viridis",
+)
