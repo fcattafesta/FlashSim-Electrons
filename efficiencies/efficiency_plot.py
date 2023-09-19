@@ -112,20 +112,20 @@ plt.savefig("efficiency_pt_dr.pdf")
 
 # the same for GenElectron_eta and GenElectron_phi
 
-xbins_ = np.linspace(-3, 3, 20)
-ybins_ = np.linspace(-3.14, 3.14, 20)
+xxbins_ = np.linspace(-3, 3, 20)
+yybins_ = np.linspace(-3.14, 3.14, 20)
 
 bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
     df["GenElectron_phi"],
-    bins=(xbins_, ybins_),
+    bins=(xbins_, yybins_),
     range=((-3, 3), (-3.14, 3.14)),
 )
 
 bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
     df["GenElectron_phi"],
-    bins=(xbins_, ybins_),
+    bins=(xxbins_, yybins_),
     range=((-3, 3), (-3.14, 3.14)),
     weights=df["isReco"],
 )
@@ -141,7 +141,7 @@ im = ax.imshow(
     eff,
     interpolation="nearest",
     origin="lower",
-    extent=[xbins_[0], xbins_[-1], ybins_[0], ybins_[-1]],
+    extent=[xxbins_[0], xbins_[-1], yybins_[0], yybins_[-1]],
     aspect="auto",
     cmap="cividis",
 )
