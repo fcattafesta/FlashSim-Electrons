@@ -56,7 +56,7 @@ df["Full_Efficency"] = df["GenElectron_isReco"] / df["GenElectron_isReco"].sum()
 
 # load the model
 model = ElectronClassifier(32)
-model.torch.load_state_dict(torch.load("models/efficiency_electrons.pt"))
+model.load_state_dict(torch.load("models/efficiency_electrons.pt"))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 model.eval()
