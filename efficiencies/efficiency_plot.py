@@ -96,10 +96,10 @@ fig, ax = plt.subplots()
 hep.cms.text("Private Work", loc=0)
 im = ax.imshow(
     eff,
-    interpolation="nearest",
+    interpolation="none",
     origin="lower",
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
-    aspect="auto",
+    aspect="equal",
     cmap="cividis",
 )
 
@@ -139,10 +139,10 @@ fig, ax = plt.subplots()
 hep.cms.text("Private Work", loc=0)
 im = ax.imshow(
     eff,
-    interpolation="nearest",
+    interpolation="none",
     origin="lower",
     extent=[xxbins_[0], xxbins_[-1], yybins_[0], yybins_[-1]],
-    aspect="auto",
+    aspect="equal",
     cmap="cividis",
 )
 
