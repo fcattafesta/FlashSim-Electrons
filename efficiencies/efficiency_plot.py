@@ -69,7 +69,7 @@ p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
 df["isReco"] = np.where(y_pred > p, tmp, 0)
 
-xbins_ = 20
+xbins_ = np.linspace(0, 300, 20)
 ybins_ = np.array([0, 0.1, 0.2, 0.3, 0.4, 0.5, 1, 2])
 
 bin_content, xbins, ybins = np.histogram2d(
@@ -101,6 +101,8 @@ im = ax.imshow(
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
     aspect="auto",
     cmap="cividis",
+    vmin=0,
+    vmax=1,
 )
 
 ax.set_xlabel(r"$p_{T}^{e}$ [GeV]")
@@ -144,6 +146,8 @@ plt.savefig("efficiency_pt_dr.pdf")
 #     extent=[xxbins_[0], xxbins_[-1], yybins_[0], yybins_[-1]],
 #     aspect="equal",
 #     cmap="cividis",
+#     vmin=0,
+#     vmax=1,
 # )
 
 # ax.set_xlabel(r"$\eta^{e}$")
