@@ -91,14 +91,16 @@ eff = bin_content_reco / bin_content
 
 eff[np.isnan(eff)] = 0
 
+hep.style.use(hep.style.CMS)
 fig, ax = plt.subplots()
+hep.CMS.text("Private Work", loc=0)
 im = ax.imshow(
     eff,
     interpolation="nearest",
     origin="lower",
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
     aspect="auto",
-    cmap="viridis",
+    cmap="cividis",
 )
 
 ax.set_xlabel(r"$p_{T}^{e}$ [GeV]")
