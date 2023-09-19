@@ -52,7 +52,7 @@ f = h5py.File("dataset/GenElectrons.hdf5", "r")
 df = pd.DataFrame(f["data"][:], columns=eff_ele)
 
 # take 1M electrons
-df = df[:10000]
+df = df[:1000000]
 
 # load the model
 model = ElectronClassifier(32)
@@ -69,18 +69,21 @@ p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
 df["isReco"] = np.where(y_pred > p, tmp, 0)
 
-bin_content, xbins, ybins, _ = np.histogram2d(
+xbins_ = 20
+ybins_ = np.array([0, 0.1, 0.2, 0.3, 0.4, 0.5, 1, 2])
+
+bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
-    bins=(20, 20),
-    range=((0, 300), (0, 10)),
+    bins=(xbins_, ybins_),
+    range=((0, 300), (0, 2)),
 )
 
-bin_content_reco, xbins, ybins, _ = np.histogram2d(
+bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
-    bins=(20, 20),
-    range=((0, 300), (0, 10)),
+    bins=(xbins_, ybins_),
+    range=((0, 300), (0, 2)),
     weights=df["isReco"],
 )
 
