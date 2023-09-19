@@ -110,45 +110,45 @@ cbar = fig.colorbar(im, ax=ax)
 
 plt.savefig("efficiency_pt_dr.pdf")
 
-# the same for GenElectron_eta and GenElectron_phi
+# # the same for GenElectron_eta and GenElectron_phi
 
-xxbins_ = np.linspace(-3, 3, 20)
-yybins_ = np.linspace(-3.14, 3.14, 20)
+# xxbins_ = np.linspace(-3, 3, 20)
+# yybins_ = np.linspace(-3.14, 3.14, 20)
 
-bin_content, xbins, ybins = np.histogram2d(
-    df["GenElectron_eta"],
-    df["GenElectron_phi"],
-    bins=(xxbins_, yybins_),
-    range=((-3, 3), (-3.14, 3.14)),
-)
+# bin_content, xbins, ybins = np.histogram2d(
+#     df["GenElectron_eta"],
+#     df["GenElectron_phi"],
+#     bins=(xxbins_, yybins_),
+#     range=((-3, 3), (-3.14, 3.14)),
+# )
 
-bin_content_reco, xbins, ybins = np.histogram2d(
-    df["GenElectron_eta"],
-    df["GenElectron_phi"],
-    bins=(xxbins_, yybins_),
-    range=((-3, 3), (-3.14, 3.14)),
-    weights=df["isReco"],
-)
+# bin_content_reco, xbins, ybins = np.histogram2d(
+#     df["GenElectron_eta"],
+#     df["GenElectron_phi"],
+#     bins=(xxbins_, yybins_),
+#     range=((-3, 3), (-3.14, 3.14)),
+#     weights=df["isReco"],
+# )
 
-eff = bin_content_reco / bin_content
+# eff = bin_content_reco / bin_content
 
-eff[np.isnan(eff)] = 0
+# eff[np.isnan(eff)] = 0
 
-hep.style.use(hep.style.CMS)
-fig, ax = plt.subplots()
-hep.cms.text("Private Work", loc=0)
-im = ax.imshow(
-    eff,
-    interpolation="none",
-    origin="lower",
-    extent=[xxbins_[0], xxbins_[-1], yybins_[0], yybins_[-1]],
-    aspect="equal",
-    cmap="cividis",
-)
+# hep.style.use(hep.style.CMS)
+# fig, ax = plt.subplots()
+# hep.cms.text("Private Work", loc=0)
+# im = ax.imshow(
+#     eff,
+#     interpolation="none",
+#     origin="lower",
+#     extent=[xxbins_[0], xxbins_[-1], yybins_[0], yybins_[-1]],
+#     aspect="equal",
+#     cmap="cividis",
+# )
 
-ax.set_xlabel(r"$\eta^{e}$")
-ax.set_ylabel(r"$\phi^{e}$")
+# ax.set_xlabel(r"$\eta^{e}$")
+# ax.set_ylabel(r"$\phi^{e}$")
 
-cbar = fig.colorbar(im, ax=ax)
+# cbar = fig.colorbar(im, ax=ax)
 
-plt.savefig("efficiency_eta_phi.pdf")
+# plt.savefig("efficiency_eta_phi.pdf")
