@@ -70,21 +70,21 @@ p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
 df["isReco"] = np.where(y_pred > p, tmp, 0)
 
-xbins_ = np.linspace(0, 150, 20)
+xbins_ = np.linspace(25, 150, 20)
 ybins_ = np.linspace(0, 2, 20)
 
 bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
     bins=(xbins_, ybins_),
-    range=((0, 150), (0, 2)),
+    range=((20, 150), (0, 2)),
 )
 
 bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
     bins=(xbins_, ybins_),
-    range=((0, 150), (0, 2)),
+    range=((20, 150), (0, 2)),
     weights=df["isReco"],
 )
 
@@ -96,7 +96,7 @@ full_bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
     bins=(xbins_, ybins_),
-    range=((0, 150), (0, 2)),
+    range=((20, 150), (0, 2)),
     weights=df["GenElectron_isReco"],
 )
 
@@ -118,7 +118,7 @@ im = ax[0].imshow(
 )
 ax[0].set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
 ax[0].set_ylabel(r"$\Delta R^{GEN}_{e-jet}$")
-ax[0].set_title("FlashSim", loc="right")
+ax[0].set_title(r"FlashSim ($p_{T}^{GEN}>20$ GeV)", loc="right")
 
 ax[1].imshow(
     full_eff.T,
@@ -131,7 +131,7 @@ ax[1].imshow(
     vmax=1,
 )
 ax[1].set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
-ax[1].set_title("FullSim", loc="right")
+ax[1].set_title(r"FullSim ($p_{T}^{GEN}>20$ GeV)", loc="right")
 
 cbar = fig.colorbar(im, ax=ax[1])
 
@@ -186,7 +186,7 @@ im = ax[0].imshow(
 )
 ax[0].set_xlabel(r"$\eta^{GEN}$")
 ax[0].set_ylabel(r"$\phi^{GEN}$")
-ax[0].set_title("FlashSim", loc="right")
+ax[0].set_title(r"FlashSim ($p_{T}^{GEN}>20$ GeV)", loc="right")
 
 ax[1].imshow(
     full_eff.T,
@@ -199,7 +199,7 @@ ax[1].imshow(
     vmax=1,
 )
 ax[1].set_xlabel(r"$\eta^{GEN}$")
-ax[1].set_title("FullSim", loc="right")
+ax[1].set_title(r"FullSim ($p_{T}^{GEN}>20$ GeV)", loc="right")
 
 cbar = fig.colorbar(im, ax=ax[1])
 
