@@ -95,7 +95,7 @@ hep.style.use(hep.style.CMS)
 fig, ax = plt.subplots()
 hep.cms.text("Private Work", loc=0)
 im = ax.imshow(
-    eff,
+    eff.T,
     interpolation="none",
     origin="lower",
     extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
