@@ -109,3 +109,46 @@ ax.set_ylabel(r"$\Delta R^{e-jet}$")
 cbar = fig.colorbar(im, ax=ax)
 
 plt.savefig("efficiency_pt_dr.pdf")
+
+# the same for GenElectron_eta and GenElectron_phi
+
+xbins_ = 20
+ybins = 20
+
+bin_content, xbins, ybins = np.histogram2d(
+    df["GenElectron_eta"],
+    df["GenElectron_phi"],
+    bins=(xbins_, ybins_),
+    range=((-3, 3), (-3.14, 3.14)),
+)
+
+bin_content_reco, xbins, ybins = np.histogram2d(
+    df["GenElectron_eta"],
+    df["GenElectron_phi"],
+    bins=(xbins_, ybins_),
+    range=((-3, 3), (-3.14, 3.14)),
+    weights=df["isReco"],
+)
+
+eff = bin_content_reco / bin_content
+
+eff[np.isnan(eff)] = 0
+
+hep.style.use(hep.style.CMS)
+fig, ax = plt.subplots()
+hep.cms.text("Private Work", loc=0)
+im = ax.imshow(
+    eff,
+    interpolation="nearest",
+    origin="lower",
+    extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
+    aspect="auto",
+    cmap="cividis",
+)
+
+ax.set_xlabel(r"$\eta^{e}$")
+ax.set_ylabel(r"$\phi^{e}$")
+
+cbar = fig.colorbar(im, ax=ax)
+
+plt.savefig("efficiency_eta_phi.pdf")
