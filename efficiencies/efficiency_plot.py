@@ -50,7 +50,9 @@ f = h5py.File("dataset/GenElectrons.hdf5", "r")
 
 # make a dataframe
 df = pd.DataFrame(f["data"][:], columns=eff_ele)
+print(len(df))
 df = df[df["GenElectron_pt"] > 20]
+print(len(df))
 
 # take 1M electrons
 # df = df[:5000000]
