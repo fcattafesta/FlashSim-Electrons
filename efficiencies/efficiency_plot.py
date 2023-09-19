@@ -62,8 +62,9 @@ model = model.to(device)
 model.eval()
 
 # make the prediction
-X = torch.tensor(df[eff_ele[0:-1]].values, dtype=torch.float32)
+X = torch.tensor(df[eff_ele[0:-1]].values, dtype=torch.float32).to(device)
 y_pred = model.predict(X)
+y_pred = y_pred.cpu().numpy().flatten()
 p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
 df["Flash_Efficiency"] = (
