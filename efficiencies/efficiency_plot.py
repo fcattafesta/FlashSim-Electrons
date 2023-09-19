@@ -91,10 +91,21 @@ eff = bin_content_reco / bin_content
 
 # eff[np.isnan(eff)] = 0
 
+full_bin_content_reco, xbins, ybins = np.histogram2d(
+    df["GenElectron_pt"],
+    df["ClosestJet_dr"],
+    bins=(xbins_, ybins_),
+    range=((0, 300), (0, 2)),
+    weights=df["GenElectron_isReco"],
+)
+
+full_eff = full_bin_content_reco / bin_content
+
+# make the plot of the two efficiencies
 hep.style.use(hep.style.CMS)
-fig, ax = plt.subplots()
-hep.cms.text("Private Work", loc=0)
-im = ax.imshow(
+fig, ax = plt.subplots(1, 2, figsize=(12, 6), sharey=True)
+hep.cms.text("Private Work", loc=0, ax=ax[0])
+im = ax[0].imshow(
     eff.T,
     interpolation="none",
     origin="lower",
@@ -104,11 +115,24 @@ im = ax.imshow(
     vmin=0,
     vmax=1,
 )
+ax[0].set_xlabel(r"$p_{T}^{e}$ [GeV]")
+ax[0].set_ylabel(r"$\Delta R^{e-jet}$")
+ax[0].set_title("FlashSim")
 
-ax.set_xlabel(r"$p_{T}^{e}$ [GeV]")
-ax.set_ylabel(r"$\Delta R^{e-jet}$")
+ax[1].imshow(
+    full_eff.T,
+    interpolation="none",
+    origin="lower",
+    extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
+    aspect="auto",
+    cmap="cividis",
+    vmin=0,
+    vmax=1,
+)
+ax[1].set_xlabel(r"$p_{T}^{e}$ [GeV]")
+ax[1].set_title("FullSim")
 
-cbar = fig.colorbar(im, ax=ax)
+cbar = fig.colorbar(im, ax=ax[1])
 
 plt.savefig("efficiency_pt_dr.pdf")
 
@@ -136,23 +160,46 @@ eff = bin_content_reco / bin_content
 
 # eff[np.isnan(eff)] = 0
 
+full_bin_content_reco, xbins, ybins = np.histogram2d(
+    df["GenElectron_eta"],
+    df["GenElectron_phi"],
+    bins=(xxbins_, yybins_),
+    range=((-3, 3), (-3.14, 3.14)),
+    weights=df["GenElectron_isReco"],
+)
+
+full_eff = full_bin_content_reco / bin_content
+
 hep.style.use(hep.style.CMS)
-fig, ax = plt.subplots()
-hep.cms.text("Private Work", loc=0)
-im = ax.imshow(
+fig, ax = plt.subplots(1, 2, figsize=(12, 6), sharey=True)
+hep.cms.text("Private Work", loc=0, ax=ax[0])
+im = ax[0].imshow(
     eff.T,
     interpolation="none",
     origin="lower",
-    extent=[xxbins_[0], xxbins_[-1], yybins_[0], yybins_[-1]],
-    aspect="equal",
+    extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
+    aspect="auto",
     cmap="cividis",
     vmin=0,
     vmax=1,
 )
+ax[0].set_xlabel(r"$\eta^{e}$")
+ax[0].set_ylabel(r"$\phi^{e}$")
+ax[0].set_title("FlashSim")
 
-ax.set_xlabel(r"$\eta^{e}$")
-ax.set_ylabel(r"$\phi^{e}$")
+ax[1].imshow(
+    full_eff.T,
+    interpolation="none",
+    origin="lower",
+    extent=[xbins[0], xbins[-1], ybins[0], ybins[-1]],
+    aspect="auto",
+    cmap="cividis",
+    vmin=0,
+    vmax=1,
+)
+ax[1].set_xlabel(r"$\eta^{e}$")
+ax[1].set_title("FullSim")
 
-cbar = fig.colorbar(im, ax=ax)
+cbar = fig.colorbar(im, ax=ax[1])
 
 plt.savefig("efficiency_eta_phi.pdf")
