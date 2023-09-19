@@ -52,7 +52,7 @@ f = h5py.File("dataset/GenElectrons.hdf5", "r")
 df = pd.DataFrame(f["data"][:], columns=eff_ele)
 
 # take 1M electrons
-df = df[:1000000]
+df = df[:5000000]
 
 # load the model
 model = ElectronClassifier(32)
@@ -89,7 +89,7 @@ bin_content_reco, xbins, ybins = np.histogram2d(
 
 eff = bin_content_reco / bin_content
 
-eff[np.isnan(eff)] = 0
+# eff[np.isnan(eff)] = 0
 
 hep.style.use(hep.style.CMS)
 fig, ax = plt.subplots()
@@ -134,7 +134,7 @@ bin_content_reco, xbins, ybins = np.histogram2d(
 
 eff = bin_content_reco / bin_content
 
-eff[np.isnan(eff)] = 0
+# eff[np.isnan(eff)] = 0
 
 hep.style.use(hep.style.CMS)
 fig, ax = plt.subplots()
