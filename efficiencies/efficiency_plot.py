@@ -50,6 +50,7 @@ f = h5py.File("dataset/GenElectrons.hdf5", "r")
 
 # make a dataframe
 df = pd.DataFrame(f["data"][:], columns=eff_ele)
+df = df[df["GenElectron_pt"] > 20]
 
 # take 1M electrons
 df = df[:5000000]
@@ -69,21 +70,21 @@ p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
 df["isReco"] = np.where(y_pred > p, tmp, 0)
 
-xbins_ = np.linspace(0, 300, 20)
+xbins_ = np.linspace(0, 150, 20)
 ybins_ = np.linspace(0, 2, 20)
 
 bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
     bins=(xbins_, ybins_),
-    range=((0, 300), (0, 2)),
+    range=((0, 150), (0, 2)),
 )
 
 bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
     bins=(xbins_, ybins_),
-    range=((0, 300), (0, 2)),
+    range=((0, 150), (0, 2)),
     weights=df["isReco"],
 )
 
@@ -95,7 +96,7 @@ full_bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_pt"],
     df["ClosestJet_dr"],
     bins=(xbins_, ybins_),
-    range=((0, 300), (0, 2)),
+    range=((0, 150), (0, 2)),
     weights=df["GenElectron_isReco"],
 )
 
@@ -138,21 +139,21 @@ plt.savefig("efficiency_pt_dr.pdf")
 
 # the same for GenElectron_eta and GenElectron_phi
 
-xxbins_ = np.linspace(-3, 3, 20)
+xxbins_ = np.linspace(-2.5, 2.5, 20)
 yybins_ = np.linspace(-3.14, 3.14, 20)
 
 bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
     df["GenElectron_phi"],
     bins=(xxbins_, yybins_),
-    range=((-3, 3), (-3.14, 3.14)),
+    range=((-2.5, 2.5), (-3.14, 3.14)),
 )
 
 bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
     df["GenElectron_phi"],
     bins=(xxbins_, yybins_),
-    range=((-3, 3), (-3.14, 3.14)),
+    range=((-2.5, 2.5), (-3.14, 3.14)),
     weights=df["isReco"],
 )
 
@@ -164,7 +165,7 @@ full_bin_content_reco, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
     df["GenElectron_phi"],
     bins=(xxbins_, yybins_),
-    range=((-3, 3), (-3.14, 3.14)),
+    range=((-2.5, 2.5), (-3.14, 3.14)),
     weights=df["GenElectron_isReco"],
 )
 
