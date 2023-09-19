@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import mplhep as hep
 import torch
+from model import ElectronClassifier
 
 ele_cond = [
     "GenElectron_eta",
@@ -54,8 +55,8 @@ df = df[:10000]
 df["Full_Efficency"] = df["GenElectron_isReco"] / df["GenElectron_isReco"].sum()
 
 # load the model
-
-model = torch.load_state_dict(torch.load("models/efficiency_electrons.pt"))
+model = ElectronClassifier(32)
+model.torch.load_state_dict(torch.load("models/efficiency_electrons.pt"))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = model.to(device)
 model.eval()
