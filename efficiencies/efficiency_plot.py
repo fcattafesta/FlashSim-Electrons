@@ -41,7 +41,7 @@ ele_cond = [
     "ClosestJet_EncodedHadronFlavour_light",
 ]
 
-eff_ele = [var.replace("C", "GC", 1) for var in ele_cond] + ["GenElectron_isReco"]
+eff_ele = ele_cond + ["GenElectron_isReco"]
 
 # open the file
 f = h5py.File("dataset/GenElectrons.hdf5", "r")
