@@ -118,7 +118,7 @@ yybins_ = np.linspace(-3.14, 3.14, 20)
 bin_content, xbins, ybins = np.histogram2d(
     df["GenElectron_eta"],
     df["GenElectron_phi"],
-    bins=(xbins_, yybins_),
+    bins=(xxbins_, yybins_),
     range=((-3, 3), (-3.14, 3.14)),
 )
 
