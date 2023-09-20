@@ -256,6 +256,7 @@ ax.errorbar(
     ls="",
     fmt="s",
     markersize=10,
+    zorder=1,
 )
 ax.errorbar(
     bin_centers,
@@ -268,6 +269,7 @@ ax.errorbar(
     ls="",
     fmt="o",
     markersize=6,
+    zorder=2,
 )
 
 ax.set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
@@ -335,6 +337,7 @@ ax.errorbar(
     ls="",
     fmt="s",
     markersize=10,
+    zorder=1,
 )
 ax.errorbar(
     bin_centers,
@@ -347,6 +350,7 @@ ax.errorbar(
     ls="",
     fmt="o",
     markersize=6,
+    zorder=2,
 )
 
 ax.set_xlabel(r"$\eta^{GEN}$")
@@ -413,6 +417,7 @@ ax.errorbar(
     ls="",
     fmt="s",
     markersize=10,
+    zorder=1,
 )
 ax.errorbar(
     bin_centers,
@@ -425,6 +430,7 @@ ax.errorbar(
     ls="",
     fmt="o",
     markersize=6,
+    zorder=2,
 )
 
 ax.set_xlabel(r"$\phi^{GEN}$")
