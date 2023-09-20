@@ -226,12 +226,31 @@ full_bin_content_reco, xbins = np.histogram(
 
 full_eff = full_bin_content_reco / bin_content
 
-hep.style.use(hep.style.CMS)
-fig, ax = plt.subplots(figsize=(15, 8))
-hep.cms.text("Private Work", loc=0, ax=ax)
-ax.errorbar(xbins[:-1], eff, label="FlashSim", color="orange", lw=2, ls="", fmt="o")
+bin_centers = (xbins[1:] + xbins[:-1]) / 2
 
-ax.errorbar(xbins[:-1], full_eff, label="FullSim", color="black", lw=2, ls="", fmt="s")
+hep.style.use(hep.style.CMS)
+fig, ax = plt.subplots(figsize=(12, 12))
+hep.cms.text("Private Work", loc=0, ax=ax)
+ax.errorbar(
+    bin_centers,
+    full_eff,
+    label="FullSim",
+    color="black",
+    lw=2,
+    ls="",
+    fmt="s",
+    markersize=10,
+)
+ax.errorbar(
+    bin_centers,
+    eff,
+    label="FlashSim",
+    color="orange",
+    lw=2,
+    ls="",
+    fmt="o",
+    markersize=6,
+)
 
 ax.set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
 ax.set_ylabel(r"Efficiency")
