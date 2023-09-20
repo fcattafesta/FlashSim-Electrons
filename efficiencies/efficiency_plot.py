@@ -211,7 +211,7 @@ plt.savefig("efficiency_eta_phi.pdf")
 
 xbins_ = np.linspace(20, 150, 20)
 
-bin_width = xbins_[1] - xbins_[0] / 2
+bin_width = 130 / 20
 
 bin_content, xbins = np.histogram(df["GenElectron_pt"], bins=xbins_, range=(20, 150))
 
@@ -270,7 +270,7 @@ plt.savefig("efficiency_pt.pdf")
 
 xxbins_ = np.linspace(-2.5, 2.5, 20)
 
-bin_width = np.abs(xxbins_[1] - xxbins_[0] / 2)
+bin_width = 2.5 / 20
 
 bin_content, xbins = np.histogram(
     df["GenElectron_eta"], bins=xxbins_, range=(-2.5, 2.5)
@@ -334,7 +334,7 @@ plt.savefig("efficiency_eta.pdf")
 
 xxbins_ = np.linspace(-3.14, 3.14, 20)
 
-bin_width = np.abs(xxbins_[1] - xxbins_[0] / 2)
+bin_width = 3.14 / 20
 
 bin_content, xbins = np.histogram(
     df["GenElectron_phi"], bins=xxbins_, range=(-3.14, 3.14)
