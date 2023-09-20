@@ -72,7 +72,7 @@ p = np.random.rand(y_pred.size)
 tmp = np.ones(y_pred.size)
 df["isReco"] = np.where(y_pred > p, tmp, 0)
 
-xbins_ = np.linspace(25, 150, 20)
+xbins_ = np.linspace(20, 150, 20)
 ybins_ = np.linspace(0, 2, 20)
 
 bin_content, xbins, ybins = np.histogram2d(
@@ -209,7 +209,7 @@ plt.savefig("efficiency_eta_phi.pdf")
 
 # 1d GenElectron_pt
 
-xbins_ = np.linspace(25, 150, 20)
+xbins_ = np.linspace(20, 150, 20)
 
 bin_content, xbins = np.histogram(df["GenElectron_pt"], bins=xbins_, range=(20, 150))
 
@@ -256,6 +256,8 @@ ax.set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
 ax.set_ylabel(r"Efficiency")
 ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
 ax.set_ylim(0.5, 1)
+
+ax.grid(which="both")
 
 ax.legend()
 
