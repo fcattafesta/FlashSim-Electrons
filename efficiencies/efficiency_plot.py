@@ -317,8 +317,7 @@ err_reco_full = np.sqrt(full_bin_content_reco)
 full_eff = full_bin_content_reco / bin_content
 
 yerr_full = full_eff * np.sqrt(
-    full_eff
-    * np.sqrt((err_reco_full / full_bin_content_reco) ** 2 + (err / bin_content) ** 2)
+    (err_reco_full / full_bin_content_reco) ** 2 + (err / bin_content) ** 2
 )
 
 bin_centers = (xbins[1:] + xbins[:-1]) / 2
