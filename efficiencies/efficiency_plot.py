@@ -239,3 +239,5 @@ ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
 ax.set_ylim(0.5, 1)
 
 ax.legend()
+
+plt.savefig("efficiency_pt.pdf")
