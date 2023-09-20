@@ -211,6 +211,8 @@ plt.savefig("efficiency_eta_phi.pdf")
 
 xbins_ = np.linspace(20, 150, 20)
 
+bin_width = xbins_[1] - xbins_[0] / 2
+
 bin_content, xbins = np.histogram(df["GenElectron_pt"], bins=xbins_, range=(20, 150))
 
 bin_content_reco, xbins = np.histogram(
@@ -234,6 +236,7 @@ hep.cms.text("Private Work", loc=0, ax=ax)
 ax.errorbar(
     bin_centers,
     full_eff,
+    xerr=bin_width,
     label="FullSim",
     color="black",
     lw=2,
@@ -244,6 +247,7 @@ ax.errorbar(
 ax.errorbar(
     bin_centers,
     eff,
+    xerr=bin_width,
     label="FlashSim",
     color="orange",
     lw=2,
@@ -257,7 +261,6 @@ ax.set_ylabel(r"Efficiency")
 ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
 ax.set_ylim(0.5, 1)
 
-ax.grid(which="both")
 
 ax.legend()
 
@@ -266,6 +269,8 @@ plt.savefig("efficiency_pt.pdf")
 # same for GenElectron_eta and GenElectron_phi
 
 xxbins_ = np.linspace(-2.5, 2.5, 20)
+
+bin_width = xxbins_[1] - xxbins_[0] / 2
 
 bin_content, xbins = np.histogram(
     df["GenElectron_eta"], bins=xxbins_, range=(-2.5, 2.5)
@@ -295,6 +300,7 @@ hep.cms.text("Private Work", loc=0, ax=ax)
 ax.errorbar(
     bin_centers,
     full_eff,
+    xerr=bin_width,
     label="FullSim",
     color="black",
     lw=2,
@@ -305,6 +311,7 @@ ax.errorbar(
 ax.errorbar(
     bin_centers,
     eff,
+    xerr=bin_width,
     label="FlashSim",
     color="orange",
     lw=2,
@@ -318,7 +325,6 @@ ax.set_ylabel(r"Efficiency")
 ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
 ax.set_ylim(0.5, 1)
 
-ax.grid(which="both")
 
 ax.legend()
 
@@ -327,6 +333,8 @@ plt.savefig("efficiency_eta.pdf")
 # same for GenElectron_phi
 
 xxbins_ = np.linspace(-3.14, 3.14, 20)
+
+bin_width = xxbins_[1] - xxbins_[0] / 2
 
 bin_content, xbins = np.histogram(
     df["GenElectron_phi"], bins=xxbins_, range=(-3.14, 3.14)
@@ -356,6 +364,7 @@ hep.cms.text("Private Work", loc=0, ax=ax)
 ax.errorbar(
     bin_centers,
     full_eff,
+    xerr=bin_width,
     label="FullSim",
     color="black",
     lw=2,
@@ -366,6 +375,7 @@ ax.errorbar(
 ax.errorbar(
     bin_centers,
     eff,
+    xerr=bin_width,
     label="FlashSim",
     color="orange",
     lw=2,
@@ -379,7 +389,6 @@ ax.set_ylabel(r"Efficiency")
 ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
 ax.set_ylim(0.5, 1)
 
-ax.grid(which="both")
 
 ax.legend()
 
