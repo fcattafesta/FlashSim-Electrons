@@ -215,18 +215,30 @@ bin_width = 130 / 20 / 2
 
 bin_content, xbins = np.histogram(df["GenElectron_pt"], bins=xbins_, range=(20, 150))
 
+err = np.sqrt(bin_content)
+
 bin_content_reco, xbins = np.histogram(
     df["GenElectron_pt"], bins=xbins_, range=(20, 150), weights=df["isReco"]
 )
 
+err_reco = np.sqrt(bin_content_reco)
+
 eff = bin_content_reco / bin_content
+
+yerr = eff * np.sqrt((err_reco / bin_content_reco) ** 2 + (err / bin_content) ** 2)
 
 
 full_bin_content_reco, xbins = np.histogram(
     df["GenElectron_pt"], bins=xbins_, range=(20, 150), weights=df["GenElectron_isReco"]
 )
 
+err_reco_full = np.sqrt(full_bin_content_reco)
+
 full_eff = full_bin_content_reco / bin_content
+
+yerr_full = full_eff * np.sqrt(
+    (err_reco_full / full_bin_content_reco) ** 2 + (err / bin_content) ** 2
+)
 
 bin_centers = (xbins[1:] + xbins[:-1]) / 2
 
@@ -236,6 +248,7 @@ hep.cms.text("Private Work", loc=0, ax=ax)
 ax.errorbar(
     bin_centers,
     full_eff,
+    yerr=yerr_full,
     xerr=bin_width,
     label="FullSim",
     color="black",
@@ -247,6 +260,7 @@ ax.errorbar(
 ax.errorbar(
     bin_centers,
     eff,
+    yerr=yerr,
     xerr=bin_width,
     label="FlashSim",
     color="orange",
@@ -276,11 +290,17 @@ bin_content, xbins = np.histogram(
     df["GenElectron_eta"], bins=xxbins_, range=(-2.5, 2.5)
 )
 
+err = np.sqrt(bin_content)
+
 bin_content_reco, xbins = np.histogram(
     df["GenElectron_eta"], bins=xxbins_, range=(-2.5, 2.5), weights=df["isReco"]
 )
 
+err_reco = np.sqrt(bin_content_reco)
+
 eff = bin_content_reco / bin_content
+
+yerr = eff * np.sqrt((err_reco / bin_content_reco) ** 2 + (err / bin_content) ** 2)
 
 
 full_bin_content_reco, xbins = np.histogram(
@@ -290,7 +310,14 @@ full_bin_content_reco, xbins = np.histogram(
     weights=df["GenElectron_isReco"],
 )
 
+err_reco_full = np.sqrt(full_bin_content_reco)
+
 full_eff = full_bin_content_reco / bin_content
+
+yerr_full = full_eff * np.sqrt(
+    full_eff
+    * np.sqrt((err_reco_full / full_bin_content_reco) ** 2 + (err / bin_content) ** 2)
+)
 
 bin_centers = (xbins[1:] + xbins[:-1]) / 2
 
@@ -300,6 +327,7 @@ hep.cms.text("Private Work", loc=0, ax=ax)
 ax.errorbar(
     bin_centers,
     full_eff,
+    yerr=yerr_full,
     xerr=bin_width,
     label="FullSim",
     color="black",
@@ -312,6 +340,7 @@ ax.errorbar(
     bin_centers,
     eff,
     xerr=bin_width,
+    yerr=yerr,
     label="FlashSim",
     color="orange",
     lw=2,
@@ -340,11 +369,17 @@ bin_content, xbins = np.histogram(
     df["GenElectron_phi"], bins=xxbins_, range=(-3.14, 3.14)
 )
 
+err = np.sqrt(bin_content)
+
 bin_content_reco, xbins = np.histogram(
     df["GenElectron_phi"], bins=xxbins_, range=(-3.14, 3.14), weights=df["isReco"]
 )
 
+err_reco = np.sqrt(bin_content_reco)
+
 eff = bin_content_reco / bin_content
+
+yerr = eff * np.sqrt((err_reco / bin_content_reco) ** 2 + (err / bin_content) ** 2)
 
 
 full_bin_content_reco, xbins = np.histogram(
@@ -354,7 +389,13 @@ full_bin_content_reco, xbins = np.histogram(
     weights=df["GenElectron_isReco"],
 )
 
+err_reco_full = np.sqrt(full_bin_content_reco)
+
 full_eff = full_bin_content_reco / bin_content
+
+yerr_full = full_eff * np.sqrt(
+    (err_reco_full / full_bin_content_reco) ** 2 + (err / bin_content) ** 2
+)
 
 bin_centers = (xbins[1:] + xbins[:-1]) / 2
 
@@ -364,6 +405,7 @@ hep.cms.text("Private Work", loc=0, ax=ax)
 ax.errorbar(
     bin_centers,
     full_eff,
+    yerr=yerr_full,
     xerr=bin_width,
     label="FullSim",
     color="black",
@@ -375,6 +417,7 @@ ax.errorbar(
 ax.errorbar(
     bin_centers,
     eff,
+    yerr=yerr,
     xerr=bin_width,
     label="FlashSim",
     color="orange",
