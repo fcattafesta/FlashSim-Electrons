@@ -206,3 +206,36 @@ ax[1].set_title(r"FullSim ($p_{T}^{GEN}>20$ GeV)", loc="right")
 cbar = fig.colorbar(im, ax=ax[1])
 
 plt.savefig("efficiency_eta_phi.pdf")
+
+# 1d GenElectron_pt
+
+xbins_ = np.linspace(25, 150, 20)
+
+bin_content, xbins = np.histogram(df["GenElectron_pt"], bins=xbins_, range=(20, 150))
+
+bin_content_reco, xbins = np.histogram(
+    df["GenElectron_pt"], bins=xbins_, range=(20, 150), weights=df["isReco"]
+)
+
+eff = bin_content_reco / bin_content
+
+
+full_bin_content_reco, xbins = np.histogram(
+    df["GenElectron_pt"], bins=xbins_, range=(20, 150), weights=df["GenElectron_isReco"]
+)
+
+full_eff = full_bin_content_reco / bin_content
+
+hep.style.use(hep.style.CMS)
+fig, ax = plt.subplots(figsize=(15, 8))
+hep.cms.text("Private Work", loc=0, ax=ax)
+ax.plot(xbins[:-1], eff, label="FlashSim", color="orange", lw=2, ls="", fmt="o")
+
+ax.plot(xbins[:-1], full_eff, label="FullSim", color="black", lw=2, ls="", fmt="s")
+
+ax.set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
+ax.set_ylabel(r"Efficiency")
+ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
+ax.set_ylim(0.5, 1)
+
+ax.legend()
