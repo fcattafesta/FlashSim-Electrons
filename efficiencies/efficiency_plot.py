@@ -229,9 +229,9 @@ full_eff = full_bin_content_reco / bin_content
 hep.style.use(hep.style.CMS)
 fig, ax = plt.subplots(figsize=(15, 8))
 hep.cms.text("Private Work", loc=0, ax=ax)
-ax.plot(xbins[:-1], eff, label="FlashSim", color="orange", lw=2, ls="", fmt="o")
+ax.errorbar(xbins[:-1], eff, label="FlashSim", color="orange", lw=2, ls="", fmt="o")
 
-ax.plot(xbins[:-1], full_eff, label="FullSim", color="black", lw=2, ls="", fmt="s")
+ax.errorbar(xbins[:-1], full_eff, label="FullSim", color="black", lw=2, ls="", fmt="s")
 
 ax.set_xlabel(r"$p_{T}^{GEN}$ [GeV]")
 ax.set_ylabel(r"Efficiency")
