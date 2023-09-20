@@ -262,3 +262,125 @@ ax.grid(which="both")
 ax.legend()
 
 plt.savefig("efficiency_pt.pdf")
+
+# same for GenElectron_eta and GenElectron_phi
+
+xxbins_ = np.linspace(-2.5, 2.5, 20)
+
+bin_content, xbins = np.histogram(
+    df["GenElectron_eta"], bins=xxbins_, range=(-2.5, 2.5)
+)
+
+bin_content_reco, xbins = np.histogram(
+    df["GenElectron_eta"], bins=xxbins_, range=(-2.5, 2.5), weights=df["isReco"]
+)
+
+eff = bin_content_reco / bin_content
+
+
+full_bin_content_reco, xbins = np.histogram(
+    df["GenElectron_eta"],
+    bins=xxbins_,
+    range=(-2.5, 2.5),
+    weights=df["GenElectron_isReco"],
+)
+
+full_eff = full_bin_content_reco / bin_content
+
+bin_centers = (xbins[1:] + xbins[:-1]) / 2
+
+hep.style.use(hep.style.CMS)
+fig, ax = plt.subplots(figsize=(12, 12))
+hep.cms.text("Private Work", loc=0, ax=ax)
+ax.errorbar(
+    bin_centers,
+    full_eff,
+    label="FullSim",
+    color="black",
+    lw=2,
+    ls="",
+    fmt="s",
+    markersize=10,
+)
+ax.errorbar(
+    bin_centers,
+    eff,
+    label="FlashSim",
+    color="orange",
+    lw=2,
+    ls="",
+    fmt="o",
+    markersize=6,
+)
+
+ax.set_xlabel(r"$\eta^{GEN}$")
+ax.set_ylabel(r"Efficiency")
+ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
+ax.set_ylim(0.5, 1)
+
+ax.grid(which="both")
+
+ax.legend()
+
+plt.savefig("efficiency_eta.pdf")
+
+# same for GenElectron_phi
+
+xxbins_ = np.linspace(-3.14, 3.14, 20)
+
+bin_content, xbins = np.histogram(
+    df["GenElectron_phi"], bins=xxbins_, range=(-3.14, 3.14)
+)
+
+bin_content_reco, xbins = np.histogram(
+    df["GenElectron_phi"], bins=xxbins_, range=(-3.14, 3.14), weights=df["isReco"]
+)
+
+eff = bin_content_reco / bin_content
+
+
+full_bin_content_reco, xbins = np.histogram(
+    df["GenElectron_phi"],
+    bins=xxbins_,
+    range=(-3.14, 3.14),
+    weights=df["GenElectron_isReco"],
+)
+
+full_eff = full_bin_content_reco / bin_content
+
+bin_centers = (xbins[1:] + xbins[:-1]) / 2
+
+hep.style.use(hep.style.CMS)
+fig, ax = plt.subplots(figsize=(12, 12))
+hep.cms.text("Private Work", loc=0, ax=ax)
+ax.errorbar(
+    bin_centers,
+    full_eff,
+    label="FullSim",
+    color="black",
+    lw=2,
+    ls="",
+    fmt="s",
+    markersize=10,
+)
+ax.errorbar(
+    bin_centers,
+    eff,
+    label="FlashSim",
+    color="orange",
+    lw=2,
+    ls="",
+    fmt="o",
+    markersize=6,
+)
+
+ax.set_xlabel(r"$\phi^{GEN}$")
+ax.set_ylabel(r"Efficiency")
+ax.set_title(r"($p_{T}^{GEN}>20$ GeV)", loc="right")
+ax.set_ylim(0.5, 1)
+
+ax.grid(which="both")
+
+ax.legend()
+
+plt.savefig("efficiency_phi.pdf")
